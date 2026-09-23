@@ -7,9 +7,9 @@
   const $ = (sel, root = document) => root.querySelector(sel);
   const $$ = (sel, root = document) => [...root.querySelectorAll(sel)];
 
-  /* ---------- Hash routing ---------- */
+  /* ---------- Path-based routing (History API) ---------- */
   const currentRoute = () => {
-    const r = (location.hash || '#/').slice(1) || '/';
+    const r = location.pathname || '/';
     return ROUTES.includes(r) ? r : '/';
   };
 
@@ -20,7 +20,28 @@
     if (route === '/') ensureVideoPlaying();
   }
 
-  window.addEventListener('hashchange', () => { render(); window.scrollTo(0, 0); });
+  function navigate(path, { replace = false } = {}) {
+    if (location.pathname === path) { render(); return; }
+    history[replace ? 'replaceState' : 'pushState']({}, '', path);
+    render();
+    window.scrollTo(0, 0);
+  }
+
+  window.addEventListener('popstate', () => { render(); window.scrollTo(0, 0); });
+
+  // Intercept clicks on same-origin internal links so navigation never triggers
+  // a full page reload, but a direct URL load / refresh still works via the server.
+  document.addEventListener('click', e => {
+    const a = e.target.closest('a[href]');
+    if (!a || a.target === '_blank' || a.hasAttribute('download')) return;
+    let url;
+    try { url = new URL(a.href, location.href); } catch { return; }
+    if (url.origin !== location.origin) return; // external link (Instagram, LinkedIn, Substack…)
+    if (!ROUTES.includes(url.pathname)) return; // not one of our routes: let it behave normally
+    if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return; // open-in-new-tab shortcuts
+    e.preventDefault();
+    navigate(url.pathname);
+  });
 
   /* ---------- Hero video: always muted + looping ---------- */
   function ensureVideoPlaying() {
