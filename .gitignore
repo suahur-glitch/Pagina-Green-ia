@@ -1,0 +1,10 @@
+# Claude Design exports (large, not part of the site)
+*.zip
+
+# Local tooling
+.claude/
+node_modules/
+
+# OS
+.DS_Store
+Thumbs.db
