@@ -35,10 +35,16 @@ function send(res, status, body, headers = {}) {
   res.end(body);
 }
 
+// Client-side routes handled by app.js (History API). A direct load or a
+// refresh on any of these must still get index.html from the server, since
+// there's no matching file on disk for them.
+const SPA_ROUTES = new Set(['/', '/recursos-gratuitos', '/certificate-con-nosotros', '/sobre-nosotros']);
+
 function resolvePath(urlPath) {
   let p;
   try { p = decodeURIComponent(urlPath.split('?')[0]); } catch { return null; }
-  if (p.endsWith('/')) p += 'index.html';
+  if (SPA_ROUTES.has(p)) p = '/index.html';
+  else if (p.endsWith('/')) p += 'index.html';
   const full = path.normalize(path.join(ROOT, p));
   if (!full.startsWith(ROOT + path.sep)) return null;
   // Block hidden files/dirs (.claude, .git, …)
