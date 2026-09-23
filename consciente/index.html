@@ -1,0 +1,476 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#faf9f5;color:#141413}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>¿Qué tan consciente es tu IA?</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,wght@0,400;0,500;0,600;1,500&family=Karla:wght@400;500;600;700&display=swap">
+<style>
+  :root{
+    --bg: #FAFAF7;
+    --surface: #FFFFFF;
+    --surface-2: #F1F5F1;
+    --ink: #17241C;
+    --ink-soft: #4B5A50;
+    --line: #E1E8E2;
+    --brand-dark: #1B3A2F;
+    --brand: #2E7D5B;
+    --brand-tint: #E8F3EC;
+    --amber: #B5762B;
+    --amber-tint: #FBEEDF;
+    --coral: #A8443A;
+    --coral-tint: #F7E9E7;
+    --shadow: 0 1px 2px rgba(23,36,28,0.06), 0 8px 24px rgba(23,36,28,0.06);
+    font-size: 16px;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg: #10160F;
+      --surface: #182018;
+      --surface-2: #1F2B22;
+      --ink: #EAF0E9;
+      --ink-soft: #A9B9AE;
+      --line: #2B3830;
+      --brand-dark: #A8D7BE;
+      --brand: #6FBE94;
+      --brand-tint: #1E3128;
+      --amber: #E3AA6A;
+      --amber-tint: #33291B;
+      --coral: #E08A80;
+      --coral-tint: #35211E;
+      --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 8px 24px rgba(0,0,0,0.35);
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg: #10160F;
+    --surface: #182018;
+    --surface-2: #1F2B22;
+    --ink: #EAF0E9;
+    --ink-soft: #A9B9AE;
+    --line: #2B3830;
+    --brand-dark: #A8D7BE;
+    --brand: #6FBE94;
+    --brand-tint: #1E3128;
+    --amber: #E3AA6A;
+    --amber-tint: #33291B;
+    --coral: #E08A80;
+    --coral-tint: #35211E;
+    --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 8px 24px rgba(0,0,0,0.35);
+  }
+
+  *{box-sizing:border-box;}
+  body{
+    background: var(--bg);
+    color: var(--ink);
+    font-family: "Karla", "Segoe UI", sans-serif;
+    padding-inline: 18px;
+    padding-block: 28px;
+    display:flex;
+    justify-content:center;
+  }
+  .page{
+    width:100%;
+    max-width: 560px;
+    display:flex;
+    flex-direction:column;
+    gap: 22px;
+  }
+
+  .eyebrow{
+    font-family:"Karla";
+    font-weight:700;
+    font-size: 0.72rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--brand);
+  }
+  h1{
+    font-family:"Newsreader", Georgia, serif;
+    font-weight: 600;
+    font-size: clamp(1.7rem, 6vw, 2.3rem);
+    line-height: 1.15;
+    letter-spacing: -0.01em;
+    text-wrap: balance;
+    margin: 6px 0 4px;
+    color: var(--brand-dark);
+  }
+  .lede{
+    font-size: 0.98rem;
+    line-height: 1.55;
+    color: var(--ink-soft);
+    max-width: 46ch;
+  }
+
+  .progress-wrap{
+    display:flex;
+    align-items:center;
+    gap: 10px;
+  }
+  .progress-track{
+    flex:1;
+    height: 6px;
+    border-radius: 4px;
+    background: var(--surface-2);
+    overflow:hidden;
+  }
+  .progress-fill{
+    height:100%;
+    width:0%;
+    background: var(--brand);
+    border-radius: 4px;
+    transition: width .3s ease;
+  }
+  .progress-label{
+    font-variant-numeric: tabular-nums;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--ink-soft);
+    white-space:nowrap;
+  }
+
+  .questions{
+    display:flex;
+    flex-direction:column;
+    gap: 10px;
+  }
+  .q-card{
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    padding: 14px 16px;
+    box-shadow: var(--shadow);
+  }
+  .q-top{
+    display:flex;
+    gap: 12px;
+    align-items:flex-start;
+  }
+  .q-num{
+    font-family:"Newsreader";
+    font-weight:600;
+    font-style:italic;
+    font-size: 1rem;
+    color: var(--brand);
+    min-width: 1.4em;
+    padding-top: 1px;
+  }
+  .q-text{
+    font-size: 0.94rem;
+    line-height: 1.45;
+    flex:1;
+  }
+  .q-hint{
+    font-size: 0.8rem;
+    color: var(--ink-soft);
+    margin-top: 3px;
+    font-style: italic;
+  }
+  .q-toggle{
+    display:flex;
+    gap: 8px;
+    margin-top: 10px;
+    padding-left: calc(1.4em + 12px);
+  }
+  .opt{
+    flex:1;
+    text-align:center;
+    padding: 8px 0;
+    border-radius: 9px;
+    border: 1px solid var(--line);
+    background: var(--surface-2);
+    font-weight: 600;
+    font-size: 0.85rem;
+    color: var(--ink-soft);
+    cursor:pointer;
+    user-select:none;
+    transition: all .15s ease;
+  }
+  .opt:hover{ border-color: var(--brand); }
+  .opt.sel-yes{
+    background: var(--coral-tint);
+    border-color: var(--coral);
+    color: var(--coral);
+  }
+  .opt.sel-no{
+    background: var(--brand-tint);
+    border-color: var(--brand);
+    color: var(--brand-dark);
+  }
+
+  .cta-row{
+    position: sticky;
+    bottom: 12px;
+    display:flex;
+    justify-content:center;
+    padding-top: 6px;
+  }
+  .cta{
+    width:100%;
+    max-width: 400px;
+    padding: 14px 20px;
+    border-radius: 999px;
+    border: none;
+    background: var(--brand-dark);
+    color: var(--brand-tint);
+    font-family:"Karla";
+    font-weight: 700;
+    font-size: 0.95rem;
+    letter-spacing: 0.01em;
+    cursor: pointer;
+    box-shadow: var(--shadow);
+    opacity: 0.45;
+    pointer-events:none;
+    transition: opacity .2s ease, transform .1s ease;
+  }
+  .cta.ready{ opacity: 1; pointer-events:auto; }
+  .cta:active.ready{ transform: scale(0.98); }
+
+  #result{
+    display:flex;
+    flex-direction:column;
+    gap: 16px;
+  }
+  .result-card{
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 18px;
+    padding: 26px 22px;
+    box-shadow: var(--shadow);
+    text-align:center;
+  }
+  .result-score{
+    font-family:"Newsreader";
+    font-weight:600;
+    font-size: 3.4rem;
+    line-height:1;
+    font-variant-numeric: tabular-nums;
+    color: var(--brand-dark);
+  }
+  .result-outof{
+    font-size: 0.85rem;
+    color: var(--ink-soft);
+    margin-top: 2px;
+  }
+  .badge{
+    display:inline-block;
+    margin-top: 14px;
+    padding: 7px 16px;
+    border-radius: 999px;
+    font-weight: 700;
+    font-size: 0.85rem;
+  }
+  .badge.level-cons{ background: var(--brand-tint); color: var(--brand-dark); }
+  .badge.level-trans{ background: var(--amber-tint); color: var(--amber); }
+  .badge.level-auto{ background: var(--coral-tint); color: var(--coral); }
+  .result-desc{
+    margin-top: 14px;
+    font-size: 0.95rem;
+    line-height: 1.55;
+    color: var(--ink-soft);
+  }
+  .actions-title{
+    font-family:"Newsreader";
+    font-style:italic;
+    font-size: 1.05rem;
+    color: var(--brand-dark);
+    margin-bottom: 2px;
+  }
+  .actions-list{
+    display:flex;
+    flex-direction:column;
+    gap: 10px;
+  }
+  .action-item{
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 12px 14px;
+    display:flex;
+    gap: 10px;
+    align-items:flex-start;
+    font-size: 0.92rem;
+    line-height: 1.45;
+  }
+  .action-dot{
+    width: 7px; height: 7px;
+    border-radius: 50%;
+    background: var(--brand);
+    margin-top: 7px;
+    flex-shrink:0;
+  }
+  .retry{
+    text-align:center;
+    font-size: 0.85rem;
+    color: var(--ink-soft);
+    text-decoration: underline;
+    cursor:pointer;
+    background:none;
+    border:none;
+    font-family:"Karla";
+    padding: 6px;
+  }
+  .brand-foot{
+    text-align:center;
+    padding-top: 6px;
+    font-size: 0.8rem;
+    color: var(--ink-soft);
+  }
+  .brand-foot b{ color: var(--brand-dark); }
+</style>
+
+<div class="page">
+
+  <div id="quizView">
+    <div class="eyebrow">Green IA · Autodiagnóstico</div>
+    <h1>¿Qué tan consciente es tu uso de la IA?</h1>
+    <p class="lede">10 preguntas rápidas de Sí o No. Al final, tu nivel y 3 acciones concretas para tu caso — nada de teoría genérica.</p>
+
+    <div class="progress-wrap" style="margin-top:4px;">
+      <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+      <div class="progress-label" id="progressLabel">0 / 10</div>
+    </div>
+
+    <div class="questions" id="questions"></div>
+
+    <div class="cta-row">
+      <button class="cta" id="ctaBtn">Ver mi resultado</button>
+    </div>
+  </div>
+
+  <div id="result" hidden></div>
+
+</div>
+
+<script>
+(function(){
+  var QUESTIONS = [
+    "¿Sueles hacerle la misma pregunta a la IA varias veces esperando una respuesta distinta?",
+    "¿Usas el modelo más avanzado (el \"Pro\" o el más potente) incluso para tareas simples, como traducir una frase?",
+    "¿Generas imágenes con IA solo por probar algo, o porque un amigo te dijo que estaba de moda?",
+    "¿Le pides a la IA cosas que ya resolviste antes, en vez de buscar esa respuesta guardada?",
+    "¿Generas video con IA cuando una foto o un texto habrían sido suficientes?",
+    "¿Escribes tus prompts a la carrera y luego corriges con varios mensajes seguidos?",
+    "¿Usas IA para calcular o buscar algo que un buscador normal resolvería igual de rápido?",
+    "¿Mantienes conversaciones larguísimas con la IA en vez de cerrarlas y abrir una nueva cuando cambias de tema?",
+    "¿Escoges qué IA usar solo por comodidad, sin fijarte si esa empresa es transparente con su consumo energético?",
+    "¿Alguna vez has usado IA solo por costumbre, sin pensarlo dos veces?"
+  ];
+  var HINTS = {
+    7: "Cada mensaje reprocesa toda la conversación anterior — entre más larga, más cómputo gasta cada respuesta nueva."
+  };
+
+  var answers = new Array(QUESTIONS.length).fill(null);
+
+  var qWrap = document.getElementById('questions');
+  QUESTIONS.forEach(function(text, i){
+    var card = document.createElement('div');
+    card.className = 'q-card';
+    var hint = HINTS[i] ? '<div class="q-hint">' + HINTS[i] + '</div>' : '';
+    card.innerHTML =
+      '<div class="q-top">' +
+        '<div class="q-num">' + (i+1) + '</div>' +
+        '<div class="q-text">' + text + hint + '</div>' +
+      '</div>' +
+      '<div class="q-toggle">' +
+        '<div class="opt" data-q="' + i + '" data-v="1">Sí</div>' +
+        '<div class="opt" data-q="' + i + '" data-v="0">No</div>' +
+      '</div>';
+    qWrap.appendChild(card);
+  });
+
+  qWrap.addEventListener('click', function(e){
+    var opt = e.target.closest('.opt');
+    if(!opt) return;
+    var qi = parseInt(opt.dataset.q, 10);
+    var val = parseInt(opt.dataset.v, 10);
+    answers[qi] = val;
+    var siblings = qWrap.children[qi].querySelectorAll('.opt');
+    siblings.forEach(function(s){ s.classList.remove('sel-yes','sel-no'); });
+    opt.classList.add(val === 1 ? 'sel-yes' : 'sel-no');
+    updateProgress();
+  });
+
+  var fill = document.getElementById('progressFill');
+  var label = document.getElementById('progressLabel');
+  var cta = document.getElementById('ctaBtn');
+
+  function updateProgress(){
+    var answered = answers.filter(function(a){ return a !== null; }).length;
+    fill.style.width = (answered / QUESTIONS.length * 100) + '%';
+    label.textContent = answered + ' / ' + QUESTIONS.length;
+    cta.classList.toggle('ready', answered === QUESTIONS.length);
+  }
+
+  var LEVELS = [
+    {
+      max: 2, cls: 'level-cons', badge: 'Nivel Consciente 🌱',
+      desc: 'Usas la IA con criterio real. Tu huella ya es baja — comparte este test con alguien que la necesite más que tú.',
+      actions: [
+        'Guarda tus mejores prompts en una nota para no tener que reconstruirlos.',
+        'La próxima vez que generes imagen o video, pregúntate si de verdad lo vas a usar.',
+        'Sigue a @somos.greenia — vas a entender de primera mano por qué esto importa cada vez más.'
+      ]
+    },
+    {
+      max: 5, cls: 'level-trans', badge: 'Nivel En Transición 🌿',
+      desc: 'Vas por buen camino, pero hay hábitos automáticos que se cuelan sin que los notes.',
+      actions: [
+        'Antes de reintentar una pregunta, reformúlala una sola vez con más detalle.',
+        'Cierra la conversación cuando cambies de tema — no la sigas alargando.',
+        'Elige el modelo "liviano" para tareas simples (traducir, resumir, formatear).'
+      ]
+    },
+    {
+      max: 10, cls: 'level-auto', badge: 'Nivel Automático 🔥',
+      desc: 'Usas la IA en piloto automático — no es un juicio, es la oportunidad más grande de las tres para reducir tu huella real.',
+      actions: [
+        'Empieza por una sola cosa: deja de repetir la misma pregunta esperando otra respuesta.',
+        'Antes de generar imagen o video, pregúntate si un texto o una búsqueda ya resuelven lo mismo.',
+        'Revisa qué IA usas más y si esa empresa publica su consumo energético — te vas a sorprender.'
+      ]
+    }
+  ];
+
+  function levelFor(score){
+    for(var i=0;i<LEVELS.length;i++){ if(score <= LEVELS[i].max) return LEVELS[i]; }
+    return LEVELS[LEVELS.length-1];
+  }
+
+  cta.addEventListener('click', function(){
+    if(!cta.classList.contains('ready')) return;
+    var score = answers.reduce(function(a,b){ return a + b; }, 0);
+    var level = levelFor(score);
+
+    var actionsHtml = level.actions.map(function(a){
+      return '<div class="action-item"><div class="action-dot"></div><div>' + a + '</div></div>';
+    }).join('');
+
+    document.getElementById('result').innerHTML =
+      '<div class="result-card">' +
+        '<div class="result-score">' + score + '</div>' +
+        '<div class="result-outof">de 10 respuestas afirmativas</div>' +
+        '<div class="badge ' + level.cls + '">' + level.badge + '</div>' +
+        '<div class="result-desc">' + level.desc + '</div>' +
+      '</div>' +
+      '<div>' +
+        '<div class="actions-title">Tus 3 próximos pasos</div>' +
+        '<div class="actions-list">' + actionsHtml + '</div>' +
+      '</div>' +
+      '<button class="retry" id="retryBtn">Volver a hacer el test</button>' +
+      '<div class="brand-foot"><b>Green IA</b> · Uso responsable y eficiente de IA · @somos.greenia</div>';
+
+    document.getElementById('quizView').hidden = true;
+    document.getElementById('result').hidden = false;
+    window.scrollTo({top:0, behavior:'smooth'});
+
+    document.getElementById('retryBtn').addEventListener('click', function(){
+      answers = new Array(QUESTIONS.length).fill(null);
+      qWrap.querySelectorAll('.opt').forEach(function(o){ o.classList.remove('sel-yes','sel-no'); });
+      updateProgress();
+      document.getElementById('result').hidden = true;
+      document.getElementById('quizView').hidden = false;
+      window.scrollTo({top:0, behavior:'smooth'});
+    });
+  });
+
+  updateProgress();
+})();
+</script>
+
+</body></html>
