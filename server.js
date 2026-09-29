@@ -40,10 +40,14 @@ function send(res, status, body, headers = {}) {
 // there's no matching file on disk for them.
 const SPA_ROUTES = new Set(['/', '/recursos-gratuitos', '/certificate-con-nosotros', '/sobre-nosotros']);
 
+// Short addresses for standalone pages (served without a trailing slash).
+const PAGE_ROUTES = { '/test': '/consciente/index.html', '/consciente': '/consciente/index.html' };
+
 function resolvePath(urlPath) {
   let p;
   try { p = decodeURIComponent(urlPath.split('?')[0]); } catch { return null; }
   if (SPA_ROUTES.has(p)) p = '/index.html';
+  else if (PAGE_ROUTES[p]) p = PAGE_ROUTES[p];
   else if (p.endsWith('/')) p += 'index.html';
   const full = path.normalize(path.join(ROOT, p));
   if (!full.startsWith(ROOT + path.sep)) return null;
