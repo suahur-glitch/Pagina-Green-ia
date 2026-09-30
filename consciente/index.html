@@ -468,6 +468,8 @@
     if(!cta.classList.contains('ready')) return;
     var score = answers.reduce(function(a,b){ return a + b; }, 0);
     var level = levelFor(score);
+    // Cada "Sí" es un hábito automático; mostramos los hábitos conscientes (más alto = mejor)
+    var good = QUESTIONS.length - score;
 
     var actionsHtml = level.actions.map(function(a){
       return '<div class="action-item"><div class="action-dot"></div><div>' + a + '</div></div>';
@@ -475,8 +477,8 @@
 
     document.getElementById('result').innerHTML =
       '<div class="result-card">' +
-        '<div class="result-score">' + score + '</div>' +
-        '<div class="result-outof">de 10 respuestas afirmativas</div>' +
+        '<div class="result-score">' + good + '</div>' +
+        '<div class="result-outof">de ' + QUESTIONS.length + ' hábitos conscientes</div>' +
         '<div class="badge ' + level.cls + '">' + level.badge + '</div>' +
         '<div class="result-desc">' + level.desc + '</div>' +
       '</div>' +
