@@ -4,12 +4,12 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>¿Qué tan consciente es tu uso de la IA? · somosgreenia</title>
-<meta name="description" content="Test gratuito de 10 preguntas: descubre qué tan consciente es tu uso de la inteligencia artificial y recibe 3 acciones concretas. Primero criterio, luego IA.">
+<meta name="description" content="Test gratuito de 10 preguntas: descubre qué tan consciente es tu uso de la inteligencia artificial y recibe acciones concretas según tus respuestas. Primero criterio, luego IA.">
 <link rel="canonical" href="https://somosgreenia.com/consciente/">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://somosgreenia.com/consciente/">
 <meta property="og:title" content="¿Qué tan consciente es tu uso de la IA?">
-<meta property="og:description" content="10 preguntas de sí o no. Tu nivel y 3 acciones concretas. Primero criterio, luego IA. · somosgreenia">
+<meta property="og:description" content="10 preguntas de sí o no. Tu nivel y acciones concretas según tus respuestas. Primero criterio, luego IA. · somosgreenia">
 <meta property="og:site_name" content="somosgreenia">
 <meta name="theme-color" content="#1F3B2C">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -243,6 +243,7 @@
   .cta.ready{ opacity: 1; pointer-events:auto; }
   .cta:active.ready{ transform: scale(0.98); }
 
+  .steps-note{ font-size:0.85rem; color:var(--ink-soft); margin:-4px 0 10px; }
   /* ---------- result ---------- */
   #result{
     display:flex;
@@ -349,7 +350,7 @@
   <div id="quizView">
     <div class="eyebrow">somosgreenia · Primero criterio, luego IA</div>
     <h1>¿Qué tan consciente es tu uso de la IA?</h1>
-    <p class="lede">10 preguntas rápidas de Sí o No. Al final, tu nivel y 3 acciones concretas para tu caso — nada de teoría genérica.</p>
+    <p class="lede">10 preguntas rápidas de Sí o No. Al final, tu nivel y acciones concretas según lo que respondiste. Nada de teoría genérica.</p>
 
     <div class="progress-wrap" style="margin-top:4px;">
       <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
@@ -429,34 +430,34 @@
     cta.classList.toggle('ready', answered === QUESTIONS.length);
   }
 
+  // Un paso concreto por pregunta: solo se muestran los de las preguntas respondidas con "Sí".
+  var STEPS = [
+    'Si la respuesta no te sirve, no la regeneres: reformula una sola vez con más contexto (qué necesitas, para qué y en qué formato).',
+    'Usa el modelo liviano para tareas simples como traducir, resumir o corregir. Pasa al más potente solo si el liviano no alcanza.',
+    'Antes de generar una imagen, pregúntate para qué la vas a usar. Si no tiene un uso claro, no la generes.',
+    'Guarda tus mejores respuestas y prompts en una nota. Buscar ahí es más rápido y no gasta nada.',
+    'Generar video exige mucha más energía que un texto o una imagen. Úsalo solo cuando lo demás de verdad no alcance.',
+    'Antes de enviar, escribe en un solo mensaje qué necesitas, para qué y cómo quieres la respuesta. Te ahorras varias correcciones.',
+    'Para datos rápidos (una definición, un horario, una conversión), usa primero el buscador o la calculadora.',
+    'Cuando cambies de tema, abre un chat nuevo. En un chat largo, la IA vuelve a procesar todo lo anterior en cada respuesta.',
+    'Revisa si la IA que más usas publica informes de consumo de energía o agua, y súmalo como un criterio más al elegir.',
+    'Antes de abrir la IA, hazte una pregunta: ¿esto lo resuelvo igual de rápido por mi cuenta?'
+  ];
+  // Orden de prioridad (mayor impacto primero) cuando hay más de 3 "Sí".
+  var PRIORITY = [4, 2, 1, 0, 7, 5, 3, 6, 9, 8];
+  var KEEP = [
+    'Sigue eligiendo el modelo liviano para lo simple: es tu mejor hábito.',
+    'Comparte este test con alguien que use IA a diario. Los hábitos se contagian.',
+    'Vuelve a hacer el test en un mes para confirmar que tus hábitos se mantienen.'
+  ];
+
   var LEVELS = [
-    {
-      max: 2, cls: 'level-cons', badge: 'Nivel Consciente 🌱',
-      desc: 'Usas la IA con criterio real. Tu huella ya es baja — comparte este test con alguien que la necesite más que tú.',
-      actions: [
-        'Guarda tus mejores prompts en una nota para no tener que reconstruirlos.',
-        'La próxima vez que generes imagen o video, pregúntate si de verdad lo vas a usar.',
-        'Sigue a @somos.greenia — vas a entender de primera mano por qué esto importa cada vez más.'
-      ]
-    },
-    {
-      max: 5, cls: 'level-trans', badge: 'Nivel En Transición 🌿',
-      desc: 'Vas por buen camino, pero hay hábitos automáticos que se cuelan sin que los notes.',
-      actions: [
-        'Antes de reintentar una pregunta, reformúlala una sola vez con más detalle.',
-        'Cierra la conversación cuando cambies de tema — no la sigas alargando.',
-        'Elige el modelo "liviano" para tareas simples (traducir, resumir, formatear).'
-      ]
-    },
-    {
-      max: 10, cls: 'level-auto', badge: 'Nivel Automático 🔥',
-      desc: 'Usas la IA en piloto automático — no es un juicio, es la oportunidad más grande de las tres para reducir tu huella real.',
-      actions: [
-        'Empieza por una sola cosa: deja de repetir la misma pregunta esperando otra respuesta.',
-        'Antes de generar imagen o video, pregúntate si un texto o una búsqueda ya resuelven lo mismo.',
-        'Revisa qué IA usas más y si esa empresa publica su consumo energético — te vas a sorprender.'
-      ]
-    }
+    { max: 2, cls: 'level-cons', badge: 'Nivel Consciente 🌱',
+      desc: 'Usas la IA con criterio. Mantén lo que ya haces bien.' },
+    { max: 5, cls: 'level-trans', badge: 'Nivel En Transición 🌿',
+      desc: 'Vas por buen camino, pero algunos hábitos automáticos se cuelan sin que lo notes.' },
+    { max: 10, cls: 'level-auto', badge: 'Nivel Automático 🔥',
+      desc: 'Hoy usas la IA en piloto automático. No es un juicio: es donde más puedes mejorar con cambios pequeños.' }
   ];
 
   function levelFor(score){
@@ -471,7 +472,19 @@
     // Cada "Sí" es un hábito automático; mostramos los hábitos conscientes (más alto = mejor)
     var good = QUESTIONS.length - score;
 
-    var actionsHtml = level.actions.map(function(a){
+    var yesIdx = PRIORITY.filter(function(i){ return answers[i] === 1; });
+    var steps, stepsTitle;
+    if(yesIdx.length === 0){
+      steps = KEEP; stepsTitle = 'Para mantener tus hábitos';
+    } else {
+      steps = yesIdx.slice(0, 3).map(function(i){ return STEPS[i]; });
+      stepsTitle = steps.length === 1 ? 'Tu próximo paso' : 'Tus ' + steps.length + ' próximos pasos';
+    }
+    var stepsNote = yesIdx.length > 3
+      ? '<div class="steps-note">Marcaste ' + yesIdx.length + ' hábitos por mejorar. Empieza por estos 3, que son los de mayor impacto.</div>'
+      : '';
+
+    var actionsHtml = steps.map(function(a){
       return '<div class="action-item"><div class="action-dot"></div><div>' + a + '</div></div>';
     }).join('');
 
@@ -483,7 +496,7 @@
         '<div class="result-desc">' + level.desc + '</div>' +
       '</div>' +
       '<div>' +
-        '<div class="actions-title">Tus 3 próximos pasos</div>' +
+        '<div class="actions-title">' + stepsTitle + '</div>' + stepsNote +
         '<div class="actions-list">' + actionsHtml + '</div>' +
       '</div>' +
       '<button class="retry" id="retryBtn">Volver a hacer el test</button>' +
