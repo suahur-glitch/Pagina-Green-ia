@@ -41,7 +41,12 @@ function send(res, status, body, headers = {}) {
 const SPA_ROUTES = new Set(['/', '/recursos-gratuitos', '/certificate-con-nosotros', '/sobre-nosotros']);
 
 // Short addresses for standalone pages (served without a trailing slash).
-const PAGE_ROUTES = { '/test': '/consciente/index.html', '/consciente': '/consciente/index.html' };
+const PAGE_ROUTES = {
+  '/test': '/consciente/index.html',
+  '/consciente': '/consciente/index.html',
+  '/calculadora': '/calculadora/index.html',
+  '/huella': '/calculadora/index.html'
+};
 
 function resolvePath(urlPath) {
   let p;

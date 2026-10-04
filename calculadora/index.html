@@ -1,0 +1,722 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Calculadora Huella IA · somosgreenia</title>
+<meta name="description" content="Calculadora gratuita: estima la energía, el agua y el CO₂ de tu uso diario de inteligencia artificial, con rangos y fuentes verificadas. Primero criterio, luego IA.">
+<link rel="canonical" href="https://somosgreenia.com/calculadora/">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://somosgreenia.com/calculadora/">
+<meta property="og:title" content="¿Cuánto gasta tu IA? · Calculadora Huella IA">
+<meta property="og:description" content="Arma tu día típico de uso de IA y mira su huella estimada de energía, agua y CO₂, con rangos y fuentes. Gratis, sin registro. · somosgreenia">
+<meta property="og:site_name" content="somosgreenia">
+<meta name="theme-color" content="#1F3B2C">
+<style>
+  html,body{margin:0;}
+  [hidden]{display:none!important;}
+  .home-link{display:inline-block;margin-bottom:14px;font-size:13px;font-weight:600;color:var(--primary);text-decoration:none;}
+  .home-link:hover{text-decoration:underline;}
+</style>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#F6F5F0; --surface:#FFFFFF; --surface-2:#EFEDE4; --ink:#22221E; --muted:#6B675D; --line:rgba(31,59,44,.12);
+    --primary:#3E7C5A; --primary-dark:#1F3B2C; --primary-tint:#E3EDE5; --on-primary:#FFFFFF;
+    --water:#2F6F80; --water-tint:#E1ECEE;
+    --energy:#8A6A24; --energy-tint:#F3EAD6;
+    --carbon:#4A483F; --carbon-tint:#E9E7DF;
+    --warn:#8A6A24; --warn-tint:#F3EAD6;
+    --shadow:0 1px 2px rgba(31,59,44,.04),0 10px 30px rgba(31,59,44,.07);
+    color-scheme:light;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:#141A16; --surface:#1B231E; --surface-2:#232C26; --ink:#EEEDE6; --muted:#A9A597; --line:rgba(238,237,230,.12);
+      --primary:#7DB894; --primary-dark:#B5D8C1; --primary-tint:#223328; --on-primary:#10180F;
+      --water:#86BFCB; --water-tint:#1C2E33;
+      --energy:#D9C08C; --energy-tint:#33291A;
+      --carbon:#C9C5B8; --carbon-tint:#2A2B26;
+      --warn:#D9C08C; --warn-tint:#33291A;
+      --shadow:0 1px 2px rgba(0,0,0,.3),0 10px 30px rgba(0,0,0,.35);
+      color-scheme:dark;
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#141A16; --surface:#1B231E; --surface-2:#232C26; --ink:#EEEDE6; --muted:#A9A597; --line:rgba(238,237,230,.12);
+      --primary:#7DB894; --primary-dark:#B5D8C1; --primary-tint:#223328; --on-primary:#10180F;
+      --water:#86BFCB; --water-tint:#1C2E33;
+      --energy:#D9C08C; --energy-tint:#33291A;
+      --carbon:#C9C5B8; --carbon-tint:#2A2B26;
+      --warn:#D9C08C; --warn-tint:#33291A;
+      --shadow:0 1px 2px rgba(0,0,0,.3),0 10px 30px rgba(0,0,0,.35);
+      color-scheme:dark;
+  }
+
+  *{box-sizing:border-box;}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:"Inter",system-ui,sans-serif;font-size:15px;line-height:1.5;padding-inline:16px;padding-block:32px 64px;}
+  .wrap{max-width:1100px;margin-inline:auto;display:flex;flex-direction:column;gap:48px;}
+  a{color:var(--primary);}
+  button{font-family:inherit;}
+  :focus-visible{outline:2px solid var(--primary);outline-offset:2px;}
+  .mono{font-family:"Inter",system-ui,sans-serif;font-variant-numeric:tabular-nums;}
+
+  .eyebrow{font-family:"Inter",system-ui,sans-serif;font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--primary);}
+  h1{font-family:"Fraunces",Georgia,serif;font-weight:600;color:var(--primary-dark);font-size:clamp(34px,6.5vw,56px);line-height:1.02;margin:10px 0 14px;letter-spacing:-.01em;text-wrap:balance;max-width:16ch;}
+  h2{font-family:"Fraunces",Georgia,serif;font-weight:600;font-size:24px;line-height:1.15;margin:0 0 4px;text-wrap:balance;}
+  h3{font-size:15px;font-weight:600;margin:0;}
+  .lede{font-size:18px;line-height:1.55;color:var(--muted);max-width:58ch;margin:0 0 18px;}
+  .sub{color:var(--muted);font-size:14px;margin:0;max-width:62ch;}
+  .note{display:flex;gap:10px;align-items:flex-start;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:12px 14px;font-size:13.5px;color:var(--muted);max-width:70ch;}
+  .note b{color:var(--ink);}
+  .updated{display:inline-block;margin-top:12px;font-size:12.5px;color:var(--muted);}
+
+  .card{background:var(--surface);border:1px solid var(--line);border-radius:20px;box-shadow:var(--shadow);padding:24px;}
+  .section-head{display:flex;flex-direction:column;gap:4px;margin-bottom:18px;}
+
+  /* main grid */
+  .main{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:24px;align-items:start;}
+  .sticky{position:sticky;top:calc(env(safe-area-inset-top,0px) + 16px);}
+  @media (max-width:880px){.main{grid-template-columns:1fr;}.sticky{position:static;}}
+
+  /* presets */
+  .presets{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:18px;}
+  .chip{font-size:13.5px;font-weight:500;padding:8px 13px;border-radius:999px;border:1.5px solid var(--line);background:var(--surface);color:var(--ink);cursor:pointer;}
+  .chip:hover{border-color:var(--primary);}
+  .chip[aria-pressed="true"]{border-color:var(--primary);background:var(--primary-tint);}
+
+  /* activity rows */
+  .acts{display:flex;flex-direction:column;border-top:1px solid var(--line);}
+  .act{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:12px;align-items:center;padding:12px 0;border-bottom:1px solid var(--line);}
+  .act-name{display:flex;flex-direction:column;gap:2px;min-width:0;}
+  .act-name .meta{font-size:12.5px;color:var(--muted);display:flex;flex-wrap:wrap;gap:6px;align-items:center;}
+  .conf{font-family:"Inter",system-ui,sans-serif;font-size:10.5px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;padding:2px 7px;border-radius:999px;white-space:nowrap;}
+  .conf.alta{background:var(--primary-tint);color:var(--primary);}
+  .conf.media{background:var(--surface-2);color:var(--muted);}
+  .conf.baja{background:var(--warn-tint);color:var(--warn);}
+  .stepper{display:flex;align-items:center;border:1.5px solid var(--line);border-radius:10px;overflow:hidden;background:var(--surface-2);}
+  .stepper button{width:36px;height:38px;border:0;background:transparent;color:var(--ink);font-size:18px;font-weight:600;cursor:pointer;}
+  .stepper button:hover{background:var(--primary-tint);}
+  .stepper input{width:54px;height:38px;border:0;border-inline:1px solid var(--line);background:var(--surface);color:var(--ink);text-align:center;font-family:"Inter",system-ui,sans-serif;font-size:16px;font-weight:600;font-variant-numeric:tabular-nums;-moz-appearance:textfield;}
+  .stepper input::-webkit-outer-spin-button,.stepper input::-webkit-inner-spin-button{-webkit-appearance:none;margin:0;}
+  .act.zero .act-name h3{color:var(--muted);font-weight:500;}
+
+  /* settings */
+  .settings{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:20px;}
+  @media (max-width:520px){.settings{grid-template-columns:1fr;}}
+  .field{display:flex;flex-direction:column;gap:6px;}
+  .field label,.field .lbl{font-size:12.5px;font-weight:600;color:var(--muted);}
+  .seg{display:flex;border:1.5px solid var(--line);border-radius:10px;overflow:hidden;}
+  .seg button{flex:1;padding:9px 6px;border:0;background:var(--surface);color:var(--ink);font-size:13.5px;font-weight:500;cursor:pointer;}
+  .seg button + button{border-left:1px solid var(--line);}
+  .seg button[aria-pressed="true"]{background:var(--primary);color:var(--on-primary);font-weight:600;}
+  select,input.num{font-family:inherit;font-size:14px;color:var(--ink);background:var(--surface-2);border:1.5px solid var(--line);border-radius:10px;padding:9px 10px;width:100%;}
+  input.num{font-family:"Inter",system-ui,sans-serif;font-weight:600;}
+  details.adv{margin-top:18px;border-top:1px solid var(--line);padding-top:14px;}
+  details.adv summary{cursor:pointer;font-weight:600;font-size:14px;color:var(--primary);}
+  details.adv .settings{margin-top:14px;}
+  .check{display:flex;gap:10px;align-items:flex-start;font-size:13.5px;color:var(--ink);grid-column:1/-1;}
+  .check input{margin-top:3px;accent-color:var(--primary);width:16px;height:16px;}
+  .check small{display:block;color:var(--muted);font-size:12.5px;}
+
+  /* results */
+  .res-head{display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:wrap;margin-bottom:14px;}
+  .res-scope{font-size:13px;color:var(--muted);}
+  .tiles{display:flex;flex-direction:column;gap:10px;}
+  .tile{border-radius:14px;padding:14px 16px;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:2px 12px;align-items:baseline;}
+  .tile.energy{background:var(--energy-tint);} .tile.water{background:var(--water-tint);} .tile.carbon{background:var(--carbon-tint);}
+  .tile .label{font-family:"Inter",system-ui,sans-serif;font-size:11px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;}
+  .tile.energy .label{color:var(--energy);} .tile.water .label{color:var(--water);} .tile.carbon .label{color:var(--carbon);}
+  .tile .value{font-family:"Inter",system-ui,sans-serif;font-variant-numeric:tabular-nums;font-size:clamp(24px,4.5vw,30px);font-weight:600;line-height:1.1;grid-column:1/-1;}
+  .tile .range{font-size:12.5px;color:var(--muted);grid-column:1/-1;}
+  .tile .equiv{font-size:13.5px;color:var(--ink);grid-column:1/-1;margin-top:4px;}
+
+  .level{margin-top:14px;display:flex;flex-wrap:wrap;gap:8px;align-items:center;font-size:13.5px;color:var(--muted);}
+  .level .lv{font-size:12px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;padding:3px 10px;border-radius:999px;background:var(--primary-tint);color:var(--primary);}
+  .level .lv.alto,.level .lv.muyalto{background:var(--surface-2);color:var(--ink);}
+  .level .lv-note{flex-basis:100%;font-size:12.5px;}
+  .units{margin-top:12px;font-size:13.5px;color:var(--muted);max-width:70ch;}
+  .units b{color:var(--ink);}
+  .breakdown{margin-top:20px;}
+  .breakdown h3{margin-bottom:10px;}
+  .bd-row{display:grid;grid-template-columns:minmax(0,9rem) minmax(0,1fr) 3.2rem;gap:10px;align-items:center;font-size:13px;padding:4px 0;}
+  .bd-track{height:10px;background:var(--surface-2);border-radius:5px;overflow:hidden;}
+  .bd-fill{height:100%;background:var(--primary);border-radius:5px;}
+  .bd-row .pct{text-align:right;color:var(--muted);}
+  .bd-empty{font-size:13.5px;color:var(--muted);}
+  .actions{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-top:18px;}
+  .btn{font-size:14px;font-weight:600;border-radius:999px;padding:11px 20px;cursor:pointer;border:1.5px solid var(--primary);}
+  .btn.primary{background:var(--primary);color:var(--on-primary);}
+  .btn.primary:hover{background:var(--primary-dark);border-color:var(--primary-dark);}
+  .btn.ghost{background:transparent;color:var(--primary);}
+  .btn.ghost:hover{background:var(--primary-tint);}
+  .copy-note{font-size:12.5px;color:var(--muted);}
+  #share-text{width:100%;margin-top:10px;font-family:inherit;font-size:13px;color:var(--ink);background:var(--surface-2);border:1px solid var(--line);border-radius:10px;padding:10px;resize:vertical;}
+
+  /* tips */
+  .tips{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px;}
+  .tip{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:16px;display:flex;flex-direction:column;gap:6px;}
+  .tip .saving{font-family:"Inter",system-ui,sans-serif;font-size:12px;font-weight:600;color:var(--primary);letter-spacing:.03em;}
+  .tip p{margin:0;font-size:14px;color:var(--muted);}
+
+  /* range chart */
+  .rchart{margin-top:8px;overflow-x:auto;}
+  .rchart-inner{min-width:520px;}
+  .rc-row{display:grid;grid-template-columns:11rem minmax(0,1fr) 5.5rem;gap:12px;align-items:center;padding:7px 0;}
+  .rc-name{font-size:13.5px;font-weight:500;}
+  .rc-track{position:relative;height:18px;}
+  .rc-grid{position:absolute;inset:0;}
+  .rc-grid span{position:absolute;top:-4px;bottom:-4px;width:1px;background:var(--line);}
+  .rc-bar{position:absolute;top:6px;height:6px;border-radius:3px;background:var(--primary-tint);border:1px solid var(--primary);}
+  .rc-dot{position:absolute;top:3px;width:12px;height:12px;margin-left:-6px;border-radius:50%;background:var(--primary);border:2px solid var(--surface);}
+  .rc-val{font-family:"Inter",system-ui,sans-serif;font-size:12.5px;color:var(--ink);text-align:right;font-variant-numeric:tabular-nums;}
+  .rc-axis{display:grid;grid-template-columns:11rem minmax(0,1fr) 5.5rem;gap:12px;margin-top:4px;}
+  .rc-ticks{position:relative;height:18px;font-family:"Inter",system-ui,sans-serif;font-size:11px;color:var(--muted);}
+  .rc-ticks span{position:absolute;transform:translateX(-50%);white-space:nowrap;}
+  .rc-ticks span:first-child{transform:none;} .rc-ticks span:last-child{transform:translateX(-100%);}
+  .legend{display:flex;gap:16px;flex-wrap:wrap;font-size:12.5px;color:var(--muted);margin-top:12px;align-items:center;}
+  .legend i{display:inline-block;vertical-align:middle;margin-right:6px;}
+  .lg-dot{width:10px;height:10px;border-radius:50%;background:var(--primary);}
+  .lg-bar{width:22px;height:6px;border-radius:3px;background:var(--primary-tint);border:1px solid var(--primary);}
+
+  /* myths */
+  .myths{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px;}
+  .myth{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:18px;display:flex;flex-direction:column;gap:10px;}
+  .myth .claim{font-family:"Fraunces",Georgia,serif;font-size:18px;font-weight:600;line-height:1.25;text-decoration:line-through;text-decoration-color:var(--energy);text-decoration-thickness:2px;}
+  .myth .tag{font-family:"Inter",system-ui,sans-serif;font-size:11px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:var(--muted);}
+  .myth p{margin:0;font-size:14px;color:var(--muted);}
+  .myth p b{color:var(--ink);}
+
+  /* method */
+  details.method{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:4px 20px;}
+  details.method + details.method{margin-top:10px;}
+  details.method summary{cursor:pointer;padding:16px 0;font-weight:600;font-size:15px;list-style:none;display:flex;justify-content:space-between;gap:12px;}
+  details.method summary::-webkit-details-marker{display:none;}
+  details.method summary .chev{font-family:"Inter",system-ui,sans-serif;color:var(--muted);transition:transform .15s;}
+  details.method[open] summary .chev{transform:rotate(45deg);}
+  .mb{padding-bottom:18px;font-size:14px;line-height:1.6;color:var(--muted);}
+  .mb p{max-width:75ch;}
+  .tbl-wrap{overflow-x:auto;}
+  .mb table{width:100%;min-width:560px;border-collapse:collapse;font-size:13.5px;}
+  .mb th,.mb td{text-align:left;padding:8px;border-bottom:1px solid var(--line);vertical-align:top;}
+  .mb th{color:var(--ink);font-weight:600;}
+  .mb td.num{font-family:"Inter",system-ui,sans-serif;font-variant-numeric:tabular-nums;color:var(--ink);white-space:nowrap;}
+  .mb ol{padding-left:20px;margin:8px 0 0;}
+  .mb li{margin-bottom:6px;}
+  .formula{font-family:"Inter",system-ui,sans-serif;font-size:13px;background:var(--surface-2);border-radius:8px;padding:10px 12px;color:var(--ink);overflow-x:auto;white-space:nowrap;}
+
+  footer{text-align:center;padding-top:8px;border-top:1px solid var(--line);}
+  footer .cta-title{font-family:"Fraunces",serif;font-weight:600;font-size:20px;margin:20px 0 6px;}
+  footer p{color:var(--muted);font-size:14px;margin:0 0 14px;}
+  .links{display:flex;justify-content:center;gap:18px;flex-wrap:wrap;font-size:14px;}
+  .links a{font-weight:600;text-decoration:none;} .links a:hover{text-decoration:underline;}
+  .fine{font-size:12px;color:var(--muted);margin-top:22px;}
+
+  /* mobile summary bar */
+  .mbar{display:none;}
+  @media (max-width:880px){
+    body{padding-bottom:calc(96px + env(safe-area-inset-bottom,0px));}
+    .mbar{display:flex;position:fixed;left:0;right:0;bottom:0;z-index:10;background:var(--surface);border-top:1px solid var(--line);box-shadow:0 -6px 20px rgba(0,0,0,.08);padding:10px 16px calc(10px + env(safe-area-inset-bottom,0px));gap:12px;align-items:center;justify-content:space-between;}
+    .mbar .vals{display:flex;gap:12px;flex-wrap:wrap;font-family:"Inter",system-ui,sans-serif;font-size:13.5px;font-weight:600;font-variant-numeric:tabular-nums;}
+    .mbar .e{color:var(--energy);} .mbar .w{color:var(--water);} .mbar .c{color:var(--carbon);}
+    .mbar a{font-size:13px;font-weight:600;white-space:nowrap;}
+  }
+  @media (prefers-reduced-motion: reduce){*{transition:none!important;}}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+  <header>
+    <a class="home-link" href="https://somosgreenia.com/">← somosgreenia.com</a>
+    <div class="eyebrow">somosgreenia · Primero criterio, luego IA</div>
+    <h1>¿Cuánto gasta tu IA?</h1>
+    <p class="lede">Cada consulta a una IA usa electricidad y agua en un centro de datos. Arma tu día típico de uso y mira su huella estimada, con rangos y fuentes, sin alarmismo y sin minimizar.</p>
+    <div class="note"><span aria-hidden="true">⚠</span><span><b>Son estimaciones, no mediciones de tu cuenta.</b> Ningún proveedor publica el consumo de cada consulta individual. Usamos los estudios públicos más recientes y mostramos siempre un rango, porque el mismo prompt puede costar varias veces más según el modelo y el centro de datos.</span></div>
+    <p class="units"><b>Cómo leer las unidades.</b> <b>Wh</b> (vatio-hora) mide energía: un bombillo LED de 10 W encendido 6 minutos gasta 1 Wh; 1 <b>kWh</b> son 1.000 Wh, la unidad del recibo de la luz. <b>mL</b> y <b>L</b> miden el agua que se evapora al enfriar los servidores. <b>g</b> y <b>kg de CO₂</b> miden los gases de efecto invernadero que se emiten al producir esa electricidad.</p>
+    <div class="note" style="margin-top:12px;"><span aria-hidden="true">🔒</span><span><b>Tus datos no salen de tu navegador.</b> La calculadora no pide datos personales ni envía nada a ningún servidor.</span></div>
+    <span class="updated mono">Versión 1.1 · datos revisados el 30 de septiembre de 2026</span>
+  </header>
+
+  <div class="main">
+    <section class="card" aria-labelledby="uso-title">
+      <div class="section-head">
+        <h2 id="uso-title">Tu uso en un día</h2>
+        <p class="sub">Empieza con un perfil y ajusta las cantidades.</p>
+      </div>
+
+      <div class="presets" role="group" aria-label="Perfiles de uso" id="presets"></div>
+
+      <div class="acts" id="acts"></div>
+
+      <div class="settings">
+        <div class="field">
+          <label for="people">Personas</label>
+          <input class="num" type="number" id="people" min="1" step="1" value="1" inputmode="numeric">
+        </div>
+        <div class="field">
+          <span class="lbl" id="period-lbl">Ver resultado por</span>
+          <div class="seg" role="group" aria-labelledby="period-lbl" id="period">
+            <button type="button" data-p="dia" aria-pressed="true">Día</button>
+            <button type="button" data-p="mes" aria-pressed="false">Mes</button>
+            <button type="button" data-p="ano" aria-pressed="false">Año</button>
+          </div>
+        </div>
+      </div>
+
+      <details class="adv">
+        <summary>Supuestos avanzados</summary>
+        <div class="settings">
+          <div class="field">
+            <label for="wue">Refrigeración del centro de datos</label>
+            <select id="wue">
+              <option value="0.2">Muy eficiente · 0,2 L/kWh</option>
+              <option value="1.1" selected>Gran proveedor típico · 1,1 L/kWh</option>
+              <option value="1.9">Promedio de la industria · 1,9 L/kWh</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="grid">Electricidad que alimenta el centro</label>
+            <select id="grid">
+              <option value="458" selected>Promedio mundial (2025) · 458 g CO₂/kWh</option>
+              <option value="384">Estados Unidos (2024) · 384 g CO₂/kWh</option>
+            </select>
+          </div>
+          <label class="check"><input type="checkbox" id="indirect"><span>Incluir el agua usada para generar la electricidad<small>Suma ~3,1 L por kWh (promedio de plantas en EE. UU.). Es la parte que casi ningún proveedor reporta.</small></span></label>
+        </div>
+      </details>
+    </section>
+
+    <aside class="card sticky" id="resultado" aria-labelledby="res-title">
+      <div class="res-head">
+        <h2 id="res-title">Tu huella</h2>
+        <span class="res-scope" id="scope">1 persona · por día</span>
+      </div>
+      <div class="tiles" aria-live="polite">
+        <div class="tile energy">
+          <div class="label">Energía</div>
+          <div class="value" id="v-energy">–</div>
+          <div class="range" id="r-energy"></div>
+          <div class="equiv" id="q-energy"></div>
+        </div>
+        <div class="tile water">
+          <div class="label">Agua</div>
+          <div class="value" id="v-water">–</div>
+          <div class="range" id="r-water"></div>
+          <div class="equiv" id="q-water"></div>
+        </div>
+        <div class="tile carbon">
+          <div class="label">Emisiones CO₂</div>
+          <div class="value" id="v-carbon">–</div>
+          <div class="range" id="r-carbon"></div>
+          <div class="equiv" id="q-carbon"></div>
+        </div>
+      </div>
+
+      <div class="level" id="level" aria-live="polite"></div>
+
+      <div class="breakdown">
+        <h3>¿De dónde sale la energía?</h3>
+        <div id="bd"></div>
+      </div>
+
+      <div class="actions">
+        <button class="btn primary" id="copy-btn" type="button">Copiar para compartir</button>
+        <button class="btn ghost" id="reset-btn" type="button">Poner en cero</button>
+        <span class="copy-note" id="copy-note" role="status"></span>
+      </div>
+      <textarea id="share-text" rows="4" readonly hidden aria-label="Texto para compartir"></textarea>
+    </aside>
+  </div>
+
+  <section aria-labelledby="tips-title">
+    <div class="section-head">
+      <h2 id="tips-title">Cómo bajar tu huella</h2>
+      <p class="sub">Sugerencias calculadas sobre tu uso actual.</p>
+    </div>
+    <div class="tips" id="tips"></div>
+  </section>
+
+  <section class="card" aria-labelledby="chart-title">
+    <div class="section-head">
+      <h2 id="chart-title">Cuánto pesa cada tarea</h2>
+      <p class="sub">Energía por unidad en escala logarítmica: cada línea vertical es 10 veces la anterior. El punto es el valor central y la barra el rango publicado.</p>
+    </div>
+    <div class="rchart"><div class="rchart-inner" id="rchart"></div></div>
+    <div class="legend"><span><i class="lg-dot"></i>Valor central</span><span><i class="lg-bar"></i>Rango de estudios</span></div>
+  </section>
+
+  <section aria-labelledby="myth-title">
+    <div class="section-head">
+      <h2 id="myth-title">Tres cifras que circulan y no cuadran</h2>
+    </div>
+    <div class="myths">
+      <article class="myth">
+        <span class="tag">Mito</span>
+        <div class="claim">Cada conversación con un chatbot gasta medio litro de agua</div>
+        <p>Salió de un estudio de 2023 que contaba conversaciones largas y el agua de las plantas eléctricas. <b>Google midió 0,26 mL por consulta</b> en 2025 y Microsoft estima entre 0 y 0,07 mL en 2026 (solo refrigeración). Aun sumando el agua de la electricidad, una consulta típica queda en poco más de 1 mL.</p>
+      </article>
+      <article class="myth">
+        <span class="tag">Desactualizado</span>
+        <div class="claim">Generar una imagen es como cargar el celular</div>
+        <p>Venía del modelo menos eficiente de un estudio de 2023. Mediciones de 2025 con un modelo actual dan <b>~1,2 Wh por imagen</b> de alta calidad, cerca de un 8 % de una carga de celular.</p>
+      </article>
+      <article class="myth">
+        <span class="tag">Incompleto</span>
+        <div class="claim">Todo uso de IA pesa más o menos igual</div>
+        <p>Un video de 5 segundos puede gastar <b>más de 3.000 veces</b> lo que un mensaje de chat, y una consulta con razonamiento gasta entre 13 y 30 veces más que una respuesta directa, según el estudio. Lo que cambia tu huella es qué tipo de tarea haces.</p>
+      </article>
+    </div>
+  </section>
+
+  <section>
+    <details class="method" open>
+      <summary>Metodología y coeficientes <span class="chev" aria-hidden="true">+</span></summary>
+      <div class="mb">
+        <p>La energía por tarea sale de estudios publicados. El agua y el CO₂ se calculan a partir de esa energía con factores constantes, para poder comparar tareas con el mismo criterio en vez de mezclar estudios con métodos distintos.</p>
+        <div class="formula">agua (mL) = energía (Wh) × factor de agua (L/kWh) &nbsp;·&nbsp; CO₂ (g) = energía (Wh) × intensidad de la red (g/kWh) ÷ 1.000</div>
+        <p>Mes = 22 días laborales. Año = 250 días laborales. El rango usa el mínimo y el máximo de cada tarea. Las emisiones se expresan en CO₂ equivalente (CO₂e), que suma todos los gases de efecto invernadero.</p>
+        <p>Nivel de uso (energía al mes por persona, Estándar somosgreenia v1.1): bajo, menos de 100 Wh · moderado, 100 Wh a 1 kWh · alto, 1 a 5 kWh · muy alto, más de 5 kWh. Describe cuánto usas la IA, no califica tus hábitos.</p>
+        <div class="tbl-wrap" id="coef-table"></div>
+      </div>
+    </details>
+    <details class="method">
+      <summary>Qué no incluye esta calculadora <span class="chev" aria-hidden="true">+</span></summary>
+      <div class="mb">
+        <p>No cuenta el entrenamiento del modelo, la fabricación de chips y servidores, la red de internet ni tu propio dispositivo. Otros métodos miden más cosas: el análisis de ciclo de vida de Mistral (2025) reporta 1,14 g de CO₂e y 45 mL de agua por respuesta de 400 tokens. Por eso sus cifras no se pueden comparar directamente con las de esta calculadora.</p>
+        <p>Tampoco distingue entre proveedores: no existen cifras públicas por tipo de tarea medidas con un mismo método para todos. Las emisiones usan la red eléctrica promedio (location-based); si un proveedor compra energía renovable, sus reportes pueden mostrar cifras más bajas, pero la electricidad consumida es la misma.</p>
+      </div>
+    </details>
+    <details class="method">
+      <summary>Fuentes <span class="chev" aria-hidden="true">+</span></summary>
+      <div class="mb">
+        <ol>
+          <li><a href="https://www.cell.com/joule/fulltext/S2542-4351(26)00114-5" target="_blank" rel="noopener">Oviedo et al. (Microsoft), “Energy use of AI inference, efficiency pathways, and test-time scaling”, Joule, 2026</a>. Consulta típica: mediana 0,31 Wh (rango intercuartil 0,16–0,60). Consulta con razonamiento largo (~15 veces más texto generado): mediana 3,91 Wh (2,15–7,05).</li>
+          <li><a href="https://www.microsoft.com/en-us/microsoft-cloud/blog/2026/06/15/scaling-ai-with-8-to-20x-energy-efficiency/" target="_blank" rel="noopener">Microsoft, “Scaling AI with 8 to 20x energy efficiency”, junio 2026</a>. Consulta típica: 0,16 a 0,60 Wh. Agua de refrigeración: 0 a 0,067 mL por consulta. Modelos más pequeños y especializados, junto con otras mejoras, pueden reducir la energía de 5 a 10 veces.</li>
+          <li><a href="https://arxiv.org/abs/2508.15734" target="_blank" rel="noopener">Elsworth et al. (Google), “Measuring the environmental impact of delivering AI at Google Scale”, 2025</a>. Prompt mediano de Gemini: 0,24 Wh, 0,26 mL de agua, 0,03 g CO₂e.</li>
+          <li><a href="https://epoch.ai/gradient-updates/how-much-energy-does-chatgpt-use" target="_blank" rel="noopener">Epoch AI, “How much energy does ChatGPT use?”, 2025</a>. ~0,3 Wh por consulta típica.</li>
+          <li><a href="https://huggingface.co/blog/sasha/ai-energy-score-v2" target="_blank" rel="noopener">Luccioni y Gamazaychikov, AI Energy Score v2 (Hugging Face / Salesforce), diciembre 2025</a>. Los modelos con razonamiento usan en promedio 30 veces más energía que los modelos sin razonamiento.</li>
+          <li><a href="https://www.technologyreview.com/2025/05/20/1116327/ai-energy-usage-climate-footprint-big-tech/" target="_blank" rel="noopener">O’Donnell y Crownhart, “We did the math on AI’s energy footprint”, MIT Technology Review, 2025</a>. Imagen 1024 × 1024: 2.282 J (≈ 0,63 Wh) en calidad estándar y 4.402 J (≈ 1,22 Wh) en alta calidad. Video de 5 s: 3,4 MJ (≈ 944 Wh); una versión anterior del modelo, de menor calidad, usaba 109.000 J (≈ 30 Wh).</li>
+          <li><a href="https://arxiv.org/abs/2311.16863" target="_blank" rel="noopener">Luccioni et al., “Power Hungry Processing”, 2023</a>. Estudio original de generación de imágenes (2,9 Wh promedio por imagen entre los modelos medidos).</li>
+          <li>Mistral AI con ADEME y Carbone 4, análisis de ciclo de vida de Mistral Large 2, 2025 (<a href="https://the-decoder.com/mistral-ai-publishes-the-first-comprehensive-life-cycle-assessment-of-a-large-language-model/" target="_blank" rel="noopener">resumen en The Decoder</a>). Impacto marginal de la inferencia: 1,14 g CO₂e y 45 mL de agua por respuesta de 400 tokens, con un método de ciclo de vida.</li>
+          <li><a href="https://ember-energy.org/latest-insights/global-electricity-review-2026/" target="_blank" rel="noopener">Ember, Global Electricity Review 2026</a>. Intensidad mundial 2025: 458 g CO₂e/kWh. EE. UU. 2024: 384 g/kWh (Global Electricity Review 2025).</li>
+          <li><a href="https://www.eesi.org/articles/view/data-centers-and-water-consumption" target="_blank" rel="noopener">EESI, “Data Centers and Water Consumption”</a>. Promedio de la industria: 1,9 L/kWh.</li>
+          <li><a href="https://arxiv.org/abs/2304.03271" target="_blank" rel="noopener">Li, Yang, Islam y Ren, “Making AI Less Thirsty”, 2023</a>. Agua indirecta de la generación eléctrica (~3,1 L/kWh, EE. UU.).</li>
+          <li><a href="https://www.epa.gov/greenvehicles/greenhouse-gas-emissions-typical-passenger-vehicle" target="_blank" rel="noopener">EPA, emisiones de un vehículo de pasajeros típico</a>. ~400 g CO₂ por milla (≈ 250 g/km).</li>
+        </ol>
+        <p>Lecturas complementarias: <a href="https://www.seangoedecke.com/water-impact-of-ai/" target="_blank" rel="noopener">por qué el mito de los 500 mL está mal (Sean Goedecke)</a> · <a href="https://aiindex.stanford.edu" target="_blank" rel="noopener">Stanford HAI, AI Index Report</a> · <a href="https://greensoftware.foundation" target="_blank" rel="noopener">Green Software Foundation</a>.</p>
+        <p>Equivalencias: carga de celular ≈ 15 Wh (batería de 4.000 mAh). Bombillo LED = 10 W. Una gota ≈ 0,05 mL. Una cucharadita = 5 mL. Un vaso = 250 mL. Carro a gasolina ≈ 250 g CO₂/km.</p>
+      </div>
+    </details>
+  </section>
+
+  <footer>
+    <div class="cta-title">somosgreenia</div>
+    <p><b>Primero criterio, luego IA.</b> Uso responsable y eficiente de la inteligencia artificial, explicado sin jerga.</p>
+    <div class="links">
+      <a href="https://odhs.substack.com" target="_blank" rel="noopener">Suscríbete en Substack</a>
+      <a href="https://www.instagram.com/somos.greenia" target="_blank" rel="noopener">Instagram @somos.greenia</a>
+      <a href="https://somosgreenia.com" target="_blank" rel="noopener">somosgreenia.com</a>
+    </div>
+    <p class="fine">© 2026 somosgreenia · somosgreenia.com · @somos.greenia. Calculadora educativa basada en el Estándar somosgreenia v1.1. Nada de lo aquí presentado es asesoría legal ni una certificación. No sustituye una medición certificada de consumo energético o hídrico. somosgreenia es independiente y no está afiliada ni respaldada por OpenAI, Anthropic, Google, Microsoft ni ningún otro proveedor; sus nombres se usan solo para citar fuentes y dar contexto.</p>
+  </footer>
+</div>
+
+<div class="mbar" aria-hidden="true">
+  <div class="vals"><span class="e" id="m-e">–</span><span class="w" id="m-w">–</span><span class="c" id="m-c">–</span></div>
+  <a href="#resultado">Ver detalle</a>
+</div>
+
+<script>
+(function(){
+  "use strict";
+
+  // Energía por unidad en Wh: central, mínimo, máximo.
+  var TASKS = [
+    {id:"chat", name:"Mensaje de chat", unit:"mensajes", hint:"pregunta y respuesta corta", wh:0.3, lo:0.16, hi:0.6, conf:"alta", src:"Joule 2026, Google 2025, Epoch AI 2025"},
+    {id:"long", name:"Respuesta larga o resumen de documento", unit:"respuestas", hint:"~1.000 palabras de salida", wh:1.5, lo:0.6, hi:4, conf:"media", src:"Estimación somosgreenia: ~0,001 Wh por token generado (Joule 2026), más la lectura del documento"},
+    {id:"translate", name:"Traducción", unit:"bloques de 500 palabras", hint:"por cada 500 palabras", wh:0.7, lo:0.35, hi:1.4, conf:"media", src:"Estimación somosgreenia: ~700 tokens de salida × 0,001 Wh (Joule 2026)"},
+    {id:"code", name:"Generar código", unit:"solicitudes", hint:"una función o un componente", wh:2, lo:0.75, hi:6, conf:"media", src:"Estimación somosgreenia: ~2.000 tokens de salida × 0,001 Wh (Joule 2026)"},
+    {id:"reason", name:"Consulta con razonamiento", unit:"consultas", hint:"modo “pensar” antes de responder", wh:4, lo:2.15, hi:9, conf:"media", src:"Joule 2026: mediana 3,91 Wh (2,15–7,05); máximo con AI Energy Score v2 (30 × 0,3 Wh)"},
+    {id:"image", name:"Generar una imagen", unit:"imágenes", hint:"1024 × 1024 px", wh:1.2, lo:0.6, hi:2.9, conf:"media", src:"MIT Technology Review 2025 (0,63 estándar; 1,22 alta calidad); Luccioni et al. 2023 (2,9 promedio)"},
+    {id:"agent", name:"Sesión de agente", unit:"sesiones", hint:"~30 min de un agente que ejecuta pasos", wh:40, lo:10, hi:120, conf:"baja", src:"Estimación somosgreenia: decenas de llamadas encadenadas con contexto largo; sin estudio público"},
+    {id:"video", name:"Video de 5 segundos", unit:"videos", hint:"generado desde texto", wh:944, lo:30, hi:944, conf:"baja", src:"MIT Technology Review 2025 (CogVideoX: 944 Wh; versión anterior de menor calidad: 30 Wh)"}
+  ];
+  var BYID = {}; TASKS.forEach(function(t){ BYID[t.id]=t; });
+
+  var PRESETS = [
+    {id:"ligero", name:"Uso ligero", counts:{chat:10,translate:1}},
+    {id:"pro", name:"Profesional", counts:{chat:25,long:5,translate:2,code:2,reason:3,image:2}},
+    {id:"creador", name:"Creador de contenido", counts:{chat:20,long:3,image:15,video:3}},
+    {id:"dev", name:"Desarrollador", counts:{chat:15,code:20,reason:10,agent:2}}
+  ];
+  var DAYS = {dia:1, mes:22, ano:250};
+  var PERIOD_TXT = {dia:"por día", mes:"por mes (22 días laborales)", ano:"por año (250 días laborales)"};
+  var INDIRECT_WUE = 3.1, PHONE_WH = 15, LED_W = 10, CAR_G_KM = 250;
+  var PRO_MONTH = TASKS.reduce(function(a,t){ return a + (PRESETS[1].counts[t.id] || 0) * t.wh; }, 0) * 22;
+
+  var state = {counts:{}, people:1, period:"dia", wue:1.1, grid:458, indirect:false, preset:"pro"};
+  PRESETS[1] && applyCounts(PRESETS[1].counts);
+
+  // Restaurar lo que el visitante dejó la última vez (opcional).
+  try {
+    var saved = JSON.parse(localStorage.getItem("huella-ia-v2") || "null");
+    if (saved && saved.counts) {
+      state.counts = saved.counts; state.people = saved.people || 1; state.period = saved.period || "dia";
+      state.wue = saved.wue === 1.8 ? 1.9 : (saved.wue || 1.1); state.grid = saved.grid || 458; state.indirect = !!saved.indirect; state.preset = saved.preset || null;
+    }
+  } catch(e) {}
+
+  function applyCounts(c){ state.counts = {}; TASKS.forEach(function(t){ state.counts[t.id] = c[t.id] || 0; }); }
+
+  // ---------- formato ----------
+  var nf0 = new Intl.NumberFormat("es-CO",{maximumFractionDigits:0});
+  var nf1 = new Intl.NumberFormat("es-CO",{maximumFractionDigits:1});
+  var nf2 = new Intl.NumberFormat("es-CO",{maximumFractionDigits:2});
+  function num(n){ if (n === 0) return "0"; if (n < 1) return nf2.format(n); if (n < 10) return nf1.format(n); return nf0.format(n); }
+  function scaled(v, units){ for (var i = units.length-1; i >= 0; i--) { if (v >= units[i][0] || i === 0) return num(v/units[i][0]) + " " + units[i][1]; } }
+  var EU = [[1,"Wh"],[1000,"kWh"],[1e6,"MWh"]];
+  var WU = [[1,"mL"],[1000,"L"],[1e6,"m³"]];
+  var CU = [[1,"g"],[1000,"kg"],[1e6,"t"]];
+  function fE(v){ return scaled(v,EU); } function fW(v){ return scaled(v,WU); } function fC(v){ return scaled(v,CU); }
+  function plural(n, s, p){ return num(n) + " " + (Math.abs(n - 1) < 0.05 ? s : p); }
+
+  function equivEnergy(wh){
+    if (wh <= 0) return "";
+    var charges = wh / PHONE_WH;
+    var ledMin = wh / LED_W * 60;
+    if (charges < 1) return "≈ " + nf0.format(Math.max(1,Math.round(charges*100))) + " % de una carga de celular · un bombillo LED " + (ledMin < 60 ? nf0.format(Math.max(1,Math.round(ledMin))) + " min" : num(ledMin/60) + " h");
+    if (ledMin/60 < 24*3) return "≈ " + plural(charges,"carga","cargas") + " de celular · un bombillo LED " + num(ledMin/60) + " h";
+    return "≈ " + plural(charges,"carga","cargas") + " de celular · un bombillo LED " + plural(ledMin/60/24,"día","días") + " seguidos";
+  }
+  function equivWater(ml){
+    if (ml <= 0) return "";
+    if (ml < 5) return "≈ " + plural(ml/0.05,"gota","gotas");
+    if (ml < 250) return "≈ " + plural(ml/5,"cucharadita","cucharaditas");
+    if (ml < 20000) return "≈ " + plural(ml/250,"vaso","vasos") + " de agua";
+    return "≈ " + plural(ml/20000,"botellón","botellones") + " de 20 L";
+  }
+  function equivCarbon(g){
+    if (g <= 0) return "";
+    var km = g / CAR_G_KM;
+    if (km < 1) return "≈ " + nf0.format(Math.max(1,Math.round(km*1000))) + " metros en un carro a gasolina";
+    return "≈ " + plural(km,"km","km") + " en un carro a gasolina";
+  }
+
+  // ---------- cálculo ----------
+  function compute(){
+    var mult = state.people * DAYS[state.period];
+    var e=0, lo=0, hi=0, parts=[];
+    TASKS.forEach(function(t){
+      var n = state.counts[t.id] || 0;
+      e += n*t.wh; lo += n*t.lo; hi += n*t.hi;
+      if (n > 0) parts.push({t:t, wh:n*t.wh*mult});
+    });
+    var wf = state.wue + (state.indirect ? INDIRECT_WUE : 0);
+    var cf = state.grid / 1000;
+    return {mult:mult, day:e, e:e*mult, lo:lo*mult, hi:hi*mult, wf:wf, cf:cf, parts:parts};
+  }
+
+  // ---------- UI: perfiles y actividades ----------
+  var presetsEl = document.getElementById("presets");
+  PRESETS.forEach(function(p){
+    var b = document.createElement("button");
+    b.type = "button"; b.className = "chip"; b.textContent = p.name; b.dataset.id = p.id;
+    b.addEventListener("click", function(){ applyCounts(p.counts); state.preset = p.id; syncInputs(); render(); });
+    presetsEl.appendChild(b);
+  });
+
+  var actsEl = document.getElementById("acts");
+  var CONF_TXT = {alta:"certeza alta", media:"certeza media", baja:"certeza baja"};
+  TASKS.forEach(function(t){
+    var row = document.createElement("div");
+    row.className = "act"; row.id = "row-" + t.id;
+    row.innerHTML =
+      '<div class="act-name"><h3 id="lbl-'+t.id+'">'+t.name+'</h3>' +
+      '<div class="meta"><span>'+t.hint+' · '+num(t.wh)+' Wh c/u</span><span class="conf '+t.conf+'">'+CONF_TXT[t.conf]+'</span></div></div>' +
+      '<div class="stepper"><button type="button" data-d="-1" aria-label="Menos '+t.name+'">−</button>' +
+      '<input type="number" id="n-'+t.id+'" min="0" step="1" inputmode="numeric" aria-labelledby="lbl-'+t.id+'">' +
+      '<button type="button" data-d="1" aria-label="Más '+t.name+'">+</button></div>';
+    var input = row.querySelector("input");
+    row.querySelectorAll("button").forEach(function(btn){
+      btn.addEventListener("click", function(){
+        var v = Math.max(0, (state.counts[t.id]||0) + Number(btn.dataset.d));
+        state.counts[t.id] = v; input.value = v; state.preset = null; render();
+      });
+    });
+    input.addEventListener("input", function(){
+      var v = Math.max(0, Math.floor(Number(input.value) || 0));
+      state.counts[t.id] = v; state.preset = null; render();
+    });
+    actsEl.appendChild(row);
+  });
+
+  var peopleEl = document.getElementById("people");
+  peopleEl.addEventListener("input", function(){ state.people = Math.max(1, Math.floor(Number(peopleEl.value) || 1)); render(); });
+  document.querySelectorAll("#period button").forEach(function(b){
+    b.addEventListener("click", function(){ state.period = b.dataset.p; render(); });
+  });
+  var wueEl = document.getElementById("wue"), gridEl = document.getElementById("grid"), indEl = document.getElementById("indirect");
+  wueEl.addEventListener("change", function(){ state.wue = Number(wueEl.value); render(); });
+  gridEl.addEventListener("change", function(){ state.grid = Number(gridEl.value); render(); });
+  indEl.addEventListener("change", function(){ state.indirect = indEl.checked; render(); });
+
+  document.getElementById("reset-btn").addEventListener("click", function(){ applyCounts({}); state.preset = null; syncInputs(); render(); });
+
+  function syncInputs(){
+    TASKS.forEach(function(t){ document.getElementById("n-"+t.id).value = state.counts[t.id] || 0; });
+    peopleEl.value = state.people; wueEl.value = String(state.wue); gridEl.value = String(state.grid); indEl.checked = state.indirect;
+  }
+
+  // ---------- render ----------
+  function setText(id, s){ document.getElementById(id).textContent = s; }
+
+  function render(){
+    var r = compute();
+    var w = r.e * r.wf, wlo = r.lo * r.wf, whi = r.hi * r.wf;
+    var c = r.e * r.cf, clo = r.lo * r.cf, chi = r.hi * r.cf;
+
+    setText("scope", (state.people === 1 ? "1 persona" : nf0.format(state.people) + " personas") + " · " + PERIOD_TXT[state.period]);
+    setText("v-energy", fE(r.e)); setText("v-water", fW(w)); setText("v-carbon", fC(c));
+    setText("r-energy", r.e > 0 ? "Rango: " + fE(r.lo) + " a " + fE(r.hi) : "Agrega al menos una actividad");
+    setText("r-water", r.e > 0 ? "Rango: " + fW(wlo) + " a " + fW(whi) + (state.indirect ? " · incluye generación eléctrica" : " · solo refrigeración") : "");
+    setText("r-carbon", r.e > 0 ? "Rango: " + fC(clo) + " a " + fC(chi) : "");
+    setText("q-energy", equivEnergy(r.e)); setText("q-water", equivWater(w)); setText("q-carbon", equivCarbon(c));
+    var monthly = r.day * 22;
+    var lvEl = document.getElementById("level");
+    if (r.day > 0) {
+      var lv = monthly < 100 ? ["bajo","Bajo"] : monthly < 1000 ? ["moderado","Moderado"] : monthly <= 5000 ? ["alto","Alto"] : ["muyalto","Muy alto"];
+      lvEl.innerHTML = '<span>Nivel de uso</span><span class="lv '+lv[0]+'">'+lv[1]+'</span><span>' + fE(monthly) + ' al mes por persona · referencia: perfil Profesional ≈ ' + fE(PRO_MONTH) + '</span><span class="lv-note">Mide cuánto usas la IA, no qué tan bien la usas. Los hábitos se miden con el test y la Radiografía IA.</span>';
+    } else { lvEl.innerHTML = ""; }
+    setText("m-e", fE(r.e)); setText("m-w", fW(w)); setText("m-c", fC(c) + " CO₂");
+
+    document.querySelectorAll("#period button").forEach(function(b){ b.setAttribute("aria-pressed", String(b.dataset.p === state.period)); });
+    presetsEl.querySelectorAll(".chip").forEach(function(b){ b.setAttribute("aria-pressed", String(b.dataset.id === state.preset)); });
+    TASKS.forEach(function(t){ document.getElementById("row-"+t.id).classList.toggle("zero", !(state.counts[t.id] > 0)); });
+
+    // desglose
+    var bd = document.getElementById("bd");
+    bd.innerHTML = "";
+    if (!r.parts.length) {
+      bd.innerHTML = '<p class="bd-empty">Sin actividades. Elige un perfil o suma cantidades.</p>';
+    } else {
+      r.parts.sort(function(a,b){ return b.wh - a.wh; });
+      var max = r.parts[0].wh;
+      r.parts.forEach(function(p){
+        var pct = p.wh / r.e * 100;
+        var row = document.createElement("div");
+        row.className = "bd-row";
+        row.innerHTML = '<span>'+p.t.name+'</span><div class="bd-track"><div class="bd-fill" style="width:'+(p.wh/max*100).toFixed(1)+'%"></div></div><span class="pct mono">'+(pct < 1 ? "<1" : nf0.format(pct))+' %</span>';
+        bd.appendChild(row);
+      });
+    }
+
+    renderTips(r);
+    buildShare(r, w, c);
+    try { localStorage.setItem("huella-ia-v2", JSON.stringify(state)); } catch(e) {}
+  }
+
+  function renderTips(r){
+    var tips = [];
+    var n = state.counts, per = r.mult;
+    function tip(title, body, saveWh){
+      var pct = r.e > 0 ? saveWh / r.e * 100 : 0;
+      tips.push({title:title, body:body, w: saveWh, save: saveWh > 0 && r.e > 0 ? "Ahorro: " + fE(saveWh) + " (" + (pct < 1 ? "menos de 1" : nf0.format(pct)) + " %)" : ""});
+    }
+    if (n.video > 0) {
+      var vx = Math.round(BYID.video.wh / BYID.chat.wh / 100) * 100;
+      tip("Piensa dos veces cada video", "Según MIT Technology Review (2025), un video de 5 segundos puede gastar lo mismo que unos " + nf0.format(vx) + " mensajes de chat. Define guion y encuadre antes de generar y evita las versiones de prueba. Hacer un video menos al día:", BYID.video.wh * Math.min(1, n.video) * per);
+    }
+    if (n.reason > 0) {
+      var moved = Math.ceil(n.reason / 2);
+      var movedTxt = n.reason === 1 ? "Pasar tu consulta con razonamiento a chat normal:" : "Pasar " + moved + " de tus " + n.reason + " consultas con razonamiento a chat normal:";
+      tip("Activa el razonamiento solo cuando haga falta", "Para preguntas simples, la respuesta directa basta. " + movedTxt, moved * (BYID.reason.wh - BYID.chat.wh) * per);
+    }
+    if (n.agent > 0) {
+      tip("Acota el trabajo de los agentes", "Un agente encadena decenas de llamadas. Instrucciones claras y un alcance definido evitan vueltas. Recortar un 30 % la duración de tus sesiones:", n.agent * BYID.agent.wh * 0.3 * per);
+    }
+    if (n.image >= 5) {
+      tip("Afina el prompt antes de regenerar", "La mayoría de imágenes se descartan. Describir estilo, encuadre y formato desde el primer intento reduce las repeticiones. Generar la mitad de imágenes:", Math.floor(n.image / 2) * BYID.image.wh * per);
+    }
+    if (n.code >= 5 || n.long >= 5) {
+      tip("Pide respuestas del largo que necesitas", "La energía crece con cada palabra generada. Pedir “solo el cambio” o “en 5 viñetas” recorta la salida. Respuestas 30 % más cortas en código y textos largos:", ((n.code||0) * BYID.code.wh + (n.long||0) * BYID.long.wh) * 0.3 * per);
+    }
+    tips.sort(function(a,b){ return b.w - a.w; });
+    tips = tips.slice(0, 3);
+    tip("Usa el modelo más pequeño que resuelva la tarea", "Los modelos livianos (sus nombres suelen incluir “mini”, “flash” o “lite”) sirven para resumir, clasificar o corregir. Según Microsoft (2026), modelos más pequeños y especializados, junto con otras mejoras, pueden reducir de 5 a 10 veces la energía.", 0);
+    if (tips.length < 3) tip("Mira la escala", "Cada mensaje cuenta, y la cuenta crece rápido: multiplica tu uso por un equipo entero o suma tareas pesadas como video y agentes. Prueba el campo “Personas” para ver tu empresa.", 0);
+
+    var el = document.getElementById("tips");
+    el.innerHTML = "";
+    tips.slice(0,4).forEach(function(t){
+      var d = document.createElement("div");
+      d.className = "tip";
+      d.innerHTML = '<h3>'+t.title+'</h3><p>'+t.body+'</p>' + (t.save ? '<span class="saving">'+t.save+'</span>' : "");
+      el.appendChild(d);
+    });
+  }
+
+  function buildShare(r, w, c){
+    var who = state.people === 1 ? "Mi huella de IA" : "La huella de IA de un equipo de " + nf0.format(state.people);
+    var txt = r.e > 0
+      ? who + " " + PERIOD_TXT[state.period].replace(/ \(.*\)/,"") + ": " + fE(r.e) + " de energía, " + fW(w) + " de agua y " + fC(c) + " de CO₂ (" + equivEnergy(r.e).replace("≈ ","~").split(" · ")[0] + ").\nCalculado con la Huella IA de somosgreenia · somosgreenia.com · @somos.greenia\nPrimero criterio, luego IA."
+      : "";
+    document.getElementById("share-text").value = txt;
+  }
+
+  var copyBtn = document.getElementById("copy-btn"), note = document.getElementById("copy-note"), shareEl = document.getElementById("share-text");
+  copyBtn.addEventListener("click", function(){
+    var txt = shareEl.value;
+    if (!txt) { note.textContent = "Primero agrega alguna actividad."; return; }
+    function fallback(){ shareEl.hidden = false; shareEl.focus(); shareEl.select(); note.textContent = "Texto seleccionado: cópialo con Ctrl+C o mantén presionado."; }
+    try {
+      navigator.clipboard.writeText(txt).then(function(){ note.textContent = "Copiado. Pégalo en tu post."; shareEl.hidden = true; }, fallback);
+    } catch(e) { fallback(); }
+  });
+
+  // ---------- gráfico de rangos (log) ----------
+  function buildChart(){
+    var MIN = 0.1, MAX = 1000, DEC = Math.log10(MAX/MIN);
+    function pos(v){ return Math.log10(v/MIN) / DEC * 100; }
+    var ticks = [0.1, 1, 10, 100, 1000];
+    var sorted = TASKS.slice().sort(function(a,b){ return a.wh - b.wh; });
+    var el = document.getElementById("rchart");
+    var html = "";
+    sorted.forEach(function(t){
+      var grid = ticks.map(function(v){ return '<span style="left:'+pos(v)+'%"></span>'; }).join("");
+      html += '<div class="rc-row"><span class="rc-name">'+t.name+'</span>' +
+        '<div class="rc-track" role="img" aria-label="'+t.name+': '+num(t.wh)+' Wh, rango '+num(t.lo)+' a '+num(t.hi)+' Wh"><div class="rc-grid">'+grid+'</div>' +
+        '<div class="rc-bar" style="left:'+pos(t.lo)+'%;width:'+Math.max(0.6,pos(t.hi)-pos(t.lo))+'%"></div>' +
+        '<div class="rc-dot" style="left:'+pos(t.wh)+'%"></div></div>' +
+        '<span class="rc-val">'+num(t.wh)+' Wh</span></div>';
+    });
+    html += '<div class="rc-axis"><span></span><div class="rc-ticks">' +
+      ticks.map(function(v){ return '<span style="left:'+pos(v)+'%">'+(v < 1 ? "0,1" : nf0.format(v))+' Wh</span>'; }).join("") +
+      '</div><span></span></div>';
+    el.innerHTML = html;
+  }
+
+  // ---------- tabla de coeficientes ----------
+  function buildTable(){
+    var rows = TASKS.map(function(t){
+      return '<tr><td>'+t.name+' <span style="color:var(--muted)">('+t.hint+')</span></td><td class="num">'+num(t.wh)+' Wh</td><td class="num">'+num(t.lo)+'–'+num(t.hi)+' Wh</td><td><span class="conf '+t.conf+'">'+CONF_TXT[t.conf]+'</span></td><td>'+t.src+'</td></tr>';
+    }).join("");
+    document.getElementById("coef-table").innerHTML =
+      '<table><thead><tr><th>Tarea</th><th>Central</th><th>Rango</th><th>Certeza</th><th>Base</th></tr></thead><tbody>'+rows+
+      '<tr><td>Agua de refrigeración</td><td class="num">1,1 L/kWh</td><td class="num">0,2–1,9 L/kWh</td><td><span class="conf media">certeza media</span></td><td>Google 2025 (0,26 mL / 0,24 Wh); Microsoft 2026; EESI</td></tr>'+
+      '<tr><td>Agua de la generación eléctrica</td><td class="num">3,1 L/kWh</td><td class="num">opcional</td><td><span class="conf baja">certeza baja</span></td><td>Li et al. 2023 (promedio EE. UU.)</td></tr>'+
+      '<tr><td>Intensidad de carbono de la red</td><td class="num">458 g/kWh</td><td class="num">384–458 g/kWh</td><td><span class="conf alta">certeza alta</span></td><td>Ember 2026 (mundo, 2025) y 2025 (EE. UU., 2024)</td></tr>'+
+      '</tbody></table>';
+  }
+
+  buildChart();
+  buildTable();
+  syncInputs();
+  render();
+})();
+</script>
+</body>
+</html>
