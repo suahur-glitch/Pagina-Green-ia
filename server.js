@@ -46,6 +46,8 @@ const PAGE_ROUTES = {
   '/test': '/consciente/index.html',
   '/consciente': '/consciente/index.html',
   '/calculadora': '/calculadora/index.html',
+  '/privacidad': '/privacidad/index.html',
+  '/cookies': '/cookies/index.html',
   '/huella': '/calculadora/index.html'
 };
 
@@ -55,6 +57,8 @@ const REDIRECTS = {
   '/consciente/': '/test',
   '/huella': '/calculadora',
   '/calculadora/': '/calculadora',
+  '/privacidad/': '/privacidad',
+  '/cookies/': '/cookies',
   '/index.html': '/'
 };
 
@@ -96,7 +100,7 @@ function withMeta(html, route) {
     .replace(/(<meta property="og:description" content=")[^"]*(")/, `$1${esc(m.description)}$2`);
 }
 
-const SITEMAP_URLS = ['/', '/recursos-gratuitos', '/certificate-con-nosotros', '/sobre-nosotros', '/test', '/calculadora'];
+const SITEMAP_URLS = ['/', '/recursos-gratuitos', '/certificate-con-nosotros', '/sobre-nosotros', '/test', '/calculadora', '/privacidad', '/cookies'];
 
 function sitemapXml() {
   const today = new Date().toISOString().slice(0, 10);
