@@ -502,7 +502,7 @@ a:hover { color: var(--leaf); }
 .footer__brand .logo { font-size: 26px; letter-spacing: normal; }
 .footer__brand p { margin: 0; font-size: 15px; line-height: 1.6; color: var(--ink-2); }
 .footer__col { display: flex; flex-direction: column; gap: 12px; font-size: 14px; }
-.footer__copy { max-width: 1200px; margin: 56px auto 0; font-size: 12px; color: var(--ink-4); }
+.footer__copy { max-width: 1200px; margin: 20px auto 0; font-size: 12px; color: var(--ink-4); }
 
 /* ---------- Playbook modal ---------- */
 .modal {
@@ -527,3 +527,14 @@ a:hover { color: var(--leaf); }
 @media (prefers-reduced-motion: reduce) {
   .rise { animation: none; }
 }
+
+/* ---------- Recursos: herramientas ---------- */
+.tools { padding: 96px 24px; border-top: 1px solid var(--line); }
+.tools__inner { max-width: 1100px; margin: 0 auto; display: flex; flex-direction: column; gap: 40px; }
+a.card--link { text-decoration: none; color: inherit; transition: transform .2s ease, border-color .2s ease; }
+a.card--link:hover, a.card--link:focus-visible { transform: translateY(-3px); border-color: var(--leaf); }
+.card__go { margin-top: auto; font-weight: 600; color: var(--leaf); }
+.email-form input:disabled { opacity: .6; cursor: not-allowed; }
+.email-form button:disabled { opacity: .75; cursor: not-allowed; }
+@media (prefers-reduced-motion: reduce) { a.card--link { transition: none; } }
+.footer__legal { max-width: 1200px; margin: 28px auto 0; font-size: 12px; line-height: 1.6; color: var(--ink-4); }

@@ -1,0 +1,533 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>¿Qué tan consciente es tu uso de la IA? · somosgreenia</title>
+<meta name="description" content="Test gratuito de 10 preguntas: descubre qué tan consciente es tu uso de la inteligencia artificial y recibe acciones concretas según tus respuestas. Primero criterio, luego IA.">
+<link rel="canonical" href="https://somosgreenia.com/test">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://somosgreenia.com/test">
+<meta property="og:title" content="¿Qué tan consciente es tu uso de la IA?">
+<meta property="og:description" content="10 preguntas de sí o no. Tu nivel y acciones concretas según tus respuestas. Primero criterio, luego IA. · somosgreenia">
+<meta property="og:site_name" content="somosgreenia">
+<meta name="theme-color" content="#1F3B2C">
+<link rel="icon" href="/favicon.ico" sizes="48x48">
+<link rel="icon" type="image/png" sizes="96x96" href="/assets/brand/favicon-96.png">
+<link rel="apple-touch-icon" href="/assets/brand/apple-touch-icon.png">
+<meta property="og:locale" content="es_CO">
+<meta property="og:image" content="https://somosgreenia.com/assets/brand/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Test: ¿Qué tan consciente es tu uso de la IA? · somosgreenia">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://somosgreenia.com/assets/brand/og-image.png">
+<link rel="preload" href="/assets/fonts/inter-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/assets/fonts/fraunces-latin-opsz-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/assets/fonts/fonts.css">
+<style>
+  html,body{margin:0;}
+  [hidden]{display:none!important;}
+  .home-link{font-size:0.8rem;font-weight:600;color:var(--brand);text-decoration:none;}
+  .home-link:hover{text-decoration:underline;}
+  :root{
+    --bg: #F6F5F0;
+    --surface: #FFFFFF;
+    --surface-2: #F1F5F1;
+    --ink: #22221E;
+    --ink-soft: #4B5A50;
+    --line: #E1E8E2;
+    --brand-dark: #1F3B2C;
+    --brand: #3E7C5A;
+    --brand-tint: #E8F3EC;
+    --amber: #B5762B;
+    --amber-tint: #FBEEDF;
+    --coral: #A8443A;
+    --coral-tint: #F7E9E7;
+    --shadow: 0 1px 2px rgba(23,36,28,0.06), 0 8px 24px rgba(23,36,28,0.06);
+    font-size: 16px;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg: #10160F;
+      --surface: #182018;
+      --surface-2: #1F2B22;
+      --ink: #EAF0E9;
+      --ink-soft: #A9B9AE;
+      --line: #2B3830;
+      --brand-dark: #A8D7BE;
+      --brand: #6FBE94;
+      --brand-tint: #1E3128;
+      --amber: #E3AA6A;
+      --amber-tint: #33291B;
+      --coral: #E08A80;
+      --coral-tint: #35211E;
+      --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 8px 24px rgba(0,0,0,0.35);
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg: #10160F;
+    --surface: #182018;
+    --surface-2: #1F2B22;
+    --ink: #EAF0E9;
+    --ink-soft: #A9B9AE;
+    --line: #2B3830;
+    --brand-dark: #A8D7BE;
+    --brand: #6FBE94;
+    --brand-tint: #1E3128;
+    --amber: #E3AA6A;
+    --amber-tint: #33291B;
+    --coral: #E08A80;
+    --coral-tint: #35211E;
+    --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 8px 24px rgba(0,0,0,0.35);
+  }
+
+  *{box-sizing:border-box;}
+  body{
+    background: var(--bg);
+    color: var(--ink);
+    font-family: "Inter", "Segoe UI", sans-serif;
+    padding-inline: 18px;
+    padding-block: 28px;
+    display:flex;
+    justify-content:center;
+  }
+  .page{
+    width:100%;
+    max-width: 560px;
+    display:flex;
+    flex-direction:column;
+    gap: 22px;
+  }
+
+  /* ---------- header ---------- */
+  .eyebrow{
+    font-family:"Inter";
+    font-weight:700;
+    font-size: 0.72rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--brand);
+  }
+  h1{
+    font-family:"Fraunces", Georgia, serif;
+    font-weight: 600;
+    font-size: clamp(1.7rem, 6vw, 2.3rem);
+    line-height: 1.15;
+    letter-spacing: -0.01em;
+    text-wrap: balance;
+    margin: 6px 0 4px;
+    color: var(--brand-dark);
+  }
+  .lede{
+    font-size: 0.98rem;
+    line-height: 1.55;
+    color: var(--ink-soft);
+    max-width: 46ch;
+  }
+
+  /* ---------- progress ---------- */
+  .progress-wrap{
+    display:flex;
+    align-items:center;
+    gap: 10px;
+  }
+  .progress-track{
+    flex:1;
+    height: 6px;
+    border-radius: 4px;
+    background: var(--surface-2);
+    overflow:hidden;
+  }
+  .progress-fill{
+    height:100%;
+    width:0%;
+    background: var(--brand);
+    border-radius: 4px;
+    transition: width .3s ease;
+  }
+  .progress-label{
+    font-variant-numeric: tabular-nums;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--ink-soft);
+    white-space:nowrap;
+  }
+
+  /* ---------- question cards ---------- */
+  .questions{
+    display:flex;
+    flex-direction:column;
+    gap: 10px;
+  }
+  .q-card{
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    padding: 14px 16px;
+    box-shadow: var(--shadow);
+  }
+  .q-top{
+    display:flex;
+    gap: 12px;
+    align-items:flex-start;
+  }
+  .q-num{
+    font-family:"Fraunces";
+    font-weight:600;
+    font-style:italic;
+    font-size: 1rem;
+    color: var(--brand);
+    min-width: 1.4em;
+    padding-top: 1px;
+  }
+  .q-text{
+    font-size: 0.94rem;
+    line-height: 1.45;
+    flex:1;
+  }
+  .q-hint{
+    font-size: 0.8rem;
+    color: var(--ink-soft);
+    margin-top: 3px;
+    font-style: italic;
+  }
+  .q-toggle{
+    display:flex;
+    gap: 8px;
+    margin-top: 10px;
+    padding-left: calc(1.4em + 12px);
+  }
+  .opt{
+    flex:1;
+    text-align:center;
+    padding: 8px 0;
+    border-radius: 9px;
+    border: 1px solid var(--line);
+    background: var(--surface-2);
+    font-weight: 600;
+    font-size: 0.85rem;
+    color: var(--ink-soft);
+    cursor:pointer;
+    user-select:none;
+    transition: all .15s ease;
+  }
+  .opt:hover{ border-color: var(--brand); }
+  .opt.sel-yes{
+    background: var(--coral-tint);
+    border-color: var(--coral);
+    color: var(--coral);
+  }
+  .opt.sel-no{
+    background: var(--brand-tint);
+    border-color: var(--brand);
+    color: var(--brand-dark);
+  }
+
+  /* ---------- CTA ---------- */
+  .cta-row{
+    position: sticky;
+    bottom: 12px;
+    display:flex;
+    justify-content:center;
+    padding-top: 6px;
+  }
+  .cta{
+    width:100%;
+    max-width: 400px;
+    padding: 14px 20px;
+    border-radius: 999px;
+    border: none;
+    background: var(--brand-dark);
+    color: var(--brand-tint);
+    font-family:"Inter";
+    font-weight: 700;
+    font-size: 0.95rem;
+    letter-spacing: 0.01em;
+    cursor: pointer;
+    box-shadow: var(--shadow);
+    opacity: 0.45;
+    pointer-events:none;
+    transition: opacity .2s ease, transform .1s ease;
+  }
+  .cta.ready{ opacity: 1; pointer-events:auto; }
+  .cta:active.ready{ transform: scale(0.98); }
+
+  .steps-note{ font-size:0.85rem; color:var(--ink-soft); margin:-4px 0 10px; }
+  /* ---------- result ---------- */
+  #result{
+    display:flex;
+    flex-direction:column;
+    gap: 16px;
+  }
+  .result-card{
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 18px;
+    padding: 26px 22px;
+    box-shadow: var(--shadow);
+    text-align:center;
+  }
+  .result-score{
+    font-family:"Fraunces";
+    font-weight:600;
+    font-size: 3.4rem;
+    line-height:1;
+    font-variant-numeric: tabular-nums;
+    color: var(--brand-dark);
+  }
+  .result-outof{
+    font-size: 0.85rem;
+    color: var(--ink-soft);
+    margin-top: 2px;
+  }
+  .badge{
+    display:inline-block;
+    margin-top: 14px;
+    padding: 7px 16px;
+    border-radius: 999px;
+    font-weight: 700;
+    font-size: 0.85rem;
+  }
+  .badge.level-cons{ background: var(--brand-tint); color: var(--brand-dark); }
+  .badge.level-trans{ background: var(--amber-tint); color: var(--amber); }
+  .badge.level-auto{ background: var(--coral-tint); color: var(--coral); }
+  .result-desc{
+    margin-top: 14px;
+    font-size: 0.95rem;
+    line-height: 1.55;
+    color: var(--ink-soft);
+  }
+  .actions-title{
+    font-family:"Fraunces";
+    font-style:italic;
+    font-size: 1.05rem;
+    color: var(--brand-dark);
+    margin-bottom: 2px;
+  }
+  .actions-list{
+    display:flex;
+    flex-direction:column;
+    gap: 10px;
+  }
+  .action-item{
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 12px 14px;
+    display:flex;
+    gap: 10px;
+    align-items:flex-start;
+    font-size: 0.92rem;
+    line-height: 1.45;
+  }
+  .action-dot{
+    width: 7px; height: 7px;
+    border-radius: 50%;
+    background: var(--brand);
+    margin-top: 7px;
+    flex-shrink:0;
+  }
+  .retry{
+    text-align:center;
+    font-size: 0.85rem;
+    color: var(--ink-soft);
+    text-decoration: underline;
+    cursor:pointer;
+    background:none;
+    border:none;
+    font-family:"Inter";
+    padding: 6px;
+  }
+  .brand-foot{
+    text-align:center;
+    padding-top: 6px;
+    font-size: 0.8rem;
+    color: var(--ink-soft);
+  }
+  .brand-foot b{ color: var(--brand-dark); }
+  .brand-foot a{ color: var(--brand); font-weight:600; }
+  .brand-foot .fine{ margin-top:8px; font-size:0.72rem; opacity:.85; }
+  .page-foot{ text-align:center; font-size:0.8rem; color:var(--ink-soft); padding-top:4px; }
+  .page-foot a{ color: var(--brand); font-weight:600; }
+</style>
+</head>
+<body>
+
+<div class="page">
+  <a class="home-link" href="https://somosgreenia.com/">← somosgreenia.com</a>
+
+  <div id="quizView">
+    <div class="eyebrow">somosgreenia · Primero criterio, luego IA</div>
+    <h1>¿Qué tan consciente es tu uso de la IA?</h1>
+    <p class="lede">10 preguntas rápidas de Sí o No. Al final, tu nivel y acciones concretas según lo que respondiste. Nada de teoría genérica.</p>
+
+    <div class="progress-wrap" style="margin-top:4px;">
+      <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+      <div class="progress-label" id="progressLabel">0 / 10</div>
+    </div>
+
+    <div class="questions" id="questions"></div>
+
+    <div class="cta-row">
+      <button class="cta" id="ctaBtn">Ver mi resultado</button>
+    </div>
+  </div>
+
+  <div id="result" hidden></div>
+
+  <div class="page-foot"><b>somosgreenia</b> · Primero criterio, luego IA. · <a href="https://somosgreenia.com" target="_blank" rel="noopener">somosgreenia.com</a> · <a href="https://www.instagram.com/somos.greenia" target="_blank" rel="noopener">@somos.greenia</a></div>
+
+</div>
+
+<script>
+(function(){
+  var QUESTIONS = [
+    "¿Sueles hacerle la misma pregunta a la IA varias veces esperando una respuesta distinta?",
+    "¿Usas el modelo más avanzado (el \"Pro\" o el más potente) incluso para tareas simples, como traducir una frase?",
+    "¿Generas imágenes con IA solo por probar algo, o porque un amigo te dijo que estaba de moda?",
+    "¿Le pides a la IA cosas que ya resolviste antes, en vez de buscar esa respuesta guardada?",
+    "¿Generas video con IA cuando una foto o un texto habrían sido suficientes?",
+    "¿Escribes tus prompts a la carrera y luego corriges con varios mensajes seguidos?",
+    "¿Usas IA para calcular o buscar algo que un buscador normal resolvería igual de rápido?",
+    "¿Mantienes conversaciones larguísimas con la IA en vez de cerrarlas y abrir una nueva cuando cambias de tema?",
+    "¿Escoges qué IA usar solo por comodidad, sin fijarte si esa empresa es transparente con su consumo energético?",
+    "¿Alguna vez has usado IA solo por costumbre, sin pensarlo dos veces?"
+  ];
+  var HINTS = {
+    7: "Cada mensaje reprocesa toda la conversación anterior — entre más larga, más cómputo gasta cada respuesta nueva."
+  };
+
+  var answers = new Array(QUESTIONS.length).fill(null);
+
+  var qWrap = document.getElementById('questions');
+  QUESTIONS.forEach(function(text, i){
+    var card = document.createElement('div');
+    card.className = 'q-card';
+    var hint = HINTS[i] ? '<div class="q-hint">' + HINTS[i] + '</div>' : '';
+    card.innerHTML =
+      '<div class="q-top">' +
+        '<div class="q-num">' + (i+1) + '</div>' +
+        '<div class="q-text">' + text + hint + '</div>' +
+      '</div>' +
+      '<div class="q-toggle">' +
+        '<div class="opt" data-q="' + i + '" data-v="1">Sí</div>' +
+        '<div class="opt" data-q="' + i + '" data-v="0">No</div>' +
+      '</div>';
+    qWrap.appendChild(card);
+  });
+
+  qWrap.addEventListener('click', function(e){
+    var opt = e.target.closest('.opt');
+    if(!opt) return;
+    var qi = parseInt(opt.dataset.q, 10);
+    var val = parseInt(opt.dataset.v, 10);
+    answers[qi] = val;
+    var siblings = qWrap.children[qi].querySelectorAll('.opt');
+    siblings.forEach(function(s){ s.classList.remove('sel-yes','sel-no'); });
+    opt.classList.add(val === 1 ? 'sel-yes' : 'sel-no');
+    updateProgress();
+  });
+
+  var fill = document.getElementById('progressFill');
+  var label = document.getElementById('progressLabel');
+  var cta = document.getElementById('ctaBtn');
+
+  function updateProgress(){
+    var answered = answers.filter(function(a){ return a !== null; }).length;
+    fill.style.width = (answered / QUESTIONS.length * 100) + '%';
+    label.textContent = answered + ' / ' + QUESTIONS.length;
+    cta.classList.toggle('ready', answered === QUESTIONS.length);
+  }
+
+  // Un paso concreto por pregunta: solo se muestran los de las preguntas respondidas con "Sí".
+  var STEPS = [
+    'Si la respuesta no te sirve, no la regeneres: reformula una sola vez con más contexto (qué necesitas, para qué y en qué formato).',
+    'Usa el modelo liviano para tareas simples como traducir, resumir o corregir. Pasa al más potente solo si el liviano no alcanza.',
+    'Antes de generar una imagen, pregúntate para qué la vas a usar. Si no tiene un uso claro, no la generes.',
+    'Guarda tus mejores respuestas y prompts en una nota. Buscar ahí es más rápido y no gasta nada.',
+    'Generar video exige mucha más energía que un texto o una imagen. Úsalo solo cuando lo demás de verdad no alcance.',
+    'Antes de enviar, escribe en un solo mensaje qué necesitas, para qué y cómo quieres la respuesta. Te ahorras varias correcciones.',
+    'Para datos rápidos (una definición, un horario, una conversión), usa primero el buscador o la calculadora.',
+    'Cuando cambies de tema, abre un chat nuevo. En un chat largo, la IA vuelve a procesar todo lo anterior en cada respuesta.',
+    'Revisa si la IA que más usas publica informes de consumo de energía o agua, y súmalo como un criterio más al elegir.',
+    'Antes de abrir la IA, hazte una pregunta: ¿esto lo resuelvo igual de rápido por mi cuenta?'
+  ];
+  // Orden de prioridad (mayor impacto primero) cuando hay más de 3 "Sí".
+  var PRIORITY = [4, 2, 1, 0, 7, 5, 3, 6, 9, 8];
+  var KEEP = [
+    'Sigue eligiendo el modelo liviano para lo simple: es tu mejor hábito.',
+    'Comparte este test con alguien que use IA a diario. Los hábitos se contagian.',
+    'Vuelve a hacer el test en un mes para confirmar que tus hábitos se mantienen.'
+  ];
+
+  var LEVELS = [
+    { max: 2, cls: 'level-cons', badge: 'Nivel Consciente 🌱',
+      desc: 'Usas la IA con criterio. Mantén lo que ya haces bien.' },
+    { max: 5, cls: 'level-trans', badge: 'Nivel En Transición 🌿',
+      desc: 'Vas por buen camino, pero algunos hábitos automáticos se cuelan sin que lo notes.' },
+    { max: 10, cls: 'level-auto', badge: 'Nivel Automático 🔥',
+      desc: 'Hoy usas la IA en piloto automático. No es un juicio: es donde más puedes mejorar con cambios pequeños.' }
+  ];
+
+  function levelFor(score){
+    for(var i=0;i<LEVELS.length;i++){ if(score <= LEVELS[i].max) return LEVELS[i]; }
+    return LEVELS[LEVELS.length-1];
+  }
+
+  cta.addEventListener('click', function(){
+    if(!cta.classList.contains('ready')) return;
+    var score = answers.reduce(function(a,b){ return a + b; }, 0);
+    var level = levelFor(score);
+    // Cada "Sí" es un hábito automático; mostramos los hábitos conscientes (más alto = mejor)
+    var good = QUESTIONS.length - score;
+
+    var yesIdx = PRIORITY.filter(function(i){ return answers[i] === 1; });
+    var steps, stepsTitle;
+    if(yesIdx.length === 0){
+      steps = KEEP; stepsTitle = 'Para mantener tus hábitos';
+    } else {
+      steps = yesIdx.slice(0, 3).map(function(i){ return STEPS[i]; });
+      stepsTitle = steps.length === 1 ? 'Tu próximo paso' : 'Tus ' + steps.length + ' próximos pasos';
+    }
+    var stepsNote = yesIdx.length > 3
+      ? '<div class="steps-note">Marcaste ' + yesIdx.length + ' hábitos por mejorar. Empieza por estos 3, que son los de mayor impacto.</div>'
+      : '';
+
+    var actionsHtml = steps.map(function(a){
+      return '<div class="action-item"><div class="action-dot"></div><div>' + a + '</div></div>';
+    }).join('');
+
+    document.getElementById('result').innerHTML =
+      '<div class="result-card">' +
+        '<div class="result-score">' + good + '</div>' +
+        '<div class="result-outof">de ' + QUESTIONS.length + ' hábitos conscientes</div>' +
+        '<div class="badge ' + level.cls + '">' + level.badge + '</div>' +
+        '<div class="result-desc">' + level.desc + '</div>' +
+      '</div>' +
+      '<div>' +
+        '<div class="actions-title">' + stepsTitle + '</div>' + stepsNote +
+        '<div class="actions-list">' + actionsHtml + '</div>' +
+      '</div>' +
+      '<button class="retry" id="retryBtn">Volver a hacer el test</button>' +
+      '<div class="brand-foot"><div class="fine">Autodiagnóstico educativo, no una medición. somosgreenia es independiente y no está afiliada a ningún proveedor de IA. © 2026 somosgreenia</div></div>';
+
+    document.getElementById('quizView').hidden = true;
+    document.getElementById('result').hidden = false;
+    window.scrollTo({top:0, behavior:'smooth'});
+
+    document.getElementById('retryBtn').addEventListener('click', function(){
+      answers = new Array(QUESTIONS.length).fill(null);
+      qWrap.querySelectorAll('.opt').forEach(function(o){ o.classList.remove('sel-yes','sel-no'); });
+      updateProgress();
+      document.getElementById('result').hidden = true;
+      document.getElementById('quizView').hidden = false;
+      window.scrollTo({top:0, behavior:'smooth'});
+    });
+  });
+
+  updateProgress();
+})();
+</script>
+</body>
+</html>

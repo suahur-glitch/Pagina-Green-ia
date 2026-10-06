@@ -24,7 +24,8 @@ const MIME = {
   '.mp4': 'video/mp4',
   '.webm': 'video/webm',
   '.woff2': 'font/woff2',
-  '.txt': 'text/plain; charset=utf-8'
+  '.txt': 'text/plain; charset=utf-8',
+  '.xml': 'application/xml; charset=utf-8'
 };
 
 // Server-side files that share a public extension but must never be served.
@@ -47,6 +48,63 @@ const PAGE_ROUTES = {
   '/calculadora': '/calculadora/index.html',
   '/huella': '/calculadora/index.html'
 };
+
+// Permanent redirects so each page has one canonical address.
+const REDIRECTS = {
+  '/consciente': '/test',
+  '/consciente/': '/test',
+  '/huella': '/calculadora',
+  '/calculadora/': '/calculadora',
+  '/index.html': '/'
+};
+
+const SITE = 'https://somosgreenia.com';
+
+// Per-route metadata for the single-page routes (index.html is shared, so the
+// server rewrites title, description, canonical and Open Graph for crawlers).
+const ROUTE_META = {
+  '/': {
+    title: 'somosgreenia · Primero criterio, luego IA',
+    description: 'somosgreenia te enseña a usar la IA con responsabilidad y eficiencia, sin tecnicismos. Primero criterio, luego IA.'
+  },
+  '/recursos-gratuitos': {
+    title: 'Recursos gratuitos para usar la IA con criterio · somosgreenia',
+    description: 'Test de hábitos, calculadora de la huella de la IA y glosario sin jerga. Gratis y sin registro.'
+  },
+  '/certificate-con-nosotros': {
+    title: 'Certifícate con nosotros · somosgreenia',
+    description: 'Estamos construyendo una certificación de hábitos para el uso responsable y eficiente de la IA, para personas y empresas. En construcción.'
+  },
+  '/sobre-nosotros': {
+    title: 'Sobre nosotros · somosgreenia',
+    description: 'Qué es somosgreenia, cómo trabajamos y por qué creemos que primero va el criterio y luego la IA.'
+  }
+};
+
+const esc = s => s.replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;');
+
+function withMeta(html, route) {
+  const m = ROUTE_META[route];
+  if (!m) return html;
+  const url = SITE + (route === '/' ? '/' : route);
+  return html
+    .replace(/<title>[^<]*<\/title>/, `<title>${esc(m.title)}</title>`)
+    .replace(/(<meta name="description" content=")[^"]*(")/, `$1${esc(m.description)}$2`)
+    .replace(/(<link rel="canonical" href=")[^"]*(")/, `$1${url}$2`)
+    .replace(/(<meta property="og:url" content=")[^"]*(")/, `$1${url}$2`)
+    .replace(/(<meta property="og:title" content=")[^"]*(")/, `$1${esc(m.title)}$2`)
+    .replace(/(<meta property="og:description" content=")[^"]*(")/, `$1${esc(m.description)}$2`);
+}
+
+const SITEMAP_URLS = ['/', '/recursos-gratuitos', '/certificate-con-nosotros', '/sobre-nosotros', '/test', '/calculadora'];
+
+function sitemapXml() {
+  const today = new Date().toISOString().slice(0, 10);
+  const items = SITEMAP_URLS.map(u => `  <url><loc>${SITE}${u === '/' ? '/' : u}</loc><lastmod>${today}</lastmod></url>`).join('\n');
+  return `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${items}\n</urlset>\n`;
+}
+
+const ROBOTS = `User-agent: *\nAllow: /\n\nSitemap: ${SITE}/sitemap.xml\n`;
 
 function resolvePath(urlPath) {
   let p;
@@ -84,6 +142,27 @@ function parseRange(header, size) {
 const server = http.createServer((req, res) => {
   if (req.method !== 'GET' && req.method !== 'HEAD') {
     return send(res, 405, 'Method Not Allowed', { Allow: 'GET, HEAD' });
+  }
+
+  const urlPath = req.url.split('?')[0];
+  const qs = req.url.includes('?') ? req.url.slice(req.url.indexOf('?')) : '';
+  if (REDIRECTS[urlPath]) return send(res, 301, 'Moved Permanently', { Location: REDIRECTS[urlPath] + qs });
+  if (urlPath === '/robots.txt') {
+    return send(res, 200, ROBOTS, { 'Cache-Control': 'public, max-age=3600' });
+  }
+  if (urlPath === '/sitemap.xml') {
+    return send(res, 200, sitemapXml(), { 'Content-Type': 'application/xml; charset=utf-8', 'Cache-Control': 'public, max-age=3600' });
+  }
+  if (urlPath === '/favicon.ico') req.url = '/favicon.ico';
+
+  // Single-page routes: serve index.html with route-specific metadata.
+  if (ROUTE_META[urlPath]) {
+    return fs.readFile(path.join(ROOT, 'index.html'), 'utf8', (err, html) => {
+      if (err) return send(res, 404, 'Not Found');
+      const body = Buffer.from(withMeta(html, urlPath), 'utf8');
+      res.writeHead(200, { 'Content-Type': MIME['.html'], 'Content-Length': body.length, 'Cache-Control': 'no-cache', 'X-Content-Type-Options': 'nosniff' });
+      res.end(req.method === 'HEAD' ? undefined : body);
+    });
   }
 
   const file = resolvePath(req.url);
