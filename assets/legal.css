@@ -1,0 +1,27 @@
+/* Páginas legales de somosgreenia (privacidad y cookies). Tipografías y colores de la marca. */
+:root{--paper:#F6F5F0;--forest:#1F3B2C;--leaf:#3E7C5A;--sand:#D9C08C;--ink:#22221E;--ink-2:#4A483F;--ink-3:#6B675D;--line:rgba(31,59,44,.14)}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--paper);color:var(--ink);font-family:Inter,system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+a{color:var(--forest);text-underline-offset:3px}
+a:hover{color:var(--leaf)}
+.top{border-bottom:1px solid var(--line);background:var(--paper)}
+.top__in{max-width:760px;margin:0 auto;padding:18px 24px;display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}
+.logo{font-family:Fraunces,serif;font-weight:700;font-size:22px;color:var(--forest);text-decoration:none}
+.top nav{display:flex;gap:18px;font-size:14px}
+main{max-width:760px;margin:0 auto;padding:48px 24px 72px}
+h1{font-family:Fraunces,serif;font-weight:600;font-size:clamp(32px,6vw,46px);line-height:1.1;color:var(--forest);margin:0 0 8px}
+h2{font-family:Fraunces,serif;font-weight:600;font-size:24px;line-height:1.2;color:var(--forest);margin:44px 0 12px}
+p,li{font-size:16.5px;line-height:1.7;color:var(--ink-2)}
+p{margin:0 0 14px}
+ul,ol{padding-left:22px;margin:0 0 14px}
+li{margin-bottom:6px}
+.meta{font-size:14px;color:var(--ink-3);margin:0 0 32px}
+.box{background:#fff;border:1px solid var(--line);border-radius:16px;padding:20px 24px;margin:0 0 20px}
+.box p:last-child,.box ul:last-child{margin-bottom:0}
+table{width:100%;border-collapse:collapse;margin:0 0 18px;font-size:15px}
+th,td{text-align:left;vertical-align:top;padding:10px 12px;border-bottom:1px solid var(--line);line-height:1.55;color:var(--ink-2)}
+th{color:var(--forest);font-weight:600;background:rgba(31,59,44,.04)}
+.table-wrap{overflow-x:auto}
+footer{border-top:1px solid var(--line);margin-top:24px}
+footer .in{max-width:760px;margin:0 auto;padding:24px;font-size:13px;line-height:1.6;color:var(--ink-3)}
+footer p{font-size:13px;color:var(--ink-3);margin:0 0 6px}
