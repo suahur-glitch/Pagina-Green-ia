@@ -233,6 +233,32 @@
     .mbar .e{color:var(--energy);} .mbar .w{color:var(--water);} .mbar .c{color:var(--carbon);}
     .mbar a{font-size:13px;font-weight:600;white-space:nowrap;}
   }
+  /* historial */
+  details.hist{border:1.5px solid var(--line);border-radius:14px;background:var(--surface-2);margin-bottom:18px;}
+  details.hist summary{cursor:pointer;list-style:none;display:flex;justify-content:space-between;gap:12px;align-items:center;padding:12px 14px;font-size:14px;color:var(--ink);}
+  details.hist summary::-webkit-details-marker{display:none;}
+  details.hist summary b{color:var(--primary-dark);}
+  details.hist summary .chev{color:var(--muted);font-size:18px;transition:transform .15s;}
+  details.hist[open] summary .chev{transform:rotate(45deg);}
+  .hist-body{padding:0 14px 14px;display:flex;flex-direction:column;gap:12px;}
+  .hist-lock{display:flex;gap:8px;margin:0;font-size:13px;color:var(--muted);}
+  .hist-lock b{color:var(--ink);}
+  .htabs{display:inline-flex;align-self:flex-start;border:1.5px solid var(--line);border-radius:999px;padding:3px;gap:2px;background:var(--surface);}
+  .htabs button{border:0;background:transparent;color:var(--ink);font-size:13.5px;font-weight:500;padding:6px 14px;border-radius:999px;cursor:pointer;}
+  .htabs button[aria-selected="true"]{background:var(--primary);color:var(--on-primary);font-weight:600;}
+  .hsteps{margin:0;padding-left:20px;display:flex;flex-direction:column;gap:6px;font-size:13.5px;}
+  .hdrop{border:2px dashed var(--line);border-radius:12px;padding:18px 14px;text-align:center;display:flex;flex-direction:column;gap:8px;align-items:center;background:var(--surface);}
+  .hdrop.over{border-color:var(--primary);background:var(--primary-tint);}
+  .hdrop p{margin:0;font-size:13.5px;color:var(--muted);}
+  .hdrop label.btn{display:inline-block;}
+  .hstate{border-radius:10px;padding:10px 12px;font-size:13.5px;}
+  .hstate b{display:block;}
+  .hstate small{display:block;color:var(--muted);font-size:12.5px;margin-top:3px;overflow-wrap:anywhere;}
+  .hstate ul{margin:6px 0 0;padding-left:18px;font-size:12.5px;}
+  .hstate.busy{background:var(--surface);}
+  .hstate.ok{background:var(--primary-tint);} .hstate.ok b{color:var(--primary-dark);}
+  .hstate.err{background:var(--warn-tint);} .hstate.err b{color:var(--warn);}
+  .hnote{margin:0;font-size:12.5px;color:var(--muted);}
   @media (prefers-reduced-motion: reduce){*{transition:none!important;}}
 </style>
 </head>
@@ -248,15 +274,44 @@
     <div class="note"><span aria-hidden="true">⚠</span><span><b>Son estimaciones, no mediciones de tu cuenta.</b> Ningún proveedor publica el consumo de cada consulta individual. Usamos los estudios públicos más recientes y mostramos siempre un rango, porque el mismo prompt puede costar varias veces más según el modelo y el centro de datos.</span></div>
     <p class="units"><b>Cómo leer las unidades.</b> <b>Wh</b> (vatio-hora) mide energía: un bombillo LED de 10 W encendido 6 minutos gasta 1 Wh; 1 <b>kWh</b> son 1.000 Wh, la unidad del recibo de la luz. <b>mL</b> y <b>L</b> miden el agua que se evapora al enfriar los servidores. <b>g</b> y <b>kg de CO₂</b> miden los gases de efecto invernadero que se emiten al producir esa electricidad.</p>
     <div class="note" style="margin-top:12px;"><span aria-hidden="true">🔒</span><span><b>Tus datos no salen de tu navegador.</b> La calculadora no pide datos personales ni envía nada a ningún servidor.</span></div>
-    <span class="updated mono">Versión 1.1 · datos revisados el 30 de septiembre de 2026</span>
+    <span class="updated mono">Versión 1.2 · datos revisados el 30 de septiembre de 2026 · carga de historial desde el 6 de octubre de 2026</span>
   </header>
 
   <div class="main">
     <section class="card" aria-labelledby="uso-title">
       <div class="section-head">
         <h2 id="uso-title">Tu uso en un día</h2>
-        <p class="sub">Empieza con un perfil y ajusta las cantidades.</p>
+        <p class="sub">Empieza con un perfil y ajusta las cantidades, o llénalas con tu historial.</p>
       </div>
+
+      <details class="hist" id="hist">
+        <summary><span><b>¿No sabes cuánto usas la IA?</b> Llena las cantidades con tu historial de Claude o ChatGPT</span><span class="chev" aria-hidden="true">+</span></summary>
+        <div class="hist-body">
+          <p class="hist-lock"><span aria-hidden="true">🔒</span><span><b>Tu archivo no sale de tu navegador.</b> Se lee en tu dispositivo, no se sube a ningún servidor y no se guarda. La calculadora solo se queda con los conteos.</span></p>
+          <div class="htabs" role="tablist" aria-label="Plataforma">
+            <button type="button" role="tab" id="htab-claude" aria-selected="true" aria-controls="hsteps-claude">Claude</button>
+            <button type="button" role="tab" id="htab-gpt" aria-selected="false" aria-controls="hsteps-gpt">ChatGPT</button>
+          </div>
+          <ol class="hsteps" id="hsteps-claude" role="tabpanel" aria-labelledby="htab-claude">
+            <li>Entra a <b>claude.ai</b> y abre <b>Configuración → Privacidad</b>.</li>
+            <li>Pulsa <b>Exportar datos</b> y confirma. Te llega un correo con un enlace.</li>
+            <li>Descarga el archivo <b>conversations-000.zip</b> (y los siguientes, si existen) y súbelo aquí tal cual, sin descomprimir. Si te descarga un <b>manifest….json</b>, súbelo y te decimos cuál descargar.</li>
+          </ol>
+          <ol class="hsteps" id="hsteps-gpt" role="tabpanel" aria-labelledby="htab-gpt" hidden>
+            <li>Entra a <b>chatgpt.com</b> desde el navegador y abre <b>Configuración → Controles de datos</b>.</li>
+            <li>Pulsa <b>Exportar datos</b> y confirma. El correo puede tardar de 1 a 3 días y su enlace vence a las 24 horas.</li>
+            <li>Descarga el <b>.zip</b> con tu sesión abierta en chatgpt.com y súbelo aquí tal cual, sin descomprimir.</li>
+          </ol>
+          <div class="hdrop" id="hdrop">
+            <p>Arrastra aquí tu archivo <b>.zip</b> o <b>.json</b></p>
+            <label class="btn primary" for="hfile">Elegir archivos</label>
+            <input type="file" id="hfile" accept=".zip,.json,.jsonl,application/zip,application/json" multiple hidden>
+          </div>
+          <div class="hstate" id="hstate" role="status" aria-live="polite" hidden></div>
+          <p class="hnote">Usamos tus últimos 3 meses y calculamos un día típico con uso: el promedio de los días en que usaste la IA. Los nombres de los menús pueden cambiar según la versión de cada app.</p>
+        </div>
+      </details>
+
 
       <div class="presets" role="group" aria-label="Perfiles de uso" id="presets"></div>
 
@@ -389,6 +444,7 @@
         <p>La energía por tarea sale de estudios publicados. El agua y el CO₂ se calculan a partir de esa energía con factores constantes, para poder comparar tareas con el mismo criterio en vez de mezclar estudios con métodos distintos.</p>
         <div class="formula">agua (mL) = energía (Wh) × factor de agua (L/kWh) &nbsp;·&nbsp; CO₂ (g) = energía (Wh) × intensidad de la red (g/kWh) ÷ 1.000</div>
         <p>Mes = 22 días laborales. Año = 250 días laborales. El rango usa el mínimo y el máximo de cada tarea. Las emisiones se expresan en CO₂ equivalente (CO₂e), que suma todos los gases de efecto invernadero.</p>
+        <p><b>Con tu historial:</b> se toman los últimos 3 meses de la exportación. Cada respuesta de la IA cuenta como mensaje de chat; si tiene 600 palabras o más, como respuesta larga; si usó razonamiento, como consulta con razonamiento; y cada imagen generada, como imagen. Se divide entre los días en que escribiste al menos un mensaje y se redondea. Las traducciones y el código quedan dentro de esas categorías; los agentes y el video no aparecen en la exportación.</p>
         <p>Nivel de uso (energía al mes por persona, Estándar somosgreenia v1.1): bajo, menos de 100 Wh · moderado, 100 Wh a 1 kWh · alto, 1 a 5 kWh · muy alto, más de 5 kWh. Describe cuánto usas la IA, no califica tus hábitos.</p>
         <div class="tbl-wrap" id="coef-table"></div>
       </div>
@@ -721,6 +777,353 @@
       '<tr><td>Intensidad de carbono de la red</td><td class="num">458 g/kWh</td><td class="num">384–458 g/kWh</td><td><span class="conf alta">certeza alta</span></td><td>Ember 2026 (mundo, 2025) y 2025 (EE. UU., 2024)</td></tr>'+
       '</tbody></table>';
   }
+
+
+  // ---------- llenar con el historial (Claude o ChatGPT) ----------
+  // Lector de exportaciones tomado de la Radiografía IA. Todo ocurre en el navegador.
+  var HIST = (function(){
+  // ============ utilidades ============
+  var nf0 = new Intl.NumberFormat("es-CO",{maximumFractionDigits:0});
+  var nf1 = new Intl.NumberFormat("es-CO",{maximumFractionDigits:1});
+  var MES = ["ene","feb","mar","abr","may","jun","jul","ago","sep","oct","nov","dic"];
+  var MES_L = ["enero","febrero","marzo","abril","mayo","junio","julio","agosto","septiembre","octubre","noviembre","diciembre"];
+  function n0(x){ return nf0.format(Math.round(x)); }
+  function num(x){ return x < 10 && x % 1 ? nf1.format(x) : nf0.format(x); }
+  function big(x){ if (x >= 1e6) return nf1.format(x/1e6) + " M"; if (x >= 1e4) return nf0.format(x/1e3) + " mil"; return nf0.format(x); }
+  function esc(s){ return String(s).replace(/[&<>"']/g,function(c){ return {"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[c]; }); }
+  function norm(s){ return String(s||"").toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g,""); }
+  function words(s){ s = String(s||"").trim(); return s ? s.split(/\s+/).length : 0; }
+  function mkey(d){ return d.getFullYear() + "-" + String(d.getMonth()+1).padStart(2,"0"); }
+  function mlabel(k, long){ var p = k.split("-"); return (long ? MES_L : MES)[Number(p[1])-1] + (long ? " de " : " ") + (long ? p[0] : p[0].slice(2)); }
+  function dlabel(d){ return d.getDate() + " " + MES[d.getMonth()] + " " + d.getFullYear(); }
+  function ext(name){ var m = /\.([a-z0-9]{1,5})$/i.exec(String(name||"")); return m ? m[1].toLowerCase() : ""; }
+  var IMG_EXT = {png:1,jpg:1,jpeg:1,gif:1,webp:1,heic:1,svg:0};
+  var QWORDS = /^(que|como|cual|cuales|por que|porque|cuando|donde|quien|quienes|cuanto|cuanta|cuantos|cuantas|es |hay |puedes|podrias|sabes|what|how|why|when|where|who|which|is |are |can |could |do |does |should )/;
+
+  // ============ clasificación ============
+  var CATS = [
+    {id:"code", name:"Programación", kw:["codigo","code","python","javascript","typescript","html","css","sql","bug","script","api","react","node","github","regex","json","php","java","deploy","programar","programacion","funcion","function","debug","error en","wordpress","excel vba","formula excel","app","backend","frontend"]},
+    {id:"write", name:"Escritura y redacción", kw:["redact*","escrib*","reescrib*","correo","email","post","articulo","blog","carta","copy","corrig*","ortografia","tono","texto","write","rewrite","draft","linkedin","caption","guion","bio","parrafo","mensaje para"]},
+    {id:"biz", name:"Empresa y negocios", kw:["empresa","negocio*","cliente*","ventas","estrategia","presupuesto","precio*","propuesta","plan de negocio","kpi","finanzas","factura","contrato","proveedor*","startup","business","sales","pricing","roi","pitch","emprend*","rentabilidad","costos","modelo de negocio","agencia"]},
+    {id:"mkt", name:"Marketing y SEO", kw:["marketing","seo","campana","anuncio*","ads","contenido*","redes sociales","instagram","tiktok","branding","marca","audiencia","embudo","landing","newsletter","keywords"]},
+    {id:"analysis", name:"Razonamiento y análisis", kw:["analiz*","analisis","compar*","evalu*","pros y contras","estadistic*","investig*","research","analy*","compare","diagnostic*","datos","dashboard","metricas","tendencia*"]},
+    {id:"translate", name:"Traducción", kw:["tradu*","translat*","al ingles","al espanol","in english","in spanish","en ingles","en espanol"]},
+    {id:"travel", name:"Viajes", kw:["viaj*","vuelo*","hotel*","itinerario","turismo","vacaciones","pasaporte","visa","aeropuerto","travel","flight*","trip","hospedaje","airbnb","que visitar"]},
+    {id:"learn", name:"Aprendizaje", kw:["explica*","que es","aprend*","curso","estudi*","examen","clase","tutorial","learn","explain","ensena*","concepto","glosario"]}
+  ];
+  function buildMatchers(list){
+    return list.map(function(k){
+      k = norm(k).trim();
+      if (!k) return null;
+      var star = k.slice(-1) === "*"; var stem = star ? k.slice(0,-1) : k;
+      stem = stem.replace(/[^a-z0-9#+ ]+/g," ").trim();
+      return star ? function(t){ return t.indexOf(" " + stem) !== -1; } : function(t){ return t.indexOf(" " + stem + " ") !== -1; };
+    }).filter(Boolean);
+  }
+  CATS.forEach(function(c){ c.m = buildMatchers(c.kw); });
+  function clean(t){ return " " + norm(t).replace(/[^a-z0-9#+]+/g," ") + " "; }
+  function hits(ms, t){ var h = 0; for (var i=0;i<ms.length;i++) if (ms[i](t)) h++; return h; }
+
+  // ============ lectura de exportaciones ============
+  var FILE_LINK = /(?:sandbox:\/mnt\/data\/|\/mnt\/user-data\/outputs\/|computer:\/\/[^\s)\]]*\/)([^\s)\]"'`]+\.([a-z0-9]{2,5}))/gi;
+  function fileLinks(text){ var out = [], m; FILE_LINK.lastIndex = 0; while ((m = FILE_LINK.exec(text))) out.push(m[2].toLowerCase()); return out; }
+  var ARTIFACT_TYPE = {"application/vnd.ant.code":"código","text/html":"html","text/markdown":"documento","application/vnd.ant.react":"app","image/svg+xml":"svg","application/vnd.ant.mermaid":"diagrama"};
+
+  function mkMsg(role, text, t){
+    var w = words(text);
+    var q = false;
+    if (role === "user") { var n = norm(text).trim(); q = text.indexOf("?") !== -1 || QWORDS.test(n); }
+    return {role:role, w:w, q:q, t:t, reason:false, imgGen:0, imgIn:0, fIn:[], fOut:[]};
+  }
+
+  function parseClaude(arr){
+    var convs = [];
+    arr.forEach(function(c){
+      var msgs = [], body = "";
+      var created = new Date(c.created_at || c.updated_at || Date.now());
+      (c.chat_messages || []).forEach(function(m){
+        var role = m.sender === "human" ? "user" : "ai";
+        var t = new Date(m.created_at || c.created_at);
+        var text = "", reason = false, outs = [];
+        if (Array.isArray(m.content) && m.content.length) {
+          m.content.forEach(function(p){
+            if (!p) return;
+            if (p.type === "text" && p.text) text += p.text + "\n";
+            else if (p.type === "thinking") reason = true;
+            else if (p.type === "tool_use") {
+              var inp = p.input || {};
+              if (p.name === "artifacts" && (!inp.command || inp.command === "create")) outs.push(ARTIFACT_TYPE[inp.type] || "artefacto");
+              else if (/create_file|write_file|^write$/i.test(p.name || "") && inp.path) outs.push(ext(inp.path) || "archivo");
+            }
+          });
+        } else text = m.text || "";
+        var msg = mkMsg(role, text, t);
+        msg.reason = reason;
+        if (role === "ai") msg.fOut = outs.concat(fileLinks(text));
+        (m.attachments || []).concat(m.files || []).forEach(function(f){
+          var e = ext(f.file_name || f.name) || (f.file_kind === "image" ? "png" : "");
+          if (f.file_kind === "image" || IMG_EXT[e]) msg.imgIn++; else if (e) msg.fIn.push(e);
+          else msg.fIn.push("txt");
+        });
+        if (role === "user" && body.length < 3000) body += " " + text.slice(0, 1500);
+        msgs.push(msg);
+      });
+      convs.push({title: c.name || "Sin título", created: created, msgs: msgs, body: body});
+    });
+    return convs;
+  }
+
+  function parseGPT(arr){
+    var convs = [];
+    arr.forEach(function(c){
+      var created = new Date((c.create_time || c.update_time || 0) * 1000);
+      var nodes = Object.keys(c.mapping || {}).map(function(k){ return c.mapping[k]; })
+        .filter(function(n){ return n && n.message; })
+        .sort(function(a,b){ return (a.message.create_time||0) - (b.message.create_time||0); });
+      var msgs = [], body = "", pendingReason = false;
+      nodes.forEach(function(n){
+        var m = n.message, role = m.author && m.author.role, ct = m.content || {}, md = m.metadata || {};
+        if (md.is_visually_hidden_from_conversation) return;
+        var type = ct.content_type;
+        if (type === "thoughts" || type === "reasoning_recap") { pendingReason = true; return; }
+        if (type === "user_editable_context" || type === "system_error" || role === "system") return;
+        var parts = Array.isArray(ct.parts) ? ct.parts : [];
+        var text = "", imgs = 0;
+        parts.forEach(function(p){
+          if (typeof p === "string") text += p + "\n";
+          else if (p && (p.content_type === "image_asset_pointer" || p.asset_pointer)) imgs++;
+        });
+        if (type === "text" || type === "multimodal_text") {} else if (type === "code" || type === "execution_output" || type === "tether_browsing_display" || type === "tether_quote") { text = ""; }
+        var t = new Date(((m.create_time || c.create_time || 0)) * 1000);
+        if (role === "tool") {
+          if (imgs && msgs.length) { var last = msgs[msgs.length-1]; if (last.role === "ai") { last.imgGen += imgs; return; } }
+          if (imgs) { var g = mkMsg("ai", "", t); g.imgGen = imgs; g.hidden = true; msgs.push(g); }
+          return;
+        }
+        if (role !== "user" && role !== "assistant") return;
+        if (!text.trim() && !imgs && !(md.attachments && md.attachments.length)) return;
+        var msg = mkMsg(role === "user" ? "user" : "ai", text, t);
+        if (role === "user") {
+          msg.imgIn = imgs;
+          (md.attachments || []).forEach(function(a){
+            var e = ext(a.name) || (a.mime_type ? a.mime_type.split("/").pop() : "");
+            if (/^image\//.test(a.mime_type || "") || IMG_EXT[e]) { if (!imgs) msg.imgIn++; } else msg.fIn.push(e || "archivo");
+          });
+          if (body.length < 3000) body += " " + text.slice(0, 1500);
+        } else {
+          var slug = String(md.model_slug || "");
+          msg.reason = pendingReason || /^o\d|thinking|reason|-pro$/.test(slug);
+          msg.imgGen = imgs;
+          msg.fOut = fileLinks(text);
+          pendingReason = false;
+        }
+        msgs.push(msg);
+      });
+      convs.push({title: c.title || "Sin título", created: created, msgs: msgs, body: body});
+    });
+    return convs;
+  }
+
+  // Formato genérico: [{title/name, created_at, messages:[{role|sender|author, content|text, created_at}]}]
+  function parseGeneric(arr){
+    return arr.map(function(c){
+      var created = new Date(c.created_at || c.create_time && c.create_time*1000 || c.createdAt || c.date || c.timestamp || 0);
+      var msgs = [], body = "";
+      (c.messages || c.chat_messages || []).forEach(function(m){
+        var who = String(m.role || m.sender || (m.author && (m.author.role || m.author)) || "").toLowerCase();
+        var role = /user|human|usuario/.test(who) ? "user" : /assistant|model|ai|bot|claude|gpt|gemini/.test(who) ? "ai" : null;
+        if (!role) return;
+        var c2 = m.content != null ? m.content : m.text != null ? m.text : m.parts;
+        var text = typeof c2 === "string" ? c2 : Array.isArray(c2) ? c2.map(function(x){ return typeof x === "string" ? x : (x && (x.text || "")) || ""; }).join("\n") : (c2 && c2.parts ? c2.parts.filter(function(x){ return typeof x === "string"; }).join("\n") : "");
+        var msg = mkMsg(role, text, new Date(m.created_at || m.timestamp || m.create_time && m.create_time*1000 || created));
+        if (role === "ai") msg.fOut = fileLinks(text);
+        else if (body.length < 3000) body += " " + text.slice(0, 1500);
+        msgs.push(msg);
+      });
+      return {title: c.title || c.name || "Sin título", created: created, msgs: msgs, body: body};
+    });
+  }
+
+  function looksConv(o){ return !!o && typeof o === "object" && !Array.isArray(o) && (Array.isArray(o.chat_messages) || (o.mapping && typeof o.mapping === "object") || Array.isArray(o.messages)); }
+  function findConvs(x, depth){
+    if (depth > 3 || !x || typeof x !== "object") return null;
+    if (Array.isArray(x)) return x.slice(0, 20).some(looksConv) ? x : null;
+    if (looksConv(x)) return [x];
+    var vals = Object.keys(x).map(function(k){ return x[k]; });
+    if (vals.length && vals.slice(0, 20).every(looksConv)) return vals; // diccionario {id: conversación}
+    for (var i = 0; i < vals.length; i++) { var f = findConvs(vals[i], depth + 1); if (f) return f; }
+    return null;
+  }
+  function describe(x, fname){
+    var keys = [], kind;
+    if (Array.isArray(x)) { kind = "una lista de " + x.length + (x.length === 1 ? " elemento" : " elementos"); var f = x.find(function(e){ return e && typeof e === "object"; }); if (f) keys = Object.keys(f); }
+    else if (x && typeof x === "object") { kind = "un objeto"; keys = Object.keys(x); }
+    else kind = "un valor simple";
+    var k = keys.join(" ").toLowerCase(), hint = "";
+    if (/email|full_name|phone|verified/.test(k)) hint = " Parece el archivo con los datos de tu cuenta (users.json), no el de tus conversaciones.";
+    else if (/prompt_template|docs|is_private|starter/.test(k)) hint = " Parece el archivo de proyectos (projects.json), no el de tus conversaciones.";
+    else if (/memor/.test(k) || /memor/i.test(fname || "")) hint = " Parece el archivo de memoria, no el de tus conversaciones.";
+    else if (/feedback|rating/.test(k)) hint = " Parece el archivo de calificaciones, no el de tus conversaciones.";
+    return (fname ? "“" + fname + "” contiene " : "El archivo contiene ") + kind + (keys.length ? " con los campos: " + keys.slice(0, 8).join(", ") + (keys.length > 8 ? "…" : "") : "") + "." + hint;
+  }
+
+  function isManifest(j){ return !!j && typeof j === "object" && Array.isArray(j.data_files); }
+  function manifestError(j){
+    var conv = j.data_files.filter(function(f){ return /conversation/i.test(f.category || f.filename || ""); });
+    var e = new Error("Casi: este es el índice de tu exportación. Falta un paso.");
+    e.detail = "Tu exportación viene en " + j.data_files.length + " archivos y tus conversaciones están en " + (conv.length === 1 ? "uno" : conv.length) + ". Haz clic para descargar" + (conv.length === 1 ? "lo" : "los") + " y luego " + (conv.length === 1 ? "súbelo" : "súbelos") + " aquí con “Elegir archivos”:";
+    e.list = (conv.length ? conv : j.data_files).map(function(f){ return {name: f.filename || f.category, url: /^https:\/\/claude\.ai\//.test(f.export_url || "") ? f.export_url : ""}; });
+    e.foot = "Cada enlace de descarga funciona una sola vez. Si ya lo usaste, busca el archivo en tu carpeta de Descargas o pide una exportación nueva.";
+    return e;
+  }
+  function tagIds(arr, convs){ for (var i = 0; i < convs.length && i < arr.length; i++) { var c = arr[i] || {}; convs[i].id = c.uuid || c.id || c.conversation_id || null; } return convs; }
+
+  function detectAndParse(json, fname){
+    if (isManifest(json)) throw manifestError(json);
+    var arr = findConvs(json, 0);
+    if (!arr) {
+      if (Array.isArray(json) && json.length === 0) return {src:"desconocida", convs: []};
+      var e = new Error("No encontramos conversaciones en este archivo."); e.detail = describe(json, fname); throw e;
+    }
+    var first = arr.find(looksConv) || {};
+    if (Array.isArray(first.chat_messages)) return {src:"Claude", convs: tagIds(arr, parseClaude(arr))};
+    if (first.mapping) return {src:"ChatGPT", convs: tagIds(arr, parseGPT(arr))};
+    return {src:"otra plataforma", convs: tagIds(arr, parseGeneric(arr))};
+  }
+
+  function parseText(text){
+    try { return JSON.parse(text); }
+    catch (err) {
+      // JSON por líneas (una conversación por línea)
+      var lines = text.split(/\r?\n/).filter(function(l){ return l.trim(); }), out = [];
+      try { lines.forEach(function(l){ out.push(JSON.parse(l)); }); } catch (e2) {
+        var e = new Error("El archivo está incompleto o dañado y no se puede leer."); e.detail = "Vuelve a descargarlo desde el enlace del correo y súbelo sin abrirlo ni editarlo."; throw e;
+      }
+      return out;
+    }
+  }
+
+  var SKIP_ZIP = /(light_metadata|projects|memories|frames|users)[^\/]*$/i;
+  async function readZip(zip, zname, step, depth){
+    var entries = Object.keys(zip.files).filter(function(p){ return !zip.files[p].dir && !/(^|\/)__MACOSX\//.test(p); });
+    var jsons = entries.filter(function(p){ return /\.(json|jsonl)$/i.test(p); });
+    var inner = entries.filter(function(p){ return /\.zip$/i.test(p); });
+    var all = [], src = null, seen = [];
+    for (var i = 0; i < jsons.length; i++) {
+      var base = jsons[i].split("/").pop();
+      if (/^(users|projects|memories|manifest)[^\/]*\.json$/i.test(base)) { seen.push(base); continue; }
+      step("Leyendo " + jsons[i] + " (" + (i+1) + " de " + jsons.length + ")…");
+      var json;
+      try { json = parseText(await zip.file(jsons[i]).async("string")); } catch (e) { seen.push(base + " (no se pudo leer)"); continue; }
+      try { var r = detectAndParse(json, base); if (r.convs.length) { src = src || r.src; all = all.concat(r.convs); } }
+      catch (e) { if (e.list) throw e; seen.push(base); }
+    }
+    if (depth < 2) {
+      for (var j = 0; j < inner.length; j++) {
+        if (SKIP_ZIP.test(inner[j].replace(/\.zip$/i, ""))) continue;
+        step("Abriendo " + inner[j] + "…");
+        try { var sub = await readZip(await JSZip.loadAsync(await zip.file(inner[j]).async("uint8array")), inner[j], step, depth + 1); src = src || sub.src; all = all.concat(sub.convs); } catch (e) { if (e.list) throw e; }
+      }
+    }
+    return {src: src, convs: all, entries: entries, seen: seen};
+  }
+
+  async function readFile(file, step){
+    var name = file.name.toLowerCase();
+    if (!/\.(zip|json|jsonl)$/.test(name)) { var e0 = new Error("“" + file.name + "” no es un archivo de exportación."); e0.detail = "Sube los archivos .zip que descargaste (por ejemplo conversations-000.zip) o un conversations.json."; throw e0; }
+    if (!/\.zip$/.test(name)) { step("Leyendo " + file.name + "…"); return detectAndParse(parseText(await file.text()), file.name); }
+    if (typeof JSZip === "undefined") { var e1 = new Error("No se pudo cargar el lector de archivos ZIP."); e1.detail = "Descomprime el .zip en tu computador y sube el archivo .json que trae adentro."; throw e1; }
+    step("Descomprimiendo " + file.name + "…");
+    var res = await readZip(await JSZip.loadAsync(file), file.name, step, 0);
+    if (!res.convs.length) {
+      var e2 = new Error("“" + file.name + "” no trae conversaciones.");
+      var hint = /light_metadata|projects|memories|frames|design/i.test(name) ? " Este es otro de los archivos de tu exportación. Las conversaciones vienen en el que se llama conversations-000.zip." : "";
+      e2.detail = "Contiene: " + (res.entries.slice(0, 10).join(", ") || "ningún archivo") + (res.entries.length > 10 ? "…" : "") + "." + hint;
+      throw e2;
+    }
+    return {src: res.src, convs: res.convs};
+  }
+
+    return {readFile: readFile};
+  })();
+
+  var JSZIP_LOCAL = "/assets/js/jszip.min.js";
+  var JSZIP_CDN = "https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js";
+  function loadScript(src){ return new Promise(function(ok, ko){ var s = document.createElement("script"); s.src = src; s.onload = ok; s.onerror = ko; document.head.appendChild(s); }); }
+  function ensureZip(){
+    if (window.JSZip) return Promise.resolve();
+    var onSite = /(^|\.)somosgreenia\.com$/.test(location.hostname) || location.hostname === "localhost";
+    return loadScript(JSZIP_LOCAL).catch(function(){ if (onSite) throw new Error("zip"); return loadScript(JSZIP_CDN); }).catch(function(){});
+  }
+
+  var H_DAYS = 90, H_LONG_WORDS = 600;
+  function summarize(convs){
+    var times = [];
+    convs.forEach(function(c){ c.msgs.forEach(function(m){ if (m.t && !isNaN(m.t)) times.push(+m.t); }); });
+    if (!times.length) return null;
+    var last = Math.max.apply(null, times), from = last - H_DAYS * 864e5;
+    var tot = {chat:0, long:0, reason:0, image:0}, days = {}, first = last;
+    convs.forEach(function(c){ c.msgs.forEach(function(m){
+      if (!m.t || isNaN(m.t) || +m.t < from) return;
+      if (+m.t < first) first = +m.t;
+      if (m.role === "user") { days[m.t.toDateString()] = 1; return; }
+      if (m.imgGen) tot.image += m.imgGen;
+      if (m.hidden) return;
+      if (m.reason) tot.reason++; else if (m.w >= H_LONG_WORDS) tot.long++; else tot.chat++;
+    }); });
+    var nd = Object.keys(days).length;
+    if (!nd) return null;
+    var avg = {}; Object.keys(tot).forEach(function(k){ avg[k] = tot[k] / nd; });
+    return {days: nd, from: new Date(first), to: new Date(last), tot: tot, avg: avg};
+  }
+
+  var hstate = document.getElementById("hstate");
+  function hmsg(kind, title, detail, list){
+    hstate.hidden = false; hstate.className = "hstate " + kind;
+    var ul = list && list.length ? "<ul>" + list.map(function(f){ return "<li>" + (f.url ? '<a href="' + escH(f.url) + '" target="_blank" rel="noopener">' + escH(f.name) + "</a>" : escH(f.name)) + "</li>"; }).join("") + "</ul>" : "";
+    hstate.innerHTML = "<b>" + escH(title) + "</b>" + (detail ? "<small>" + escH(detail) + "</small>" : "") + ul;
+  }
+  function escH(s){ return String(s).replace(/[&<>"']/g, function(c){ return {"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[c]; }); }
+  var MESES = ["ene.","feb.","mar.","abr.","may.","jun.","jul.","ago.","sep.","oct.","nov.","dic."];
+  function fecha(d){ return d.getDate() + " " + MESES[d.getMonth()] + " " + d.getFullYear(); }
+
+  async function handleHist(fileList){
+    var files = Array.prototype.slice.call(fileList || []);
+    if (!files.length) return;
+    hmsg("busy", "Leyendo tu historial…", "Con archivos grandes puede tardar un minuto.");
+    if (files.some(function(f){ return /\.zip$/i.test(f.name); })) await ensureZip();
+    var all = [], src = null, fail = null;
+    for (var i = 0; i < files.length; i++) {
+      try {
+        var d = await HIST.readFile(files[i], function(m){ hmsg("busy", "Leyendo tu historial…", m); });
+        src = src || d.src; all = all.concat(d.convs);
+      } catch (e) { fail = fail && fail.list ? fail : e; }
+    }
+    var seen = {}, convs = [];
+    all.forEach(function(c){ var k = c.id || (c.title + "|" + (+c.created)); if (!seen[k]) { seen[k] = 1; convs.push(c); } });
+    var S = convs.length ? summarize(convs) : null;
+    if (!S) {
+      var err = fail || new Error("No encontramos mensajes con fecha en este archivo.");
+      hmsg("err", err.message || "No pudimos leer el archivo.", err.detail || "Revisa que sea la exportación de tus conversaciones.", err.list);
+      return;
+    }
+    applyCounts({chat: Math.round(S.avg.chat), long: Math.round(S.avg.long), reason: Math.round(S.avg.reason), image: Math.round(S.avg.image)});
+    state.preset = null; syncInputs(); render();
+    var perMonth = S.days / (H_DAYS / 30.4);
+    hmsg("ok",
+      "Listo: leímos " + nf0.format(convs.length) + (convs.length === 1 ? " conversación" : " conversaciones") + (src && src !== "desconocida" ? " de " + src : "") + ".",
+      "Entre el " + fecha(S.from) + " y el " + fecha(S.to) + " usaste la IA " + nf0.format(S.days) + (S.days === 1 ? " día" : " días") + ". Un día típico tuyo con uso: " +
+      plural(S.avg.chat, "mensaje corto", "mensajes cortos") + ", " + plural(S.avg.long, "respuesta larga", "respuestas largas") + ", " + plural(S.avg.reason, "consulta con razonamiento", "consultas con razonamiento") + " y " + plural(S.avg.image, "imagen", "imágenes") + ". Ya quedaron arriba, redondeados. " +
+      "Ojo: la calculadora cuenta 22 días al mes y tú usaste la IA unos " + nf0.format(Math.min(31, perMonth)) + " días al mes. Las traducciones y el código quedaron dentro de mensajes y respuestas largas; los agentes y el video no aparecen en la exportación: súmalos a mano si los usas.");
+  }
+  var hfile = document.getElementById("hfile"), hdrop = document.getElementById("hdrop");
+  hfile.addEventListener("change", function(e){ var f = Array.prototype.slice.call(e.target.files); e.target.value = ""; handleHist(f); });
+  ["dragenter","dragover"].forEach(function(ev){ hdrop.addEventListener(ev, function(e){ e.preventDefault(); hdrop.classList.add("over"); }); });
+  ["dragleave","drop"].forEach(function(ev){ hdrop.addEventListener(ev, function(e){ e.preventDefault(); hdrop.classList.remove("over"); }); });
+  hdrop.addEventListener("drop", function(e){ handleHist(e.dataTransfer.files); });
+  document.querySelectorAll('.htabs [role="tab"]').forEach(function(t){ t.addEventListener("click", function(){
+    document.querySelectorAll('.htabs [role="tab"]').forEach(function(x){ var on = x === t; x.setAttribute("aria-selected", String(on)); document.getElementById(x.getAttribute("aria-controls")).hidden = !on; });
+  }); });
 
   buildChart();
   buildTable();

@@ -48,7 +48,8 @@ const PAGE_ROUTES = {
   '/calculadora': '/calculadora/index.html',
   '/privacidad': '/privacidad/index.html',
   '/cookies': '/cookies/index.html',
-  '/huella': '/calculadora/index.html'
+  '/huella': '/calculadora/index.html',
+  '/kit': '/kit/index.html'
 };
 
 // Permanent redirects so each page has one canonical address.
@@ -59,6 +60,7 @@ const REDIRECTS = {
   '/calculadora/': '/calculadora',
   '/privacidad/': '/privacidad',
   '/cookies/': '/cookies',
+  '/kit/': '/kit',
   '/index.html': '/'
 };
 
@@ -73,7 +75,7 @@ const ROUTE_META = {
   },
   '/recursos-gratuitos': {
     title: 'Recursos gratuitos para usar la IA con criterio · somosgreenia',
-    description: 'Test de hábitos, calculadora de la huella de la IA y glosario sin jerga. Gratis y sin registro.'
+    description: 'Kit para usar la IA con criterio, test de hábitos, calculadora de la huella de la IA y glosario sin jerga. Gratis y sin registro.'
   },
   '/certificate-con-nosotros': {
     title: 'Certifícate con nosotros · somosgreenia',
@@ -100,7 +102,7 @@ function withMeta(html, route) {
     .replace(/(<meta property="og:description" content=")[^"]*(")/, `$1${esc(m.description)}$2`);
 }
 
-const SITEMAP_URLS = ['/', '/recursos-gratuitos', '/certificate-con-nosotros', '/sobre-nosotros', '/test', '/calculadora', '/privacidad', '/cookies'];
+const SITEMAP_URLS = ['/', '/recursos-gratuitos', '/certificate-con-nosotros', '/sobre-nosotros', '/test', '/calculadora', '/kit', '/privacidad', '/cookies'];
 
 function sitemapXml() {
   const today = new Date().toISOString().slice(0, 10);

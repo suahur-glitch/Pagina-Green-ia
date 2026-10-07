@@ -1,0 +1,592 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Kit IA con criterio · somosgreenia</title>
+<meta name="description" content="Kit gratis para dejar de improvisar con la IA: el método de 6 pasos, tu capa de instrucciones y 5 plantillas probadas que se llenan solas. Sin registro.">
+<link rel="canonical" href="https://somosgreenia.com/kit">
+<link rel="icon" href="/favicon.ico" sizes="48x48">
+<link rel="icon" type="image/png" sizes="96x96" href="/assets/brand/favicon-96.png">
+<link rel="apple-touch-icon" href="/assets/brand/apple-touch-icon.png">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://somosgreenia.com/kit">
+<meta property="og:title" content="Kit IA con criterio · Deja de improvisar con la IA">
+<meta property="og:description" content="Método de 6 pasos, tu capa de instrucciones y 5 plantillas probadas. Gratis y sin registro. · somosgreenia">
+<meta property="og:site_name" content="somosgreenia">
+<meta property="og:locale" content="es_CO">
+<meta property="og:image" content="https://somosgreenia.com/assets/brand/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Kit IA con criterio · somosgreenia">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://somosgreenia.com/assets/brand/og-image.png">
+<meta name="theme-color" content="#1F3B2C">
+<link rel="preload" href="/assets/fonts/inter-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/assets/fonts/fraunces-latin-opsz-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/assets/fonts/fonts.css">
+<style>
+/* Layout: guía de lectura con índice lateral fijo (escritorio) y bloques numerados; herramientas como "fichas de trabajo" sobre papel */
+:root{
+  --papel:#F6F5F0; --superficie:#FFFFFF; --tinta:#22221E; --tinta-suave:#5A5A50;
+  --bosque:#1F3B2C; --hoja:#3E7C5A; --arena:#D9C08C; --arena-suave:#F1E7D0;
+  --linea:#DEDBD0; --codigo-bg:#1F3B2C; --codigo-fg:#F6F5F0;
+  --ok:#3E7C5A; --error:#A4442F;
+  --f-display:"Fraunces",Georgia,"Times New Roman",serif;
+  --f-texto:"Inter",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --f-mono:ui-monospace,"SF Mono",Consolas,"Liberation Mono",monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --papel:#151A16; --superficie:#1C231E; --tinta:#ECEAE2; --tinta-suave:#A9A99C;
+  --bosque:#9CC7AE; --hoja:#7FB894; --arena:#D9C08C; --arena-suave:#2E2A1E;
+  --linea:#2F3A32; --codigo-bg:#0E1310; --codigo-fg:#E6E4DA; --ok:#7FB894; --error:#E08A72; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --papel:#151A16; --superficie:#1C231E; --tinta:#ECEAE2; --tinta-suave:#A9A99C;
+  --bosque:#9CC7AE; --hoja:#7FB894; --arena:#D9C08C; --arena-suave:#2E2A1E;
+  --linea:#2F3A32; --codigo-bg:#0E1310; --codigo-fg:#E6E4DA; --ok:#7FB894; --error:#E08A72; color-scheme:dark}
+
+*{box-sizing:border-box}
+body{background:var(--papel);color:var(--tinta);font-family:var(--f-texto);font-size:16px;line-height:1.6;margin:0}
+.envoltura{max-width:1120px;margin:0 auto;padding-inline:20px;padding-block:0 64px;display:grid;grid-template-columns:220px minmax(0,1fr);gap:56px}
+@media (max-width:860px){.envoltura{grid-template-columns:minmax(0,1fr);gap:0}}
+
+.aviso{background:var(--arena-suave);color:var(--tinta);font-size:13px;padding:10px 20px;text-align:center;border-bottom:1px solid var(--linea)}
+.aviso strong{font-weight:600}
+
+/* Índice */
+nav.indice{position:sticky;top:env(safe-area-inset-top,0px);align-self:start;padding-top:48px;max-height:100vh;overflow:auto}
+nav.indice .marca{font-family:var(--f-display);font-weight:600;font-size:18px;color:var(--bosque);margin-bottom:24px;display:block}
+nav.indice ol{list-style:none;margin:0;padding:0;display:grid;gap:2px;counter-reset:s}
+nav.indice a{display:flex;gap:10px;padding:6px 8px;border-radius:6px;color:var(--tinta-suave);text-decoration:none;font-size:14px}
+nav.indice a span{font-family:var(--f-mono);font-size:12px;color:var(--hoja);padding-top:2px}
+nav.indice a:hover,nav.indice a.activo{background:var(--superficie);color:var(--tinta)}
+@media (max-width:860px){nav.indice{position:static;max-height:none;padding-top:24px}
+  nav.indice ol{grid-template-columns:repeat(2,minmax(0,1fr))}}
+
+main{min-width:0;padding-top:48px}
+.miga{font-size:13px;color:var(--tinta-suave);margin:0 0 20px}
+.miga b{color:var(--hoja);font-weight:500}
+h1{font-family:var(--f-display);font-weight:700;font-size:clamp(36px,6vw,56px);line-height:1.05;margin:0 0 16px;color:var(--bosque);text-wrap:balance;letter-spacing:-.01em}
+.entrada{font-size:19px;color:var(--tinta-suave);max-width:62ch;margin:0 0 24px}
+.metodo{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 8px;padding:0;list-style:none}
+.metodo li{font-size:12px;letter-spacing:.06em;text-transform:uppercase;padding:4px 10px;border-radius:999px;border:1px solid var(--linea);color:var(--tinta-suave)}
+.metodo li.aqui{background:var(--bosque);border-color:var(--bosque);color:var(--papel)}
+.metodo-nota{font-size:13px;color:var(--tinta-suave);margin:0 0 40px}
+
+section{padding-block:40px;border-top:1px solid var(--linea);scroll-margin-top:16px}
+.num{font-family:var(--f-mono);font-size:13px;color:var(--hoja);letter-spacing:.08em;display:block;margin-bottom:6px}
+h2{font-family:var(--f-display);font-weight:600;font-size:clamp(26px,3.6vw,34px);line-height:1.15;margin:0 0 16px;text-wrap:balance}
+h3{font-family:var(--f-display);font-weight:600;font-size:20px;margin:28px 0 10px}
+p,li{max-width:66ch}
+p{margin:0 0 14px}
+.etapa{display:inline-block;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--tinta-suave);margin-bottom:4px}
+
+.resultado{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin-top:20px}
+@media (max-width:640px){.resultado{grid-template-columns:minmax(0,1fr)}}
+.resultado div{border-left:2px solid var(--arena);padding:4px 0 4px 14px}
+.resultado b{display:block;font-family:var(--f-display);font-size:18px;font-weight:600;color:var(--bosque)}
+.resultado span{font-size:14px;color:var(--tinta-suave)}
+
+.regla{background:var(--bosque);color:var(--papel);border-radius:10px;padding:18px 22px;margin:24px 0}
+:root[data-theme="dark"] .regla{color:#151A16}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .regla{color:#151A16}}
+.regla b{display:block;font-size:12px;letter-spacing:.1em;text-transform:uppercase;margin-bottom:4px;opacity:.85}
+.regla p{margin:0;font-size:17px}
+
+table.donde{width:100%;border-collapse:collapse;font-size:15px;margin-top:8px}
+.tabla-scroll{overflow-x:auto}
+table.donde th,table.donde td{text-align:left;padding:12px 12px 12px 0;border-bottom:1px solid var(--linea);vertical-align:top}
+table.donde th{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--tinta-suave);font-weight:500}
+table.donde td:first-child{font-weight:600;white-space:nowrap}
+
+/* Clasificador */
+.clasificador{display:grid;gap:10px;margin-top:16px}
+.item{background:var(--superficie);border:1px solid var(--linea);border-radius:10px;padding:14px 16px;display:grid;gap:10px}
+.item q{font-style:normal;font-size:15px}
+.item q::before{content:"“"}.item q::after{content:"”"}
+.opciones{display:flex;flex-wrap:wrap;gap:6px}
+.opciones button{font:inherit;font-size:13px;padding:6px 12px;border-radius:999px;border:1px solid var(--linea);background:transparent;color:var(--tinta);cursor:pointer}
+.opciones button:hover{border-color:var(--hoja)}
+.opciones button.bien{background:var(--ok);border-color:var(--ok);color:var(--papel)}
+.opciones button.mal{border-color:var(--error);color:var(--error)}
+.retro{font-size:14px;color:var(--tinta-suave);margin:0}
+.retro.bien{color:var(--ok)}
+.marcador{font-family:var(--f-mono);font-size:13px;color:var(--tinta-suave);margin-top:6px}
+
+/* Antes / después */
+.comparar{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin-top:12px}
+@media (max-width:640px){.comparar{grid-template-columns:minmax(0,1fr)}}
+.comparar > div{background:var(--superficie);border:1px solid var(--linea);border-radius:10px;padding:16px;min-width:0}
+.comparar .tit{font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--tinta-suave);margin-bottom:8px;display:block}
+.comparar .despues{border-color:var(--hoja)}
+.comparar ul{margin:0;padding-left:18px;font-size:14px}
+.chat{font-family:var(--f-mono);font-size:13px;line-height:1.55;background:var(--papel);border-radius:6px;padding:10px 12px;margin:0 0 10px;white-space:pre-wrap;word-break:break-word}
+
+/* Constructor */
+.taller{background:var(--superficie);border:1px solid var(--linea);border-radius:14px;padding:22px;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:24px;margin-top:16px}
+@media (max-width:900px){.taller{grid-template-columns:minmax(0,1fr)}}
+.ejemplo-tag{grid-column:1/-1;font-size:13px;color:var(--tinta-suave);display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between}
+.ejemplo-tag span{background:var(--arena-suave);padding:3px 10px;border-radius:999px}
+.campos{display:grid;gap:14px;min-width:0}
+label{font-size:13px;font-weight:500;display:block;margin-bottom:4px}
+input[type=text],select,textarea{width:100%;font:inherit;font-size:15px;padding:9px 11px;border-radius:8px;border:1px solid var(--linea);background:var(--papel);color:var(--tinta)}
+textarea{resize:vertical;min-height:64px}
+input:focus,select:focus,textarea:focus,button:focus-visible,a:focus-visible{outline:2px solid var(--hoja);outline-offset:2px}
+fieldset{border:0;padding:0;margin:0}
+legend{font-size:13px;font-weight:500;margin-bottom:6px;padding:0}
+.chk{display:flex;gap:8px;align-items:flex-start;font-size:14px;font-weight:400;margin-bottom:6px;cursor:pointer}
+.chk input{margin-top:4px;accent-color:var(--hoja)}
+.salida{min-width:0;display:flex;flex-direction:column;gap:10px}
+.salida-cab{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+.contador{font-family:var(--f-mono);font-size:13px;padding:3px 10px;border-radius:999px;background:var(--papel);color:var(--tinta-suave)}
+.contador.alto{color:var(--error)}
+pre.codigo{background:var(--codigo-bg);color:var(--codigo-fg);font-family:var(--f-mono);font-size:13.5px;line-height:1.6;padding:16px 18px;border-radius:10px;margin:0;white-space:pre-wrap;word-break:break-word;overflow-x:auto}
+.btn{font:inherit;font-size:14px;font-weight:600;padding:9px 16px;border-radius:8px;border:0;cursor:pointer;background:var(--hoja);color:#fff}
+.btn.sec{background:transparent;border:1px solid var(--linea);color:var(--tinta);font-weight:500}
+.btn:hover{filter:brightness(1.08)}
+.estado{font-size:13px;color:var(--ok);min-height:1em}
+
+/* Checklist */
+.lista{list-style:none;padding:0;margin:16px 0 0;display:grid;gap:8px}
+.lista label{display:flex;gap:12px;align-items:flex-start;background:var(--superficie);border:1px solid var(--linea);border-radius:10px;padding:12px 14px;font-size:15px;font-weight:400;cursor:pointer;margin:0}
+.lista input{margin-top:5px;accent-color:var(--hoja);width:16px;height:16px;flex:none}
+.lista small{display:block;color:var(--tinta-suave);font-size:13px}
+.barra{height:6px;background:var(--linea);border-radius:99px;overflow:hidden;margin-top:14px;max-width:420px}
+.barra i{display:block;height:100%;background:var(--hoja);width:0;transition:width .3s}
+@media (prefers-reduced-motion: reduce){.barra i{transition:none}}
+
+/* Fallos */
+dl.fallos{display:grid;gap:0;margin:12px 0 0}
+dl.fallos div{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.4fr);gap:16px;padding:14px 0;border-bottom:1px solid var(--linea)}
+@media (max-width:640px){dl.fallos div{grid-template-columns:minmax(0,1fr);gap:4px}}
+dt{font-weight:600}
+dd{margin:0;color:var(--tinta-suave)}
+
+/* Lo honesto */
+.honesto{background:var(--arena-suave);border-radius:14px;padding:24px;margin-top:8px}
+.honesto h3{margin-top:0}
+.honesto ul{padding-left:18px;margin:0 0 12px}
+.honesto li{margin-bottom:6px}
+.fuente{font-size:13px;color:var(--tinta-suave)}
+.fuente a{color:var(--hoja)}
+
+footer{border-top:1px solid var(--linea);padding-top:28px;margin-top:24px;font-size:13px;color:var(--tinta-suave);display:grid;gap:8px}
+footer .lema{font-family:var(--f-display);font-size:18px;color:var(--bosque)}
+a{color:var(--hoja)}
+.siguiente{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-top:20px}
+.siguiente a{flex:1 1 220px;border:1px solid var(--linea);border-radius:10px;padding:14px 16px;text-decoration:none;color:var(--tinta)}
+.siguiente a small{display:block;color:var(--tinta-suave);font-size:12px;text-transform:uppercase;letter-spacing:.08em}
+</style>
+<style>
+.tareas{width:100%;border-collapse:collapse;font-size:15px;margin-top:8px;font-variant-numeric:tabular-nums}
+.tareas th,.tareas td{text-align:left;padding:12px 14px 12px 0;border-bottom:1px solid var(--linea);vertical-align:top}
+.tareas th{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--tinta-suave);font-weight:500}
+.tareas td.cifra{font-family:var(--f-mono);font-size:14px;white-space:nowrap}
+.tareas td.cifra small{display:block;color:var(--tinta-suave);font-size:12px}
+.unidades{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin:16px 0 8px}
+.unidades div{background:var(--superficie);border:1px solid var(--linea);border-radius:10px;padding:14px 16px}
+.unidades b{font-family:var(--f-mono);font-size:15px;color:var(--hoja);display:block;margin-bottom:2px}
+.unidades span{font-size:14px;color:var(--tinta-suave)}
+.pasos6{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:16px;counter-reset:p}
+@media (max-width:760px){.pasos6{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:460px){.pasos6{grid-template-columns:minmax(0,1fr)}}
+.pasos6 div{background:var(--superficie);border:1px solid var(--linea);border-radius:10px;padding:16px;counter-increment:p}
+.pasos6 div::before{content:counter(p);font-family:var(--f-mono);font-size:12px;color:var(--hoja);display:block}
+.pasos6 b{font-family:var(--f-display);font-size:20px;font-weight:600;color:var(--bosque);display:block;margin:2px 0 6px}
+.pasos6 p{font-size:14px;margin:0;color:var(--tinta-suave)}
+.pasos6 em{font-style:normal;display:block;margin-top:8px;font-size:14px;color:var(--tinta)}
+.puertas{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin-top:16px}
+@media (max-width:640px){.puertas{grid-template-columns:minmax(0,1fr)}}
+.puertas a{display:block;background:var(--superficie);border:1px solid var(--linea);border-radius:12px;padding:18px;text-decoration:none;color:var(--tinta)}
+.puertas a:hover{border-color:var(--hoja)}
+.puertas b{font-family:var(--f-display);font-size:20px;color:var(--bosque);display:block;margin-bottom:4px}
+.puertas span{font-size:14px;color:var(--tinta-suave);display:block}
+.puertas i{font-style:normal;font-size:13px;color:var(--hoja);display:block;margin-top:10px;font-weight:600}
+.arbol{background:var(--superficie);border:1px solid var(--linea);border-radius:14px;padding:22px;margin-top:16px}
+.arbol .paso{font-family:var(--f-mono);font-size:12px;color:var(--tinta-suave)}
+.arbol .preg{font-family:var(--f-display);font-size:22px;font-weight:600;margin:6px 0 16px;color:var(--tinta);text-wrap:balance}
+.arbol .botones{display:flex;gap:10px;flex-wrap:wrap}
+.arbol .final{border-left:3px solid var(--hoja);padding:4px 0 4px 14px;margin-bottom:16px}
+.arbol .final b{display:block;font-family:var(--f-display);font-size:22px;color:var(--bosque);margin-bottom:4px}
+.arbol .camino{font-size:13px;color:var(--tinta-suave);margin-top:14px}
+.pestanas{display:flex;flex-wrap:wrap;gap:6px;margin-top:16px}
+.pestanas button{font:inherit;font-size:14px;padding:8px 14px;border-radius:999px;border:1px solid var(--linea);background:transparent;color:var(--tinta);cursor:pointer}
+.pestanas button[aria-selected="true"]{background:var(--bosque);border-color:var(--bosque);color:var(--papel)}
+.ficha{background:var(--superficie);border:1px solid var(--linea);border-radius:14px;padding:22px;margin-top:12px;display:grid;gap:18px}
+.ficha-cab{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+@media (max-width:640px){.ficha-cab{grid-template-columns:minmax(0,1fr)}}
+.ficha-cab div b,.bloque>b{display:block;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--tinta-suave);font-weight:500;margin-bottom:4px}
+.ficha-cab p{margin:0;font-size:15px}
+.ficha-cuerpo{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.2fr);gap:20px}
+@media (max-width:860px){.ficha-cuerpo{grid-template-columns:minmax(0,1fr)}}
+.ficha ul{margin:0;padding-left:18px;font-size:15px}
+.ficha li{margin-bottom:4px}
+.liviana{font-size:14px}
+.liviana pre.codigo{font-size:13px}
+.nota-prueba{font-size:13px;color:var(--tinta-suave);background:var(--arena-suave);border-radius:8px;padding:10px 14px;margin-top:12px}
+.nunca{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:16px;list-style:none;padding:0}
+@media (max-width:640px){.nunca{grid-template-columns:minmax(0,1fr)}}
+.nunca li{background:var(--superficie);border:1px solid var(--linea);border-left:3px solid var(--error);border-radius:8px;padding:12px 14px;font-size:15px;max-width:none}
+.nunca small{display:block;color:var(--tinta-suave);font-size:13px}
+.incluye{columns:2;column-gap:28px;padding-left:18px}
+@media (max-width:640px){.incluye{columns:1}}
+.incluye li{break-inside:avoid;margin-bottom:6px}
+.pronto{display:inline-block;margin-top:12px;font-size:14px;padding:10px 16px;border-radius:8px;border:1px dashed var(--hoja);color:var(--hoja)}
+</style>
+
+
+</head>
+<body>
+<div class="envoltura">
+  <nav class="indice" aria-label="Secciones del kit">
+    <a class="marca" href="/" style="text-decoration:none">somosgreenia</a>
+    <ol>
+      <li><a href="#bienvenida"><span>01</span>Bienvenida</a></li>
+      <li><a href="#cuesta"><span>02</span>Lo que cuesta un intento</a></li>
+      <li><a href="#metodo"><span>03</span>El método</a></li>
+      <li><a href="#partida"><span>04</span>Tu punto de partida</a></li>
+      <li><a href="#necesito"><span>05</span>¿Necesito IA?</a></li>
+      <li><a href="#capa"><span>06</span>Tu capa en 5 líneas</a></li>
+      <li><a href="#plantillas"><span>07</span>5 plantillas</a></li>
+      <li><a href="#nunca"><span>08</span>Qué nunca pegar</a></li>
+      <li><a href="#siguiente"><span>09</span>Siguiente paso</a></li>
+    </ol>
+  </nav>
+
+  <main>
+    <p class="miga"><a href="/" style="color:inherit">← somosgreenia.com</a> · Playbook IA con criterio · <b>Kit gratis</b></p>
+    <h1>Deja de improvisar con la IA</h1>
+    <p class="entrada">Mejores resultados a la primera, sin exponer tus datos y sin desperdiciar intentos. Este kit te da el método, una capa lista y 5 plantillas para usar hoy mismo.</p>
+    <ul class="metodo" aria-label="Método IA con criterio">
+      <li>Decidir</li><li>Elegir</li><li>Preparar</li><li>Pedir</li><li>Verificar</li><li>Guardar</li>
+    </ul>
+    <p class="metodo-nota">Tiempo: 30 minutos. No necesitas saber de tecnología.</p>
+
+    <section id="bienvenida">
+      <span class="num">01</span>
+      <h2>Bienvenida</h2>
+      <p>Este kit es para ti si usas la IA casi todos los días, pero cada vez empiezas de cero: escribes lo primero que se te ocurre, la respuesta no sirve, la pides otra vez y al final la terminas corrigiendo a mano.</p>
+      <p>Eso no es un problema de la herramienta. Es falta de método. Y tiene un costo: tu tiempo, y también la energía y el agua que se gastan en cada intento.</p>
+      <div class="resultado">
+        <div><b>Un método de 6 pasos</b><span>Para decidir, pedir y revisar con criterio.</span></div>
+        <div><b>Tu capa lista</b><span>5 líneas que pegas una vez en tu IA.</span></div>
+        <div><b>5 plantillas</b><span>Correo, resumen, acta, investigación y revisión de texto.</span></div>
+      </div>
+    </section>
+
+    <section id="cuesta">
+      <span class="num">02</span>
+      <span class="etapa">Aprende</span>
+      <h2>Lo que cuesta un intento</h2>
+      <p>Antes de las cifras, las unidades. Son cuatro y se entienden con cosas de la casa:</p>
+      <div class="unidades">
+        <div><b>Wh (vatio-hora)</b><span>Energía. 1 Wh es lo que gasta un bombillo LED de 10 W prendido 6 minutos.</span></div>
+        <div><b>kWh (kilovatio-hora)</b><span>1.000 Wh. Es la unidad que aparece en tu recibo de la luz.</span></div>
+        <div><b>mL de agua</b><span>Los centros de datos usan agua para enfriar sus equipos. Una gota son unos 0,05 mL.</span></div>
+        <div><b>kg de CO₂</b><span>Emisiones de generar esa electricidad. Un carro a gasolina emite unos 250 g por kilómetro.</span></div>
+      </div>
+      <p>Con eso claro, esto es lo que gasta cada tipo de tarea, según los estudios públicos más recientes:</p>
+      <div class="tabla-scroll">
+      <table class="tareas">
+        <thead><tr><th>Tarea</th><th>Energía estimada</th><th>Para imaginarlo</th></tr></thead>
+        <tbody>
+          <tr><td>Un mensaje de chat</td><td class="cifra">0,3 Wh<small>rango 0,16–0,6</small></td><td>El bombillo prendido casi 2 minutos. Unas 6 gotas de agua.</td></tr>
+          <tr><td>Una imagen</td><td class="cifra">1,2 Wh<small>rango 0,6–2,9</small></td><td>El bombillo prendido unos 7 minutos. Unas 26 gotas de agua.</td></tr>
+          <tr><td>Una consulta con razonamiento</td><td class="cifra">4 Wh<small>rango 2,15–9</small></td><td>El bombillo prendido unos 24 minutos. Casi una cucharadita de agua.</td></tr>
+          <tr><td>Un video de 5 segundos</td><td class="cifra">944 Wh<small>rango 30–944</small></td><td>El bombillo prendido unas 94 horas. Cerca de un litro de agua: unos 4 vasos.</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <p style="margin-top:16px">Si usas la IA toda la jornada, tu año suma unos <b>8,7 kWh y 4 kg de CO₂</b>: como manejar unos 16 km en carro. Tu parte es pequeña. La suma de millones de personas, no.</p>
+      <div class="regla"><b>La idea que importa</b><p>Cada vez que repites una pregunta porque salió mal, el gasto se repite. El intento más eficiente es el que sirve a la primera.</p></div>
+      <p class="fuente">Son estimaciones con rango, no mediciones exactas. Fuentes: <a href="https://www.cell.com/joule/fulltext/S2542-4351(26)00114-5" target="_blank" rel="noopener">Oviedo et al., Joule, 2026</a> (chat y razonamiento); <a href="https://www.technologyreview.com/2025/05/20/1116327/ai-energy-usage-climate-footprint-big-tech/" target="_blank" rel="noopener">MIT Technology Review, 2025</a> (imagen y video); <a href="https://arxiv.org/abs/2508.15734" target="_blank" rel="noopener">Elsworth et al., Google, 2025</a> (agua de refrigeración: 1,1 L por kWh; una gota ≈ 0,05 mL, una cucharadita = 5 mL, un vaso = 250 mL); <a href="https://ember-energy.org/latest-insights/global-electricity-review-2026/" target="_blank" rel="noopener">Ember, 2026</a> (458 g de CO₂ por kWh, promedio mundial 2025); <a href="https://www.epa.gov/greenvehicles/greenhouse-gas-emissions-typical-passenger-vehicle" target="_blank" rel="noopener">EPA</a> (carro). Cálculo anual: Estándar somosgreenia v1.1, perfil Profesional (≈ 35 Wh por día laboral, 250 días).</p>
+    </section>
+
+    <section id="metodo">
+      <span class="num">03</span>
+      <h2>El método en una página</h2>
+      <p>Seis pasos, en orden. Cada uno responde una pregunta.</p>
+      <div class="pasos6">
+        <div><b>Decidir</b><p>No toda tarea necesita IA.</p><em>¿Esto lo resuelve mejor una búsqueda, una plantilla o yo?</em></div>
+        <div><b>Elegir</b><p>No toda tarea necesita el modelo más potente.</p><em>¿Cuál es el modelo más liviano que lo resuelve?</em></div>
+        <div><b>Preparar</b><p>La IA solo sabe lo que le das.</p><em>¿Le di el contexto, el objetivo y el formato?</em></div>
+        <div><b>Pedir</b><p>Una instrucción clara ahorra tres intentos.</p><em>¿Lo pedí todo en un solo mensaje?</em></div>
+        <div><b>Verificar</b><p>La IA se equivoca con seguridad.</p><em>¿Revisé cifras, nombres y citas?</em></div>
+        <div><b>Guardar</b><p>Lo que funcionó no se vuelve a inventar.</p><em>¿Guardé este prompt para la próxima vez?</em></div>
+      </div>
+    </section>
+
+    <section id="partida">
+      <span class="num">04</span>
+      <span class="etapa">Hazlo</span>
+      <h2>Tu punto de partida</h2>
+      <p>Antes de cambiar hábitos, mira dónde estás. Son dos herramientas gratuitas y ninguna guarda tus respuestas.</p>
+      <div class="puertas">
+        <a href="/test"><b>¿Qué tan consciente es tu IA?</b><span>10 preguntas de sí o no. Te dice cuántos hábitos conscientes tienes y cuáles son tus 3 próximos pasos.</span><i>Hacer el test · 3 minutos</i></a>
+        <a href="/calculadora"><b>Calculadora Huella IA</b><span>Escribe cuánto usas la IA en un día normal y mira tu energía, agua y CO₂ estimados, con su rango.</span><i>Calcular mi huella · 2 minutos</i></a>
+      </div>
+      <p style="margin-top:16px">Anota tus dos resultados. Al terminar el kit, vuelve a hacer el test.</p>
+    </section>
+
+    <section id="necesito">
+      <span class="num">05</span>
+      <span class="etapa">Decidir</span>
+      <h2>¿Necesito IA para esto?</h2>
+      <p>Piensa en una tarea que tengas hoy y responde. Son máximo cuatro preguntas.</p>
+      <div class="arbol" id="arbol" aria-live="polite"></div>
+      <h3>Todos los caminos en una tabla</h3>
+      <p>Las preguntas van en orden: el árbol se detiene en la primera respuesta que da un consejo.</p>
+      <div class="tabla-scroll">
+      <table class="tareas">
+        <thead><tr><th>1. ¿Tienes una plantilla o un texto anterior?</th><th>2. ¿Lo resuelve un buscador o una calculadora?</th><th>3. ¿Tiene datos sensibles que no puedes quitar?</th><th>4. ¿Puedes revisar el resultado?</th><th>Consejo</th></tr></thead>
+        <tbody>
+          <tr><td>Sí</td><td>—</td><td>—</td><td>—</td><td><b>Reutilízalo.</b> Ajusta a mano lo que cambie.</td></tr>
+          <tr><td>No</td><td>Sí</td><td>—</td><td>—</td><td><b>Usa el buscador o la calculadora.</b> Es más rápido y ves la fuente.</td></tr>
+          <tr><td>No</td><td>No</td><td>Sí</td><td>—</td><td><b>Esa parte hazla tú.</b> Quita los datos primero o no uses IA para esa parte.</td></tr>
+          <tr><td>No</td><td>No</td><td>No</td><td>Sí</td><td><b>Adelante: usa la IA.</b> Elige el modelo más liviano que sirva y una plantilla.</td></tr>
+          <tr><td>No</td><td>No</td><td>No</td><td>No</td><td><b>Úsala solo para aprender.</b> Valida con alguien que sepa antes de usar el resultado.</td></tr>
+        </tbody>
+      </table>
+      </div>
+    </section>
+
+    <section id="capa">
+      <span class="num">06</span>
+      <span class="etapa">Preparar</span>
+      <h2>Tu capa en 5 líneas</h2>
+      <p>Tu capa es lo que le dices a la IA una sola vez: quién eres y cómo quieres las respuestas. Se pega en la configuración de tu IA, en la opción de instrucciones personalizadas o personalización, y desde ahí aplica a todos tus chats.</p>
+      <div class="taller">
+        <form class="campos" id="formCapa" autocomplete="off">
+          <div><label for="cProf">¿Qué haces?</label><input type="text" id="cProf" value="consultor de mercadeo"></div>
+          <div><label for="cSector">¿Con quién trabajas?</label><input type="text" id="cSector" value="pequeñas empresas de Bogotá"></div>
+          <p class="fuente" style="margin:0">Viene con un ejemplo. Cambia los datos por los tuyos.</p>
+        </form>
+        <div class="salida">
+          <div class="salida-cab"><b>Tu capa</b><span class="contador">5 líneas</span></div>
+          <pre class="codigo" id="capaMini"></pre>
+          <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap"><button class="btn" type="button" data-copiar="capaMini">Copiar mi capa</button><span class="estado" role="status"></span></div>
+        </div>
+      </div>
+      <p class="fuente" style="margin-top:12px">En el Playbook Estándar, el capítulo "Tu capa" te enseña a armar una completa, a decidir qué va en tu cuenta y qué en un proyecto, y a comprobar que funciona.</p>
+    </section>
+
+    <section id="plantillas">
+      <span class="num">07</span>
+      <span class="etapa">Pedir</span>
+      <h2>5 plantillas para usar hoy</h2>
+      <p>Elige una. Llena los campos y el prompt se arma solo. Cópialo y pégalo en tu IA.</p>
+      <div class="pestanas" role="tablist" id="pestanas"></div>
+      <div class="ficha" id="ficha" role="tabpanel"></div>
+      <p class="nota-prueba"><b>Probadas en octubre de 2026.</b> Cada plantilla se probó con 3 casos reales en 2 modelos de IA: uno intermedio y uno liviano, ambos del mismo proveedor (Anthropic). El intermedio cumplió los criterios de "Cómo evaluarlo" en los 15 casos. El liviano cumplió en 6 de 15; ajustamos las plantillas con lo aprendido y, al repetir los casos que fallaron, subió a 8 de 15. Por eso cada versión liviana trae una recomendación. Es una prueba propia y pequeña, no un estudio: tu resultado puede variar según el modelo y el caso.</p>
+    </section>
+
+    <section id="nunca">
+      <span class="num">08</span>
+      <span class="etapa">Verificar</span>
+      <h2>Qué nunca pegar en una IA</h2>
+      <ul class="nunca">
+        <li>Contraseñas y códigos de acceso<small>Ni siquiera para "revisar si es segura".</small></li>
+        <li>Números de cédula, cuentas bancarias o tarjetas<small>Ni tuyos ni de nadie más.</small></li>
+        <li>Datos personales de clientes o empleados<small>Nombres, teléfonos, direcciones, correos. En Colombia, tratarlos exige su autorización (Ley 1581 de 2012).</small></li>
+        <li>Información de salud de otras personas<small>Diagnósticos, incapacidades, historias clínicas.</small></li>
+        <li>Documentos confidenciales de tu empresa<small>Salvo que tu empresa lo haya autorizado por escrito.</small></li>
+        <li>Lo que no mandarías a un grupo de WhatsApp<small>Si te daría problemas que otra persona lo lea, no lo pegues.</small></li>
+      </ul>
+      <h3>Cómo anonimizar en 30 segundos</h3>
+      <p><b>Anonimizar</b> es quitar o cambiar los datos que permiten saber de quién se habla, para que nadie pueda identificar a la persona o a la empresa.</p>
+      <ol>
+        <li>Cambia los nombres por roles: "Cliente A", "la gerente", "el proveedor".</li>
+        <li>Borra teléfonos, direcciones, correos y números de documento.</li>
+        <li>Si la cifra exacta no importa para la tarea, redondéala.</li>
+      </ol>
+      <p>Revisa también la configuración de privacidad de tu IA: muchas apps permiten decidir si tus conversaciones se usan para mejorar sus modelos.</p>
+    </section>
+
+    <section id="siguiente">
+      <span class="num">09</span>
+      <h2>Siguiente paso</h2>
+      <p>Este kit es la puerta de entrada. El Playbook Estándar convierte el método en un sistema de trabajo que repites todos los días:</p>
+      <ul class="incluye">
+        <li>Los 6 pasos, capítulo por capítulo, con ejercicios.</li>
+        <li>Tu capa completa y cómo comprobar que funciona.</li>
+        <li>25 plantillas con su anatomía completa.</li>
+        <li>8 prompts de operación diaria.</li>
+        <li>8 flujos de trabajo, de la reunión al plan de acción.</li>
+        <li>La Radiografía IA: tu uso real, medido con tus chats.</li>
+        <li>Una nueva medición al final, para ver tu avance.</li>
+      </ul>
+      <p style="margin-top:16px">El Playbook Estándar sale pronto. Para enterarte del lanzamiento, síguenos en Instagram.</p>
+      <a class="pronto" href="https://www.instagram.com/somos.greenia/" target="_blank" rel="noopener">Seguir a @somos.greenia</a>
+    </section>
+
+    <footer>
+      <span class="lema">Primero criterio, luego IA.</span>
+      <span>Las cifras son estimaciones educativas basadas en estudios públicos, con su fuente, año y rango. somosgreenia no está afiliada a ningún proveedor de IA. Este contenido no constituye asesoría legal, contable ni técnica.</span>
+      <span>© 2026 somosgreenia · somosgreenia.com · @somos.greenia</span>
+      <span><a href="/privacidad">Política de privacidad</a> · <a href="/cookies">Política de cookies</a> · Esta página no pide datos ni guarda lo que escribes.</span>
+    </footer>
+  </main>
+</div>
+
+<script>
+(function(){
+  function copiar(texto,estado){
+    function hecho(){if(estado){estado.textContent="Copiado";setTimeout(function(){estado.textContent=""},2500)}}
+    function respaldo(){
+      var t=document.createElement("textarea");t.value=texto;t.setAttribute("readonly","");t.style.position="absolute";t.style.left="-9999px";
+      document.body.appendChild(t);t.select();
+      try{document.execCommand("copy");hecho()}catch(e){if(estado)estado.textContent="Selecciona el texto y cópialo a mano"}
+      document.body.removeChild(t);
+    }
+    try{if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(texto).then(hecho,respaldo)}else respaldo()}catch(e){respaldo()}
+  }
+  document.addEventListener("click",function(e){
+    var b=e.target.closest("[data-copiar]");if(!b)return;
+    var el=document.getElementById(b.getAttribute("data-copiar"));
+    copiar(el.textContent,b.parentNode.querySelector(".estado"));
+  });
+
+  // Árbol de decisión
+  var arbol=document.getElementById("arbol");
+  var P=[
+    {q:"¿Ya tienes una plantilla, un formato o un texto anterior que te sirva?",si:{t:"Reutilízalo",d:"Ajusta a mano lo que cambie. Es más rápido y no gasta nada."}},
+    {q:"¿Lo resuelve una búsqueda simple o una calculadora? (Un dato, una dirección, una cuenta.)",si:{t:"Usa el buscador o la calculadora",d:"Es más rápido y puedes ver de dónde sale el dato."}},
+    {q:"¿La tarea tiene datos sensibles que no puedes quitar?",si:{t:"Esa parte hazla tú",d:"Quita los datos sensibles primero (sección 08) o no uses IA para esa parte."}},
+    {q:"¿Puedes revisar el resultado y saber si está bien?",si:null,no:{t:"Úsala solo para aprender",d:"Explora con la IA, pero valida con alguien que sepa antes de usar el resultado."}}
+  ];
+  var FIN={t:"Adelante: usa la IA",d:"Sigue al paso Elegir: busca el modelo más liviano que resuelva la tarea, y usa una de las plantillas de la sección 07."};
+  var camino=[];
+  function pintar(i,res){
+    arbol.innerHTML="";
+    if(res){
+      var f=document.createElement("div");f.className="final";
+      f.innerHTML="<b></b><p style=\"margin:0\"></p>";f.querySelector("b").textContent=res.t;f.querySelector("p").textContent=res.d;
+      arbol.appendChild(f);
+      var r=document.createElement("button");r.className="btn sec";r.type="button";r.textContent="Probar con otra tarea";
+      r.addEventListener("click",function(){camino=[];pintar(0)});arbol.appendChild(r);
+    }else{
+      var s=document.createElement("div");s.className="paso";s.textContent="Pregunta "+(i+1)+" de 4";arbol.appendChild(s);
+      var q=document.createElement("p");q.className="preg";q.textContent=P[i].q;arbol.appendChild(q);
+      var bx=document.createElement("div");bx.className="botones";
+      [["Sí",true],["No",false]].forEach(function(o){
+        var b=document.createElement("button");b.type="button";b.className=o[1]?"btn":"btn sec";b.textContent=o[0];
+        b.addEventListener("click",function(){
+          camino.push(o[0]);
+          var p=P[i];
+          if(o[1]&&p.si) return pintar(i,p.si);
+          if(!o[1]&&p.no) return pintar(i,p.no);
+          if(i===3) return pintar(i,FIN);
+          pintar(i+1);
+        });
+        bx.appendChild(b);
+      });
+      arbol.appendChild(bx);
+    }
+    if(camino.length){var c=document.createElement("p");c.className="camino";c.textContent="Tus respuestas: "+camino.join(" → ");arbol.appendChild(c)}
+  }
+  pintar(0);
+
+  // Capa mínima
+  function capa(){
+    var p=document.getElementById("cProf").value.trim()||"[tu profesión]";
+    var s=document.getElementById("cSector").value.trim()||"[tus clientes o tu sector]";
+    document.getElementById("capaMini").textContent=
+      "Soy "+p+" y trabajo con "+s+".\n"+
+      "Dame primero la conclusión y después el detalle.\n"+
+      "Respuestas cortas, salvo que pida más.\n"+
+      "Si te falta información, pregúntame antes de responder.\n"+
+      "No inventes cifras, fechas, nombres ni citas. Si no estás seguro, dilo.";
+  }
+  document.getElementById("formCapa").addEventListener("input",capa);capa();
+
+  // Plantillas
+  var T=[
+    {id:"correo",nombre:"Correo",obj:"Un correo claro, listo para enviar a la primera.",cuando:"Para pedir algo, responder o hacer seguimiento.",
+     campos:[["dest","¿Para quién es?","text","un cliente que no ha pagado la factura de agosto"],["meta","¿Qué quieres lograr?","text","que pague esta semana sin dañar la relación"],["datos","Datos que debe incluir","text","factura 1024, $1.250.000, venció el 15 de septiembre"],["tono","Tono","select",["cordial y directo","formal","cercano"]]],
+     prompt:function(v){return "Escribe un correo para "+v.dest+".\nObjetivo: "+v.meta+".\nDatos que debe incluir: "+v.datos+".\nTono: "+v.tono+".\nIncluye un asunto y usa máximo 120 palabras.\nEmpieza con lo que necesitas, sin saludos de relleno.\nTermina con una sola acción clara para quien lo recibe.\nNo agregues razones, fechas ni datos que no te di."},
+     resultado:"Asunto y tres párrafos cortos que terminan en una sola acción.",
+     evaluar:["La primera línea deja claro qué pides.","Están todos tus datos y ninguno inventado.","Termina con una sola acción."],
+     variacion:"Dame 2 versiones: una más firme y una más amable.",
+     liviana:function(v){return "Correo para "+v.dest+". Objetivo: "+v.meta+". Datos: "+v.datos+". Tono "+v.tono+". Con asunto, máximo 120 palabras. Empieza con lo que necesito y no agregues razones ni datos que no te di."},
+     livNota:"Recomendada. En nuestras pruebas, el modelo liviano escribió buenos correos; con las reglas de esta versión dejó de inventar razones."},
+    {id:"resumen",nombre:"Resumen de documento",obj:"Entender un documento largo en minutos, sin perder lo que importa.",cuando:"Contratos, informes, propuestas o normas que no tienes tiempo de leer completos.",
+     campos:[["doc","¿Qué documento es?","text","contrato de arrendamiento de un local"],["para","¿Para qué lo necesitas?","text","decidir si lo renuevo"],["importa","¿Qué te importa?","text","plazos, costos y causales de terminación"]],
+     prompt:function(v){return "Te voy a pegar este documento: "+v.doc+". Lo necesito para "+v.para+".\nResume en este orden:\n1. La conclusión en una línea.\n2. En viñetas, lo que dice sobre: "+v.importa+".\n3. Lo que no está claro o falta en el documento.\nSi ves un plazo o un riesgo que deba atender pronto, ponlo en la conclusión.\nCita la sección o la página de cada punto. Si algo no aparece en el texto, escribe \"no aparece\"; no lo supongas ni saques conclusiones que el documento no respalde.\n\n[Pega aquí el documento, sin datos sensibles]"},
+     resultado:"Una conclusión, viñetas con su sección y una lista de vacíos.",
+     evaluar:["Cada punto trae su sección o página.","Comparaste al menos 2 puntos con el original.","Marcó lo que falta. Si es un contrato, no reemplaza la revisión de un abogado."],
+     variacion:"Ahora explícamelo como se lo contarías a alguien sin formación en el tema.",
+     liviana:function(v){return "Resume este documento ("+v.doc+") para "+v.para+": la conclusión en una línea y viñetas sobre "+v.importa+". Cita la sección de cada punto. Si algo no aparece, dilo; no lo supongas."},
+     livNota:"Úsala con documentos cortos y revisa la conclusión: en nuestras pruebas, el modelo liviano sacó conclusiones que el documento no respaldaba y no avisó de un plazo vencido. Para contratos o decisiones importantes, usa un modelo intermedio."},
+    {id:"acta",nombre:"Acta de reunión",obj:"Convertir tus notas en decisiones y tareas con responsable.",cuando:"Después de cualquier reunión con más de dos personas o con compromisos.",
+     campos:[["tema","Tema de la reunión","text","lanzamiento de la campaña de diciembre"],["part","Participantes (roles o iniciales)","text","gerente, diseñadora, A. R. de ventas"],["notas","Tus notas","area","se aprueba presupuesto; diseño entrega piezas el 20; falta definir pauta; ventas pide reunión con el cliente"]],
+     prompt:function(v){return "Con estas notas de una reunión sobre "+v.tema+" (participantes: "+v.part+"), arma un acta con:\n1. Decisiones tomadas.\n2. Tareas en una tabla: qué, quién y para cuándo.\n3. Temas pendientes.\nUsa solo lo que está en las notas. Lo que solo se habló, sin decidirse, va en pendientes, no en decisiones.\nQuien pide una tarea no siempre es quien la hace: si no está claro quién la hace o para cuándo, escribe \"por definir\".\n\nNotas:\n"+v.notas},
+     resultado:"Tres bloques y una tabla de tareas.",
+     evaluar:["Cada tarea tiene quién y cuándo, o dice \"por definir\".","No aparece ninguna decisión que nadie tomó.","Lo pendiente quedó separado de lo decidido."],
+     variacion:"Escribe el correo de seguimiento para los participantes con estas tareas.",
+     liviana:function(v){return "Acta de estas notas sobre "+v.tema+": decisiones, tareas (qué, quién, cuándo) y pendientes. Solo con lo que está en las notas; lo que solo se habló va en pendientes.\n\n"+v.notas},
+     livNota:"Sirve, pero revisa quién hace cada tarea: en nuestras pruebas, el modelo liviano a veces puso como responsable a quien pidió la tarea."},
+    {id:"investigacion",nombre:"Investigación rápida",obj:"Entender un tema nuevo, separando hechos de opiniones.",cuando:"Antes de una reunión, una propuesta o una decisión sobre algo que no dominas.",
+     campos:[["tema","Tema","text","facturación electrónica para pequeños negocios en Colombia"],["para","¿Para qué?","text","explicárselo a un cliente nuevo"],["prof","Profundidad","select",["5 puntos clave","una página"]]],
+     prompt:function(v){return "Necesito entender "+v.tema+" para "+v.para+".\nDame "+v.prof+", en lenguaje simple.\nSepara los hechos comprobables de las opiniones o tendencias.\nPara cada hecho, dime de dónde sale (fuente y año). Si no tienes una fuente confiable, dilo.\nSi no estás seguro de un número de norma o artículo, una cifra o un nombre, no lo des: di que no estás seguro.\nAl final, dame 3 preguntas que debería hacer para profundizar."},
+     resultado:"Hechos con fuente y año, opiniones aparte y 3 preguntas.",
+     evaluar:["Abriste al menos 2 fuentes y dicen lo mismo.","Las fuentes son recientes. Si tu IA no busca en internet, sus datos pueden estar desactualizados.","Ningún hecho quedó sin fuente."],
+     variacion:"Ahora dame los mejores argumentos en contra.",
+     liviana:function(v){return "Explícame "+v.tema+" en "+v.prof+" para "+v.para+", con fuente y año de cada dato. Si no estás seguro de un dato, dilo."},
+     livNota:"No recomendada. En nuestras pruebas, el modelo liviano inventó números de artículos de ley, cifras y nombres de empresas, incluso con la regla de no hacerlo. Para investigar, usa un modelo intermedio con la búsqueda en internet activada y abre las fuentes."},
+    {id:"revision",nombre:"Revisión de texto",obj:"Corregir un texto sin que la IA lo reescriba a su manera.",cuando:"Antes de enviar una propuesta, un informe o un correo importante.",
+     campos:[["tipo","¿Qué texto es?","text","propuesta comercial"],["quien","¿Para quién?","text","el gerente de una cadena de restaurantes"],["aspectos","¿Qué revisar?","select",["ortografía, puntuación y claridad","solo ortografía y puntuación","claridad y largo","tono"]]],
+     prompt:function(v){return "Revisa el siguiente texto ("+v.tipo+").\nQuién lo va a leer: "+v.quien+".\nQué revisar: "+v.aspectos+".\nPrimero, dame una tabla con cada cambio: texto original, corrección y motivo.\nDespués, la versión corregida completa.\nRevisa el texto completo: la versión final no debe quedar con errores de lo que pedí revisar.\nNo cambies el sentido, las cifras, las fechas, los plazos ni los nombres, y no agregues ideas nuevas.\n\n[Pega aquí tu texto]"},
+     resultado:"Una tabla de cambios con su motivo y el texto corregido.",
+     evaluar:["Cada cambio tiene su motivo.","Tus cifras y nombres siguen iguales.","Suena a ti, no a la IA."],
+     variacion:"Recórtalo a la mitad sin perder ningún dato.",
+     liviana:function(v){return "Corrige "+v.aspectos+" de este texto. Devuélveme solo las frases que cambiaste, con la corrección. No cambies cifras, fechas ni el sentido."},
+     livNota:"Sirve para ortografía y puntuación, aunque se le escapan algunos errores. Para claridad y largo, usa un modelo intermedio: en nuestras pruebas, el liviano cambió un plazo al acortar el texto."}
+  ];
+  var tabs=document.getElementById("pestanas"), ficha=document.getElementById("ficha"), actual=0, valores={};
+  function esc(s){return String(s).replace(/[&<>"]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;"}[c]})}
+  T.forEach(function(t,i){
+    var b=document.createElement("button");b.type="button";b.setAttribute("role","tab");b.textContent=t.nombre;b.id="tab-"+t.id;
+    b.addEventListener("click",function(){abrir(i)});tabs.appendChild(b);
+  });
+  function leer(t){
+    var v={};t.campos.forEach(function(c){var el=document.getElementById("f-"+t.id+"-"+c[0]);v[c[0]]=(el.value.trim()||"["+c[1].replace(/[¿?]/g,"").toLowerCase()+"]")});return v;
+  }
+  function actualizar(){
+    var t=T[actual],v=leer(t);
+    document.getElementById("pr-"+t.id).textContent=t.prompt(v);
+    document.getElementById("lv-"+t.id).textContent=t.liviana(v);
+  }
+  function abrir(i){
+    actual=i;var t=T[i];
+    [].forEach.call(tabs.children,function(b,j){b.setAttribute("aria-selected",j===i?"true":"false")});
+    ficha.setAttribute("aria-labelledby","tab-"+t.id);
+    var campos=t.campos.map(function(c){
+      var fid="f-"+t.id+"-"+c[0], h="<div><label for=\""+fid+"\">"+esc(c[1])+"</label>";
+      if(c[2]==="select") h+="<select id=\""+fid+"\">"+c[3].map(function(o){return "<option>"+esc(o)+"</option>"}).join("")+"</select>";
+      else if(c[2]==="area") h+="<textarea id=\""+fid+"\">"+esc(c[3])+"</textarea>";
+      else h+="<input type=\"text\" id=\""+fid+"\" value=\""+esc(c[3])+"\">";
+      return h+"</div>";
+    }).join("");
+    ficha.innerHTML=
+      "<div class=\"ficha-cab\"><div><b>Objetivo</b><p>"+esc(t.obj)+"</p></div><div><b>Cuándo usarla</b><p>"+esc(t.cuando)+"</p></div></div>"+
+      "<div class=\"ficha-cuerpo\"><form class=\"campos\" autocomplete=\"off\" onsubmit=\"return false\"><div class=\"bloque\"><b>Información que necesitas</b></div>"+campos+"<p class=\"fuente\" style=\"margin:0\">Viene con un ejemplo. Cambia los datos por los tuyos.</p></form>"+
+      "<div class=\"salida\"><div class=\"salida-cab\"><b>Prompt</b></div><pre class=\"codigo\" id=\"pr-"+t.id+"\"></pre><div style=\"display:flex;gap:10px;align-items:center;flex-wrap:wrap\"><button class=\"btn\" type=\"button\" data-copiar=\"pr-"+t.id+"\">Copiar prompt</button><span class=\"estado\" role=\"status\"></span></div></div></div>"+
+      "<div class=\"ficha-cab\"><div class=\"bloque\"><b>Resultado esperado</b><p>"+esc(t.resultado)+"</p></div><div class=\"bloque\"><b>Cómo evaluarlo</b><ul>"+t.evaluar.map(function(x){return "<li>"+esc(x)+"</li>"}).join("")+"</ul></div></div>"+
+      "<div class=\"ficha-cab\"><div class=\"bloque\"><b>Variación</b><p>Después de la primera respuesta, pide: \""+esc(t.variacion)+"\"</p></div>"+
+      "<div class=\"bloque liviana\"><b>Versión liviana</b><p style=\"margin:0 0 8px\">Para un modelo pequeño o rápido, que gasta menos energía. "+esc(t.livNota)+"</p><pre class=\"codigo\" id=\"lv-"+t.id+"\"></pre><div style=\"display:flex;gap:10px;align-items:center;margin-top:8px;flex-wrap:wrap\"><button class=\"btn sec\" type=\"button\" data-copiar=\"lv-"+t.id+"\">Copiar versión liviana</button><span class=\"estado\" role=\"status\"></span></div></div></div>";
+    ficha.querySelector("form").addEventListener("input",actualizar);
+    ficha.querySelector("form").addEventListener("change",actualizar);
+    actualizar();
+  }
+  abrir(0);
+
+  // Índice activo
+  var links=[].slice.call(document.querySelectorAll("nav.indice a"));
+  if("IntersectionObserver" in window){
+    var obs=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){links.forEach(function(a){a.classList.toggle("activo",a.getAttribute("href")==="#"+e.target.id)})}})},{rootMargin:"-40% 0px -55% 0px"});
+    document.querySelectorAll("main section").forEach(function(s){obs.observe(s)});
+  }
+})();
+</script>
+</body>
+</html>
