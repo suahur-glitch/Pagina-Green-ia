@@ -35,7 +35,12 @@
     window.scrollTo(0, 0);
   }
 
-  window.addEventListener('popstate', () => { render(); window.scrollTo(0, 0); });
+  const hasPage = route => $$('[data-page]').some(p => p.dataset.page === route);
+
+  window.addEventListener('popstate', () => {
+    if (!hasPage(currentRoute())) { location.reload(); return; }
+    render(); window.scrollTo(0, 0);
+  });
 
   // Intercept clicks on same-origin internal links so navigation never triggers
   // a full page reload, but a direct URL load / refresh still works via the server.
@@ -46,6 +51,7 @@
     try { url = new URL(a.href, location.href); } catch { return; }
     if (url.origin !== location.origin) return; // external link (Instagram, LinkedIn, Substack…)
     if (!ROUTES.includes(url.pathname)) return; // not one of our routes: let it behave normally
+    if (!hasPage(url.pathname)) return; // the server sends one section per address: load it normally
     if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return; // open-in-new-tab shortcuts
     e.preventDefault();
     navigate(url.pathname);

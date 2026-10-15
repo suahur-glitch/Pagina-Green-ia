@@ -93,7 +93,11 @@ function withMeta(html, route) {
   const m = ROUTE_META[route];
   if (!m) return html;
   const url = SITE + (route === '/' ? '/' : route);
-  return html
+  // Each address gets only its own section, so Google doesn't see the four
+  // routes as one duplicated page. Links to the other sections reload the page.
+  const onlyThisPage = html.replace(/^<div data-page="([^"]+)"( hidden)?>[\s\S]*?^<\/div>$/gm,
+    (block, page) => page === route ? block.replace(/^(<div data-page="[^"]+") hidden>/, '$1>') : '');
+  return onlyThisPage
     .replace(/<title>[^<]*<\/title>/, `<title>${esc(m.title)}</title>`)
     .replace(/(<meta name="description" content=")[^"]*(")/, `$1${esc(m.description)}$2`)
     .replace(/(<link rel="canonical" href=")[^"]*(")/, `$1${url}$2`)
@@ -152,6 +156,11 @@ const server = http.createServer((req, res) => {
 
   const urlPath = req.url.split('?')[0];
   const qs = req.url.includes('?') ? req.url.slice(req.url.indexOf('?')) : '';
+  // One domain only: www.somosgreenia.com → somosgreenia.com (permanent).
+  if (/^www\./i.test(req.headers.host || '')) {
+    const target = (REDIRECTS[urlPath] || urlPath) + qs;
+    return send(res, 301, 'Moved Permanently', { Location: SITE + target });
+  }
   if (REDIRECTS[urlPath]) return send(res, 301, 'Moved Permanently', { Location: REDIRECTS[urlPath] + qs });
   if (urlPath === '/robots.txt') {
     return send(res, 200, ROBOTS, { 'Cache-Control': 'public, max-age=3600' });
