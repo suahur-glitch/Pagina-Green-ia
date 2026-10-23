@@ -1,0 +1,303 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mitos y verdades de la IA y el planeta · somosgreenia</title>
+<meta name="description" content="Diez ideas que circulan sobre cuánta agua, energía y CO₂ gasta la inteligencia artificial, revisadas una por una con los datos más recientes. Gratis y sin registro.">
+<link rel="canonical" href="https://somosgreenia.com/mitos">
+<link rel="stylesheet" href="/assets/fonts/fonts.css">
+<style>
+:root{
+  --noche:#0E1A14; --bosque:#1F3B2C; --hoja:#3E7C5A; --lima:#C1FF72;
+  --papel:#F6F5F0; --tinta:#22221E; --arena:#D9C08C;
+  --muted:#C9D3CC;
+  --bg:var(--noche); --card:var(--bosque); --text:var(--papel); --line:#3b5a49;
+}
+:root[data-theme="light"]{
+  --bg:var(--papel); --card:#ECEADF; --text:var(--tinta); --muted:#4a4a42; --line:#cfcabb;
+  --lima:#2c6a45;
+}
+@media (prefers-color-scheme: light){
+  :root:not([data-theme="dark"]){
+    --bg:var(--papel); --card:#ECEADF; --text:var(--tinta); --muted:#4a4a42; --line:#cfcabb; --lima:#2c6a45;
+  }
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;line-height:1.7;font-size:17px}
+.wrap{max-width:760px;margin:0 auto;padding:0 20px}
+h1,h2,h3{font-weight:900;line-height:1.1;letter-spacing:-.01em;margin:0}
+.kicker{font-size:.78rem;letter-spacing:.18em;text-transform:uppercase;font-weight:800;color:var(--lima)}
+.serif{font-family:Fraunces,Georgia,serif;font-style:italic}
+header.hero{padding:56px 0 36px;border-bottom:1px solid var(--line)}
+header.hero h1{font-size:clamp(2.4rem,8vw,4rem);margin:14px 0 16px}
+header.hero p{font-size:1.1rem;color:var(--muted);max-width:56ch;margin:0 0 18px}
+.lema{font-family:Fraunces,Georgia,serif;font-style:italic;font-size:1.15rem}
+.topbar{display:flex;justify-content:space-between;align-items:center;padding:14px 0;font-size:.9rem}
+.topbar a{color:var(--text);text-decoration:none;font-weight:800}
+.topbar button{background:none;border:1px solid var(--line);color:var(--text);border-radius:999px;padding:6px 14px;font:inherit;font-weight:700;cursor:pointer}
+section{padding:44px 0;border-bottom:1px solid var(--line)}
+section h2{font-size:clamp(1.7rem,5vw,2.4rem);margin:10px 0 12px}
+.intro{color:var(--muted);margin:0 0 22px}
+.grid{display:grid;gap:14px}
+@media(min-width:620px){.grid.two{grid-template-columns:1fr 1fr}}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px 20px}
+.card h3{font-size:1.25rem;margin-bottom:6px}
+.card p{margin:6px 0}
+.big{font-size:clamp(2rem,7vw,3rem);font-weight:900;color:var(--lima);line-height:1.05}
+.steps{display:grid;gap:12px}
+.step .label{font-size:.75rem;letter-spacing:.14em;font-weight:800;color:var(--muted);text-transform:uppercase}
+.note{background:transparent;border-left:4px solid var(--lima);padding:4px 0 4px 16px;margin-top:22px}
+.legend{display:flex;flex-wrap:wrap;gap:10px;margin:14px 0 0}
+.badge{display:inline-block;font-size:.74rem;font-weight:900;letter-spacing:.12em;padding:5px 12px;border-radius:999px;text-transform:uppercase}
+.b-falso{background:var(--text);color:var(--bg)}
+.b-depende{border:2px solid var(--arena);color:var(--arena)}
+.b-desact{border:2px dashed var(--text);color:var(--text)}
+:root[data-theme="light"] .b-depende{color:#7a5f1f;border-color:#7a5f1f}
+@media (prefers-color-scheme: light){:root:not([data-theme="dark"]) .b-depende{color:#7a5f1f;border-color:#7a5f1f}}
+.filters{display:flex;flex-wrap:wrap;gap:8px;margin:18px 0 6px;position:sticky;top:0;background:var(--bg);padding:10px 0;z-index:2}
+.filters button{background:none;color:var(--text);border:1px solid var(--line);border-radius:999px;padding:8px 16px;font:inherit;font-weight:700;cursor:pointer}
+.filters button[aria-pressed="true"]{background:var(--lima);color:var(--noche);border-color:var(--lima)}
+.myth{margin:18px 0}
+.myth .num{font-size:.85rem;font-weight:900;color:var(--lima);letter-spacing:.1em}
+.myth blockquote{margin:10px 0 12px;font-family:Fraunces,Georgia,serif;font-style:italic;font-size:1.35rem;line-height:1.3}
+.myth .sub{font-size:.75rem;letter-spacing:.14em;font-weight:800;text-transform:uppercase;color:var(--muted);margin-top:10px}
+.myth .criterio{border-top:1px dashed var(--line);margin-top:12px;padding-top:10px}
+.myth .criterio b{color:var(--lima)}
+.fuente{font-size:.85rem;color:var(--muted)}
+table{width:100%;border-collapse:collapse;margin:10px 0;font-size:.95rem}
+th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--line)}
+th{font-size:.75rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+td:nth-child(2){font-weight:800}
+ol.reglas{list-style:none;padding:0;margin:0;display:grid;gap:12px}
+ol.reglas li{display:grid;grid-template-columns:44px 1fr;gap:12px;align-items:start}
+ol.reglas .n{font-size:2rem;font-weight:900;color:var(--lima);line-height:1}
+ol.reglas b{display:block}
+.cta{display:inline-block;margin:6px 10px 6px 0;background:var(--lima);color:var(--noche);text-decoration:none;font-weight:900;padding:12px 20px;border-radius:12px}
+:root[data-theme="light"] .cta{color:#fff}
+@media (prefers-color-scheme: light){:root:not([data-theme="dark"]) .cta{color:#fff}}
+a{color:var(--text)}
+ul.fuentes{padding-left:0;list-style:none;display:grid;gap:8px;font-size:.9rem;color:var(--muted)}
+footer{padding:34px 0 60px;font-size:.88rem;color:var(--muted)}
+footer p{margin:8px 0}
+.hidden{display:none}
+a:focus-visible,button:focus-visible{outline:3px solid var(--lima);outline-offset:2px}
+@media print{.filters,.topbar button{display:none}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="topbar">
+    <a href="/">somosgreenia</a>
+    <button id="tema" type="button" aria-label="Cambiar entre tema claro y oscuro">Tema</button>
+  </div>
+
+  <header class="hero">
+    <div class="kicker">Guía gratuita · Sin registro</div>
+    <h1>Mitos y verdades de la IA y el planeta</h1>
+    <p>Diez ideas que circulan sobre cuánta agua, energía y CO₂ gasta la inteligencia artificial. Revisadas una por una con los datos más recientes.</p>
+    <div class="lema">Primero criterio, luego IA.</div>
+  </header>
+
+  <section id="antes">
+    <div class="kicker">Antes de los números</div>
+    <h2>Qué estamos midiendo, explicado simple</h2>
+    <p class="intro">Para hablar de la huella de la IA usamos cinco medidas. Si las entiendes, entiendes toda esta guía.</p>
+    <div class="grid two">
+      <div class="card"><h3>Wh · vatio-hora</h3>
+        <p>Es energía: cuánta electricidad se gastó. Se calcula como potencia por tiempo. Un bombillo LED de 10 vatios prendido una hora gasta 10 Wh.</p>
+        <p>Un mensaje de chat con IA gasta unos 0,3 Wh: ese bombillo prendido casi 2 minutos.</p></div>
+      <div class="card"><h3>kWh · kilovatio-hora</h3>
+        <p>Son 1.000 Wh. Es la misma unidad que te cobran en el recibo de la luz.</p>
+        <p>1 kWh es el bombillo LED de 10 vatios prendido 100 horas seguidas.</p></div>
+      <div class="card"><h3>TWh · teravatio-hora</h3>
+        <p>Son mil millones de kWh. Se usa para medir países enteros o industrias completas.</p>
+        <p>Colombia consumió en todo 2024 unos 82 TWh de electricidad.</p></div>
+      <div class="card"><h3>kg de CO₂ · kilogramos de dióxido de carbono</h3>
+        <p>Es el gas que sale al producir la electricidad, sobre todo cuando se quema carbón, gas o petróleo. Es el principal responsable del calentamiento global. Cuánto sale por cada kWh depende de cómo produce la energía cada país: con más agua, sol y viento, sale menos.</p>
+        <p>1 kg de CO₂ ocupa unos 500 litros, el espacio de una nevera grande. En promedio mundial, cada kWh emite 458 gramos.</p></div>
+    </div>
+    <div class="card" style="margin-top:14px"><h3>mL y L de agua, y cómo se mide</h3>
+      <p>Los servidores que responden tus preguntas se calientan. Muchos centros de datos los enfrían con agua que se evapora y no vuelve. Esa agua se mide en litros por cada kWh que gastan (L/kWh): 1,1 L/kWh en un gran proveedor típico, 1,9 en el promedio de la industria y 0,2 en los más eficientes. Además, las plantas que generan la electricidad también usan agua; esa parte no suele incluirse en las cifras de los proveedores.</p>
+      <p>La cuenta es simple: agua = energía × litros por kWh. Un mensaje de 0,3 Wh (0,0003 kWh) × 1,1 L/kWh ≈ 0,3 mL, unas 6 gotas.</p></div>
+    <p class="fuente">Fuentes: Estándar somosgreenia v1.2; XM, demanda de energía de Colombia 2024; Ember, 2026; Elsworth et al. (Google), 2025; EESI. Un kilo de CO₂ ocupa ≈ 0,5 m³ a temperatura ambiente.</p>
+  </section>
+
+  <section id="escala">
+    <div class="kicker">La escala</div>
+    <h2>Cuánto gasta la IA: desde una pregunta tuya hasta el mundo entero</h2>
+    <p class="intro">Ni cada pregunta seca un río, ni da igual. Este es el consumo estimado en cinco tamaños, de menor a mayor.</p>
+    <div class="steps">
+      <div class="card step"><div class="label">Una pregunta</div><div class="big">0,3 Wh · 0,3 mL</div><p>Un bombillo LED prendido casi 2 minutos. Unas 6 gotas de agua.</p></div>
+      <div class="card step"><div class="label">Tu día de trabajo</div><div class="big">≈ 35 Wh</div><p>Si usas IA toda la jornada: chat, textos largos, algo de código, razonamiento e imágenes. El bombillo prendido 3,5 horas.</p></div>
+      <div class="card step"><div class="label">Tu año</div><div class="big">≈ 8,7 kWh · ≈ 4 kg de CO₂</div><p>Como manejar unos 16 km en un carro a gasolina.</p></div>
+      <div class="card step"><div class="label">Todos los centros de datos del mundo, 2024</div><div class="big">415 TWh</div><p>Cinco veces toda la electricidad que consumió Colombia en 2024. Cerca del 1,5 % de la electricidad del planeta.</p></div>
+      <div class="card step"><div class="label">Escenario base 2030 (Agencia Internacional de Energía)</div><div class="big">945 TWh</div><p>Más de once Colombias. Es el escenario base de la Agencia Internacional de Energía, una proyección y no una medición. La IA es el principal motor de ese crecimiento.</p></div>
+    </div>
+    <div class="note"><b>Lo que hay que entender:</b> tu parte es pequeña, la suma no. Millones de personas multiplican cada hábito, y las tareas pesadas (video, razonamiento largo, agentes) pesan decenas, cientos o miles de veces más que un chat. Cada gota de agua y cada vatio cuentan, en cualquier lugar. Por eso importa el criterio, no la culpa.</div>
+    <p class="fuente">Cálculo individual: Estándar somosgreenia v1.2 (perfil Profesional ≈ 35 Wh por día laboral, 250 días al año; 458 g CO₂/kWh, Ember 2026; carro 250 g/km, EPA, ficha de junio de 2023). Centros de datos: Agencia Internacional de Energía, Energy and AI, 2025 (945 TWh en 2030 es su escenario base). Colombia: XM, 82.085 GWh en 2024.</p>
+  </section>
+
+  <section id="mitos">
+    <div class="kicker">Cómo leer los mitos</div>
+    <h2>Diez mitos, una etiqueta cada uno</h2>
+    <div class="legend">
+      <span><span class="badge b-falso">Falso</span> Los datos actuales lo contradicen.</span>
+      <span><span class="badge b-depende">Depende</span> Tiene algo de cierto, pero sin contexto engaña.</span>
+      <span><span class="badge b-desact">Desactualizado</span> Fue cierto con datos viejos.</span>
+    </div>
+    <div class="filters" role="group" aria-label="Filtrar mitos">
+      <button type="button" data-f="todos" aria-pressed="true">Todos</button>
+      <button type="button" data-f="falso" aria-pressed="false">Falso</button>
+      <button type="button" data-f="depende" aria-pressed="false">Depende</button>
+      <button type="button" data-f="desact" aria-pressed="false">Desactualizado</button>
+    </div>
+
+    <article class="card myth" data-v="falso"><div class="num">01</div><span class="badge b-falso">Falso</span>
+      <blockquote>“Cada conversación con un chatbot gasta medio litro de agua”</blockquote>
+      <div class="sub">Lo que dicen los datos</div>
+      <p>La cifra viene de un estudio de 2023 que asumía conversaciones muy largas y sumaba el agua usada para generar la electricidad. Se repitió como si fuera el gasto de cada pregunta. Mediciones publicadas en 2025 dan 0,26 mL de agua de refrigeración por consulta de texto típica: unas cinco gotas. Aun sumando el agua de la planta eléctrica, una consulta queda en alrededor de 1 mL.</p>
+      <p class="criterio"><b>Criterio:</b> cada gota de agua importa, en cualquier lugar, haya sequía o no. Que una consulta gaste 0,26 mL y no medio litro no es permiso para desperdiciar: es el dato correcto para medir bien y reducir de verdad. Y antes de compartir una cifra, revisa de qué año es y qué mide.</p>
+      <p class="fuente">Fuentes: Li et al., 2023; Elsworth et al. (Google), 2025. Ver fuentes 1 y 2.</p></article>
+
+    <article class="card myth" data-v="falso"><div class="num">02</div><span class="badge b-falso">Falso</span>
+      <blockquote>“Preguntarle a una IA gasta muchísimo más que buscar en Google”</blockquote>
+      <div class="sub">Lo que dicen los datos</div>
+      <p>En 2009 Google reportó unos 0,3 Wh por búsqueda (0,0003 kWh). Hoy, las mediciones más recientes de un mensaje de chat típico están entre 0,24 y 0,31 Wh. Es el mismo orden de magnitud. La idea de que un chat gasta “diez veces más” venía de estimaciones de 2023 con hardware viejo y respuestas mucho más largas que las reales.</p>
+      <p>El matiz: una respuesta muy larga, el modo razonamiento o una imagen sí gastan bastante más que una búsqueda.</p>
+      <p class="criterio"><b>Criterio:</b> para un dato puntual (una dirección, un horario), el buscador sigue siendo la herramienta correcta. La IA rinde cuando hay que redactar, resumir o analizar.</p>
+      <p class="fuente">Fuentes: Google, 2009; Epoch AI, 2025 (su autor describe su estimación de 0,3 Wh como relativamente pesimista); Oviedo et al., Joule, 2026. Ver fuentes 2, 3, 4 y 5.</p></article>
+
+    <article class="card myth" data-v="desact"><div class="num">03</div><span class="badge b-desact">Desactualizado</span>
+      <blockquote>“Generar una imagen gasta lo mismo que cargar el celular”</blockquote>
+      <div class="sub">Lo que dicen los datos</div>
+      <p>Esa comparación salió del modelo menos eficiente de un estudio de 2023. Con un modelo actual, una imagen de alta calidad gasta alrededor de 1,2 Wh: cerca del 8 % de una carga de celular (con una batería de unos 15 Wh, supuesto nuestro), o lo mismo que unos cuatro mensajes de chat.</p>
+      <p class="criterio"><b>Criterio:</b> el problema no es la imagen, es la ráfaga. Pedir veinte versiones para quedarse con una multiplica el gasto por veinte. Describe estilo, encuadre y formato desde el primer intento.</p>
+      <p class="fuente">Fuentes: Luccioni et al., 2023; MIT Technology Review, 2025. Ver fuentes 6 y 7.</p></article>
+
+    <article class="card myth" data-v="falso"><div class="num">04</div><span class="badge b-falso">Falso</span>
+      <blockquote>“Todo uso de IA pesa más o menos igual”</blockquote>
+      <div class="sub">Lo que dicen los datos</div>
+      <p>La diferencia entre tareas es enorme. Energía estimada por unidad, según el Estándar somosgreenia v1.2:</p>
+      <table>
+        <thead><tr><th>Tarea</th><th>Energía</th><th>Equivale a</th></tr></thead>
+        <tbody>
+          <tr><td>Mensaje de chat</td><td>0,3 Wh</td><td>La unidad de referencia</td></tr>
+          <tr><td>Imagen</td><td>1,2 Wh</td><td>≈ 4 mensajes</td></tr>
+          <tr><td>Generar código</td><td>2 Wh</td><td>≈ 7 mensajes</td></tr>
+          <tr><td>Consulta con razonamiento</td><td>4 Wh</td><td>≈ 13 mensajes</td></tr>
+          <tr><td>Sesión de agente (30 min)</td><td>40 Wh</td><td>≈ 130 mensajes</td></tr>
+          <tr><td>Video de 5 segundos</td><td>944 Wh</td><td>≈ 3.000 mensajes</td></tr>
+        </tbody>
+      </table>
+      <p class="criterio"><b>Criterio:</b> tu huella la define qué haces, no cuántas veces preguntas. Un solo video de prueba pesa más que un mes entero de chat.</p>
+      <p class="fuente">Valores centrales; cada tarea tiene un rango amplio. Fuentes 4, 5, 7 y 8.</p></article>
+
+    <article class="card myth" data-v="depende"><div class="num">05</div><span class="badge b-depende">Depende</span>
+      <blockquote>“Si le pido que piense más, la respuesta siempre es mejor”</blockquote>
+      <div class="sub">Lo que dicen los datos</div>
+      <p>Los modos de razonamiento mejoran los resultados en problemas difíciles: matemáticas, análisis con muchos pasos, código complejo. Pero gastan entre 13 y 30 veces más energía que una respuesta directa, según los estudios citados. Para resumir un correo o reformular un párrafo, no aportan casi nada.</p>
+      <p class="criterio"><b>Criterio:</b> actívalo cuando el problema lo pida, no por defecto. Si la respuesta directa no alcanza, siempre puedes volver a preguntar con razonamiento.</p>
+      <p class="fuente">Fuentes: AI Energy Score v2 (Hugging Face y Salesforce), 2025; Oviedo et al., Joule, 2026. Ver fuentes 5 y 8.</p></article>
+
+    <article class="card myth" data-v="depende"><div class="num">06</div><span class="badge b-depende">Depende</span>
+      <blockquote>“Decirle gracias a la IA desperdicia energía”</blockquote>
+      <div class="sub">Lo que dicen los datos</div>
+      <p>En 2025 circuló que los “por favor” y “gracias” le cuestan millones de dólares a la industria. A escala global puede sumar, porque un “gracias” suelto obliga al modelo a generar otra respuesta. Para ti, es el gasto de un mensaje corto: menos de 0,3 Wh. La amabilidad no es el problema.</p>
+      <p class="criterio"><b>Criterio:</b> si vas a agradecer, hazlo en el mismo mensaje de tu siguiente instrucción. Y ahorra de verdad donde pesa: menos regeneraciones, menos videos de prueba y el razonamiento solo cuando haga falta.</p>
+      <p class="fuente">Fuentes: Epoch AI, 2025; Estándar somosgreenia v1.2. Ver fuentes 3 y 4.</p></article>
+
+    <article class="card myth" data-v="falso"><div class="num">07</div><span class="badge b-falso">Falso</span>
+      <blockquote>“Entre más grande el modelo, mejor para cualquier tarea”</blockquote>
+      <div class="sub">Lo que dicen los datos</div>
+      <p>Los modelos grandes rinden en tareas complejas. Para resumir, clasificar, corregir ortografía o extraer datos, los modelos livianos (las versiones “mini”, “flash” o similares) suelen bastar. Microsoft (2026) calcula que las mejoras de los propios modelos pueden reducir de 5 a 10 veces la energía por consulta en el corto plazo, y que dirigir las preguntas simples a modelos livianos, y reservar los grandes para las complejas, es una de las palancas para lograrlo. Es una proyección del proveedor, no una medición de lo que ahorras tú.</p>
+      <p class="criterio"><b>Criterio:</b> empieza por el modelo más pequeño que te ofrezca tu herramienta. Sube de nivel solo si el resultado no alcanza.</p>
+      <p class="fuente">Fuente: Microsoft, 2026. Ver fuente 9.</p></article>
+
+    <article class="card myth" data-v="depende"><div class="num">08</div><span class="badge b-depende">Depende</span>
+      <blockquote>“Lo que le escribo a la IA es privado”</blockquote>
+      <div class="sub">Lo que dicen los datos</div>
+      <p>Depende del servicio, del plan y de tu configuración. Algunos servicios pueden usar tus conversaciones para mejorar sus modelos a menos que lo desactives, y las versiones empresariales suelen tener condiciones distintas a las gratuitas. Lo único seguro es lo que dicen los términos y la configuración de privacidad de la herramienta que usas.</p>
+      <p class="criterio"><b>Criterio:</b> antes de pegar algo, pregúntate si lo publicarías. Nunca ingreses contraseñas, datos de clientes, historias clínicas ni información confidencial de tu empresa sin una política que lo autorice. Revisa hoy la configuración de privacidad de las IA que usas.</p>
+      <p class="fuente">Esta guía es educativa y no constituye asesoría legal. Consulta los términos de cada servicio.</p></article>
+
+    <article class="card myth" data-v="falso"><div class="num">09</div><span class="badge b-falso">Falso</span>
+      <blockquote>“Si la IA responde con seguridad, es porque es verdad”</blockquote>
+      <div class="sub">Lo que dicen los datos</div>
+      <p>Los modelos de lenguaje generan el texto más probable, no el más cierto. Pueden inventar datos, citas, fuentes y hasta leyes con el mismo tono seguro con el que dicen algo correcto. A eso se le llama “alucinación”.</p>
+      <p>Además, una respuesta equivocada tiene doble costo: la energía que gastó y el tiempo que te hace perder corrigiéndola.</p>
+      <p class="criterio"><b>Criterio:</b> verifica cifras, nombres, fechas y citas en la fuente original antes de usarlos. Pídele a la IA que te dé las fuentes y ábrelas tú.</p></article>
+
+    <article class="card myth" data-v="falso"><div class="num">10</div><span class="badge b-falso">Falso</span>
+      <blockquote>“Con bonos de carbono, mi uso de IA queda en cero”</blockquote>
+      <div class="sub">Lo que dicen los datos</div>
+      <p>Un bono de carbono financia un proyecto que reduce o captura emisiones en otro lugar. No borra la electricidad que ya se consumió. Por eso cada vez más reguladores miran con lupa frases como “carbono neutral” basadas en compensaciones; desde el 27 de septiembre de 2026 la Unión Europea las prohíbe en la publicidad a consumidores.</p>
+      <p>Además, la escala no cuadra: un bono cubre una tonelada de CO₂, y el uso intensivo de IA de una persona ronda los 4 kg al año.</p>
+      <p class="criterio"><b>Criterio:</b> primero reduce, después aporta. Si quieres apoyar un proyecto, escoge uno con registro verificable y habla de “aportar”, no de “compensar” ni de “quedar en cero”.</p>
+      <p class="fuente">Fuentes: Directiva (UE) 2024/825; Estándar somosgreenia v1.2. Ver fuentes 4 y 10.</p></article>
+  </section>
+
+  <section id="reglas">
+    <div class="kicker">Para llevar</div>
+    <h2>Cinco reglas de criterio</h2>
+    <ol class="reglas">
+      <li><span class="n">1</span><div><b>Pregúntate si necesitas IA</b>Para un dato puntual, el buscador basta. La IA rinde cuando hay que redactar, resumir o analizar.</div></li>
+      <li><span class="n">2</span><div><b>Escoge la herramienta más liviana</b>Modelo pequeño primero. Razonamiento, imágenes y video solo cuando la tarea lo pida.</div></li>
+      <li><span class="n">3</span><div><b>Pide bien a la primera</b>Una instrucción clara ahorra cinco intentos. Di qué quieres, para quién, en qué formato y de qué largo.</div></li>
+      <li><span class="n">4</span><div><b>Verifica antes de usar</b>Cifras, citas y nombres se revisan en la fuente original.</div></li>
+      <li><span class="n">5</span><div><b>Cuida lo que compartes</b>Nada que no publicarías: ni contraseñas, ni datos de clientes, ni información confidencial.</div></li>
+    </ol>
+    <div class="note" style="margin-top:28px"><b>Mide tu propia huella, gratis.</b> La Calculadora Huella IA estima la energía, el agua y el CO₂ de tu uso diario, con rangos y fuentes. Tus datos no salen de tu dispositivo.</div>
+    <p style="margin-top:18px"><a class="cta" href="/calculadora">Calculadora Huella IA</a><a class="cta" href="/test">Test: ¿qué tan consciente es tu IA?</a><a class="cta" href="/kit">Kit IA con criterio</a></p>
+  </section>
+
+  <section id="fuentes">
+    <div class="kicker">Fuentes</div>
+    <h2>De dónde salen los datos</h2>
+    <ul class="fuentes">
+      <li>1. Li, Yang, Islam y Ren, “Making AI Less Thirsty”, 2023. <a href="https://arxiv.org/abs/2304.03271" rel="noopener">arxiv.org/abs/2304.03271</a></li>
+      <li>2. Elsworth et al. (Google), “Measuring the environmental impact of delivering AI at Google Scale”, 2025. <a href="https://arxiv.org/abs/2508.15734" rel="noopener">arxiv.org/abs/2508.15734</a> · Google, “Powering a Google search”, blog oficial de Google, enero de 2009.</li>
+      <li>3. Epoch AI (Josh You), “How much energy does ChatGPT use?”, Gradient Updates, 7 de febrero de 2025. <a href="https://epoch.ai/gradient-updates/how-much-energy-does-chatgpt-use" rel="noopener">epoch.ai</a> (su autor llama “relativamente pesimista” a su estimación de 0,3 Wh por consulta)</li>
+      <li>4. Estándar somosgreenia v1.2, octubre 2026: metodología propia con coeficientes y rangos (todavía no publicada en el sitio).</li>
+      <li>5. Oviedo et al., “Energy use of AI inference, efficiency pathways, and test-time scaling”, Joule, 2026. <a href="https://arxiv.org/abs/2509.20241" rel="noopener">arxiv.org/abs/2509.20241</a> · <a href="https://doi.org/10.1016/j.joule.2026.102430" rel="noopener">doi.org/10.1016/j.joule.2026.102430</a></li>
+      <li>6. Luccioni, Jernite y Strubell, “Power Hungry Processing”, 2023. <a href="https://arxiv.org/abs/2311.16863" rel="noopener">arxiv.org/abs/2311.16863</a></li>
+      <li>7. O’Donnell y Crownhart, “We did the math on AI’s energy footprint”, MIT Technology Review, 2025.</li>
+      <li>8. Luccioni y Gamazaychikov, AI Energy Score v2 (Hugging Face y Salesforce), 2025.</li>
+      <li>9. Microsoft, “Scaling AI with 8 to 20x energy efficiency”, 15 de junio de 2026. <a href="https://www.microsoft.com/en-us/microsoft-cloud/blog/2026/06/15/scaling-ai-with-8-to-20x-energy-efficiency" rel="noopener">microsoft.com</a></li>
+      <li>10. Directiva (UE) 2024/825 sobre el empoderamiento de los consumidores para la transición ecológica (EUR-Lex).</li>
+      <li>11. Agencia Internacional de Energía, Energy and AI, 2025 (los 945 TWh de 2030 son su escenario base) · Ember, Global Electricity Review 2026 · XM, demanda de energía de Colombia en 2024 (82.084,9 GWh; comunicado del 22 de enero de 2025, xm.com.co) · EPA, emisiones de un vehículo de pasajeros típico (ficha de junio de 2023).</li>
+    </ul>
+  </section>
+
+  <footer>
+    <p><b>Sobre estas cifras.</b> Son estimaciones educativas basadas en estudios públicos, no mediciones certificadas. Ningún proveedor publica el consumo exacto de cada consulta individual, y los valores cambian rápido con cada nueva generación de modelos y centros de datos. Información vigente a octubre de 2026.</p>
+    <p><b>Independencia.</b> somosgreenia es independiente y no está afiliada ni respaldada por ningún proveedor de inteligencia artificial. Los nombres de empresas se usan solo para citar sus publicaciones.</p>
+    <p><b>No es asesoría.</b> Esta guía no constituye asesoría legal, financiera ni técnica profesional.</p>
+    <p>© 2026 somosgreenia · somosgreenia.com · @somos.greenia. Todos los derechos reservados. Para compartirla, usa el enlace de esta página. · <a href="/privacidad">Privacidad</a> · <a href="/cookies">Cookies</a> · Versión 1.5 (texto v1.4) · 23 de octubre de 2026</p>
+  </footer>
+</div>
+
+<script>
+(function(){
+  var btns=document.querySelectorAll('.filters button');
+  var items=document.querySelectorAll('.myth');
+  btns.forEach(function(b){
+    b.addEventListener('click',function(){
+      var f=b.getAttribute('data-f');
+      btns.forEach(function(x){x.setAttribute('aria-pressed',x===b?'true':'false');});
+      items.forEach(function(it){
+        it.classList.toggle('hidden', f!=='todos' && it.getAttribute('data-v')!==f);
+      });
+    });
+  });
+  var t=document.getElementById('tema'), root=document.documentElement;
+  t.addEventListener('click',function(){
+    var dark = root.getAttribute('data-theme')==='dark' ||
+      (!root.getAttribute('data-theme') && !window.matchMedia('(prefers-color-scheme: light)').matches);
+    root.setAttribute('data-theme', dark?'light':'dark');
+  });
+})();
+</script>
+</body>
+</html>

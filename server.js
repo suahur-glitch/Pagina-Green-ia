@@ -49,7 +49,8 @@ const PAGE_ROUTES = {
   '/privacidad': '/privacidad/index.html',
   '/cookies': '/cookies/index.html',
   '/huella': '/calculadora/index.html',
-  '/kit': '/kit/index.html'
+  '/kit': '/kit/index.html',
+  '/mitos': '/mitos/index.html'
 };
 
 // Permanent redirects so each page has one canonical address.
@@ -61,6 +62,7 @@ const REDIRECTS = {
   '/privacidad/': '/privacidad',
   '/cookies/': '/cookies',
   '/kit/': '/kit',
+  '/mitos/': '/mitos',
   '/index.html': '/'
 };
 
@@ -106,7 +108,7 @@ function withMeta(html, route) {
     .replace(/(<meta property="og:description" content=")[^"]*(")/, `$1${esc(m.description)}$2`);
 }
 
-const SITEMAP_URLS = ['/', '/recursos-gratuitos', '/certificate-con-nosotros', '/sobre-nosotros', '/test', '/calculadora', '/kit', '/privacidad', '/cookies'];
+const SITEMAP_URLS = ['/', '/recursos-gratuitos', '/certificate-con-nosotros', '/sobre-nosotros', '/test', '/calculadora', '/kit', '/mitos', '/privacidad', '/cookies'];
 
 function sitemapXml() {
   const today = new Date().toISOString().slice(0, 10);
