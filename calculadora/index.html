@@ -234,22 +234,22 @@
     .mbar a{font-size:13px;font-weight:600;white-space:nowrap;}
   }
   /* historial */
-  details.hist{border:1.5px solid var(--line);border-radius:14px;background:var(--surface-2);margin-bottom:18px;}
-  details.hist summary{cursor:pointer;list-style:none;display:flex;justify-content:space-between;gap:12px;align-items:center;padding:12px 14px;font-size:14px;color:var(--ink);}
-  details.hist summary::-webkit-details-marker{display:none;}
-  details.hist summary b{color:var(--primary-dark);}
-  details.hist summary .chev{color:var(--muted);font-size:18px;transition:transform .15s;}
-  details.hist[open] summary .chev{transform:rotate(45deg);}
-  .hist-body{padding:0 14px 14px;display:flex;flex-direction:column;gap:12px;}
+  .hist{border:2px solid var(--primary);border-radius:18px;background:var(--primary-tint);margin-bottom:22px;box-shadow:0 6px 22px rgba(31,59,44,.10);overflow:hidden;}
+  .hist-head{padding:18px 20px 4px;}
+  .hist-badge{display:inline-block;background:var(--primary);color:var(--on-primary);font-size:11.5px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;padding:4px 10px;border-radius:999px;margin-bottom:8px;}
+  .hist-head h3{margin:0;font-family:"Fraunces",Georgia,serif;font-weight:600;font-size:clamp(20px,3.2vw,25px);line-height:1.2;color:var(--primary-dark);text-wrap:balance;}
+  .hist-head p{margin:6px 0 0;font-size:14.5px;color:var(--ink);max-width:60ch;}
+  .hist-steps-t{margin:4px 0 0;font-size:13px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;}
+  .hist-body{padding:10px 20px 20px;display:flex;flex-direction:column;gap:12px;}
   .hist-lock{display:flex;gap:8px;margin:0;font-size:13px;color:var(--muted);}
   .hist-lock b{color:var(--ink);}
   .htabs{display:inline-flex;align-self:flex-start;border:1.5px solid var(--line);border-radius:999px;padding:3px;gap:2px;background:var(--surface);}
   .htabs button{border:0;background:transparent;color:var(--ink);font-size:13.5px;font-weight:500;padding:6px 14px;border-radius:999px;cursor:pointer;}
   .htabs button[aria-selected="true"]{background:var(--primary);color:var(--on-primary);font-weight:600;}
   .hsteps{margin:0;padding-left:20px;display:flex;flex-direction:column;gap:6px;font-size:13.5px;}
-  .hdrop{border:2px dashed var(--line);border-radius:12px;padding:18px 14px;text-align:center;display:flex;flex-direction:column;gap:8px;align-items:center;background:var(--surface);}
+  .hdrop{border:2.5px dashed var(--primary);border-radius:14px;padding:26px 16px;text-align:center;display:flex;flex-direction:column;gap:8px;align-items:center;background:var(--surface);}
   .hdrop.over{border-color:var(--primary);background:var(--primary-tint);}
-  .hdrop p{margin:0;font-size:13.5px;color:var(--muted);}
+  .hdrop p{margin:0;font-size:15px;color:var(--ink);}
   .hdrop label.btn{display:inline-block;}
   .hstate{border-radius:10px;padding:10px 12px;font-size:13.5px;}
   .hstate b{display:block;}
@@ -284,10 +284,21 @@
         <p class="sub">Empieza con un perfil y ajusta las cantidades, o llénalas con tu historial.</p>
       </div>
 
-      <details class="hist" id="hist">
-        <summary><span><b>¿No sabes cuánto usas la IA?</b> Llena las cantidades con tu historial de Claude o ChatGPT</span><span class="chev" aria-hidden="true">+</span></summary>
+      <section class="hist" id="hist" aria-labelledby="hist-title">
+        <div class="hist-head">
+          <span class="hist-badge">Más rápido y exacto</span>
+          <h3 id="hist-title">Carga aquí tu historial de Claude o ChatGPT</h3>
+          <p>¿No sabes cuánto usas la IA? Sube el archivo que te exportan Claude o ChatGPT y la calculadora llena las cantidades por ti.</p>
+        </div>
         <div class="hist-body">
           <p class="hist-lock"><span aria-hidden="true">🔒</span><span><b>Tu archivo no sale de tu navegador.</b> Se lee en tu dispositivo, no se sube a ningún servidor y no se guarda. La calculadora solo se queda con los conteos.</span></p>
+          <div class="hdrop" id="hdrop">
+            <p><b>Carga aquí el archivo de Claude o de ChatGPT</b><br>Arrástralo (.zip o .json) o elígelo desde tu dispositivo</p>
+            <label class="btn primary" for="hfile">Cargar mi archivo</label>
+            <input type="file" id="hfile" accept=".zip,.json,.jsonl,application/zip,application/json" multiple hidden>
+          </div>
+          <div class="hstate" id="hstate" role="status" aria-live="polite" hidden></div>
+          <p class="hist-steps-t">¿Cómo descargo mi archivo?</p>
           <div class="htabs" role="tablist" aria-label="Plataforma">
             <button type="button" role="tab" id="htab-claude" aria-selected="true" aria-controls="hsteps-claude">Claude</button>
             <button type="button" role="tab" id="htab-gpt" aria-selected="false" aria-controls="hsteps-gpt">ChatGPT</button>
@@ -302,15 +313,9 @@
             <li>Pulsa <b>Exportar datos</b> y confirma. El correo puede tardar de 1 a 3 días y su enlace vence a las 24 horas.</li>
             <li>Descarga el <b>.zip</b> con tu sesión abierta en chatgpt.com y súbelo aquí tal cual, sin descomprimir.</li>
           </ol>
-          <div class="hdrop" id="hdrop">
-            <p>Arrastra aquí tu archivo <b>.zip</b> o <b>.json</b></p>
-            <label class="btn primary" for="hfile">Elegir archivos</label>
-            <input type="file" id="hfile" accept=".zip,.json,.jsonl,application/zip,application/json" multiple hidden>
-          </div>
-          <div class="hstate" id="hstate" role="status" aria-live="polite" hidden></div>
           <p class="hnote">Usamos tus últimos 3 meses y calculamos un día típico con uso: el promedio de los días en que usaste la IA. Los nombres de los menús pueden cambiar según la versión de cada app.</p>
         </div>
-      </details>
+      </section>
 
 
       <div class="presets" role="group" aria-label="Perfiles de uso" id="presets"></div>
